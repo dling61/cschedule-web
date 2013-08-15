@@ -1,0 +1,175 @@
+#login { /*login页面 背景图区域设置*/
+	background-image: url(../images/home/backimage2.jpg);
+	width: 1200px;
+	height: 960px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-position: center top;
+	text-align: center;
+	position: absolute;
+	top: 0px;
+	margin: auto;
+	margin-left: 0 auto;
+	margin-right: 0 auto;
+}
+.introduction {/*login页面的文字说明设置*/
+	font-family: Verdana, Geneva, sans-serif, Arial, Courier, "Courier New";
+	text-align: center;
+	height: auto;
+	width: auto;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.sign_logo {
+	text-align: center;
+	height: auto;
+	width: auto;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 15px;
+}
+#login .introduction h1 {
+	font-family: "Lucida Sans";
+	background-image: url(../images/home/logo.png);
+	height: 46px;
+	width: 266px;
+	text-align: center;
+	margin: auto;
+}
+
+#login .introduction ul {
+	font-size: 14px;
+	color: #FFF;
+	width: 320px;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+.login_introduction { /* login页面输入部分设置*/
+	width: 400px;
+	text-align: center;
+	margin-top: 300px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+}
+.loginput { /* login页面输入区块部分设置*/
+	height: 256px;
+	width: 239px;
+	font-size: 14px;
+	color: #333;
+	background-repeat: no-repeat;
+	line-height: normal;
+	text-align: center;
+	vertical-align: middle;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	filter: Alpha(Opacity=0.1,);
+	background-image: url(../images/home/loginback.png);
+	margin: auto;
+}
+.sign { /*首页注册框大小与背景设置*/
+	height: 256px;
+	width: 239px;
+	font-size: 14px;
+	color: #333;
+	background-repeat: no-repeat;
+	line-height: normal;
+	text-align: center;
+	vertical-align: middle;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	filter: Alpha(Opacity=0.1,);
+	margin: auto;
+}
+#login_input { /* 用户名等输入区块设置 */
+	width: 100%;
+	font-size: 14px;
+	text-align: center;
+	vertical-align: middle;
+	margin-top: auto;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+}
+
+#login_input .email { /* login页面输入email */
+	font-size: 14px;
+	height: 24px;
+	width: 170px;
+	margin-top: 40px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+	color: #666;
+	text-align: left;
+	padding-left: 5px;
+	border: 1px solid #999;
+}
+#login_input .signup { /* signup页面输入email*/
+	font-size: 14px;
+	height: 24px;
+	width: 170px;
+	margin-top: 5px;
+	margin-right: auto;
+	margin-bottom: 5px;
+	margin-left: auto;
+	color: #000;
+	text-align: left;
+	padding-left: 5px;
+	border: 1px solid #FFF;
+	background-color: #CCC;
+	font-family: Arial, Helvetica, sans-serif, Verdana, Tahoma;
+	font-weight: bold;
+}
+
+#login_input .password {/* login页面输入密码*/
+	font-size: 14px;
+	height: 24px;
+	width: 170px;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+	color: #666;
+	text-align: left;
+	padding-left: 5px;
+	border: 1px solid #999;
+}
+#remind { /*login页面记住用户信息*/
+	text-align: left;
+	padding-left: 30px;
+	vertical-align: sub;
+	padding-bottom: 5px;
+	font-size: 14px;
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif, Verdana, Tahoma;
+}
+#logsbu1{ /*login页面 button 按键 区域设置*/
+	text-align: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	display: block;
+}
+#foot { /* 底部版权信息*/
+	height: 60px;
+	text-align: center;
+	position: absolute;
+	width: 100%;
+	color: #FFF;
+	font-size: 12px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 240px;
+	font-family: Arial, Helvetica, sans-serif, Verdana, Tahoma;
+	margin-bottom: auto;
+}
+body {
+	background-color: #316191;
+	font-family: Arial, Helvetica, sans-serif, Verdana, Tahoma;
+}
