@@ -60,7 +60,22 @@ class UserController extends Controller
 	* user login,render a login page
 	*/
 	public function actionLogin(){
-		$this->render('login');
+		//use cookie to implement auto login
+		if(isset($_COOKIE['cschedule_user']) && $_COOKIE['cschedule_user']!=''){
+			$ckuser =  $_COOKIE['cschedule_user'];
+		}else $ckuser = 'x'; //数据库有一个email，psw为空的用户
+		if(isset($_COOKIE['cschedule_psw']) && $_COOKIE['cschedule_psw']!=''){
+			$ckpsw =  encrypt($_COOKIE['cschedule_psw'], 'D', 'MyCSchedule');
+		}else $ckpsw = '';
+		$arr = array();
+		$arr['email'] = $ckuser;
+		$arr['password'] = $ckpsw;
+		$result = $this->rest()->getResponse('creator?action=signin','post',$arr);
+		if($result['code'] == 200){
+			$this->redirect(Yii::app()->createUrl('Service/admin'));
+		}else{
+			$this->render('login');
+		}
 	}
 	
 	/*
@@ -74,9 +89,9 @@ class UserController extends Controller
 			$arr['password'] = mysql_real_escape_string($_POST['password']);
 			$result = $this->rest()->getResponse('creator?action=signin','post',$arr);
 			if($result['code'] == 200){
-				if($_POST['remember']){
-					setcookie('user', mysql_real_escape_string($_POST['email']), time()+3600);
-					setcookie('psw', mysql_real_escape_string($_POST['password']), time()+3600);
+				setcookie('cschedule_user', mysql_real_escape_string($_POST['email']), time()+3600*24*14);
+				if($_POST['remember'] === 'true'){
+					setcookie('cschedule_psw', encrypt(mysql_real_escape_string($_POST['password']), 'E', 'MyCSchedule'), time()+3600*24*14);
 				}
 				session_start();
 				$response = json_decode($result['response']);
@@ -85,7 +100,6 @@ class UserController extends Controller
 				foreach($response as $key=>$value){
 					$_SESSION[$key] = $value;
 				}
-				session_write_close();
 				echo 'ok';
 			}else if($result['code'] == 401){
 			//do something
@@ -102,6 +116,10 @@ class UserController extends Controller
 		//if user logout,destory the session
 		session_start();
 		unset($_SESSION);
+		session_destroy(); 
+		//destroy cookie
+		setcookie("cschedule_user", "", time() - 3600);
+		setcookie("cschedule_psw", "", time() - 3600);
 		$this->redirect(Yii::app()->createUrl('User/Login'));
 	}
 	

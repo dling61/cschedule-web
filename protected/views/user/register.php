@@ -35,8 +35,9 @@ function checkValue(){
 	var username = document.getElementById('username').value;
 	var password = document.getElementById('password').value;
 	var mobile = document.getElementById('mobile').value;	
+	var regu= /^([a-zA-Z0-9]|[._]){2,10}$/; //verify special char
 	
-	var reg = /^([\w\.\_]{2,10})@(\w{1,}).([a-z]{2,4})$/;
+	var reg = /^([\w\.\_]{2,10})@(\w{1,}).([a-z]{2,4})$/; //verify email
 	if(email ==''){
 		document.getElementById('error_info').innerHTML = '<font color = \'red\'>Email cannot be empty.</font>';
 		document.getElementById('email').focus();
@@ -58,6 +59,12 @@ function checkValue(){
 		return;
 	}
 	
+	if(username !='' && !regu.test(username)){
+		document.getElementById('error_info').innerHTML = '<font color = \'red\'>Don\'t use special characters.</font>';
+		document.getElementById('username').focus();
+		return;
+	}
+	
 	var img = "<?php echo "<img src = '".Yii::app()->baseUrl."/images/home/loading.gif'>";?>";
 	var url = "<?php echo Yii::app()->createUrl('User/Login');?>";
 	<?php echo CHtml::ajax(
@@ -65,7 +72,7 @@ function checkValue(){
 					"url" => CController::createUrl("User/SignUp"),
 					"data" => "js:{email : email, username : username ,password : password, mobile : mobile}",
 					"type"=>"POST",
-					'beforeSend'=>'js:function(){document.getElementById(\'error_info\').innerHTML = img}',
+					'beforeSend'=>'js:function(){document.getElementById(\'error_info\').innerHTML = img;}',
 					"success"=>"js:function(data){
 						if(data=='ok'){
 							location.href=url;
@@ -77,6 +84,8 @@ function checkValue(){
 			);
 	?>
 }
+
+
 </script>
 </html>
 

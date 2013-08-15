@@ -15,21 +15,27 @@ body {
 </head>
 
 <body>
+<?php
+if(isset($_COOKIE['cschedule_user']) && $_COOKIE['cschedule_user']!=''){
+	$user = $_COOKIE['cschedule_user'];
+}else $user = '';
+?>
 <form id="signup" name="signup" method="post" action="">
 <div class="login" id="login">
   <div class="login_introduction">
   <div class="introduction"><h1></h1> <ul>A social network to organize activities and share schedules.</ul></div>
   <div class="loginput">
     <div id="login_input">
-     <input class="email" name="Email" id='email' type="text" placeholder='Email'>
+     <input class="email" name="Email" id='email' type="text" placeholder='Email' value="<?php echo $user;?>">
     </div>
     <div  id="login_input">
 	<input class="password" name="Password" id='password' type="password" placeholder='Password'></div>
 	
 	<span id="error_info"></span>
     <div id="remind"> 
-    <input type="checkbox" name="checkbox" id="remember" />
-    Remember me next time
+    <input type="checkbox" name="checkbox" id="remember" <?php if(isset($_COOKIE['cschedule_psw']) && $_COOKIE['cschedule_psw']!=''){?>
+       checked="checked" <?php } ?>/>
+    Remember me two weeks
   </div>
     <div id="logsbu1"><img src="<?php echo Yii::app()->baseUrl.'/images/home/login.png';?>" width="170" height="24" onclick='checkValue()'/></div>
   </form>
