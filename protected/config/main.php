@@ -1,5 +1,5 @@
 <?php
-$username='2422915252@qq.com';$psw='wn555666999';
+// $username='';$psw='';
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
@@ -18,16 +18,18 @@ return array(
 		'application.components.*',
 		'application.extensions.*',
 	),
+	
+	'defaultController'=>'User/Login',
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 		
-		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>'1',
-			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
-		),
+		// 'gii'=>array(
+			// 'class'=>'system.gii.GiiModule',
+			// 'password'=>'1',
+			//If removed, Gii defaults to localhost only. Edit carefully to taste.
+			// 'ipFilters'=>array('127.0.0.1','::1'),
+		// ),
 		
 		// 'cal' => array(
             // 'debug' => true // For first run only!
@@ -37,28 +39,54 @@ return array(
 	),
 
 	// application components
-	'components'=>array(
+	'components'=>array( 
+		// 'cache'=>array(
+              // 'class'=>'CMemCache',
+              // 'servers'=>array(
+                  // array(
+                      // 'host'=>'127.0.0.1',
+                      // 'port'=>11211,
+                      // 'weight'=>60,
+                  // ),
+              // ),
+          // ),
+		 
+		'session'=>array(
+			'timeout'=>10,
+			'cookieparams'=>array(
+				'lifetime'=>10
+			)
+		),	
+		
+		'cache'=>array(
+			//cache files are in the runtime folder
+			'class'=>'system.caching.CFileCache',    
+			// depth of the directory about cache files
+			'directoryLevel'=>'2',   
+		),
+	
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+			 'loginUrl'=>array('User/Login')
 		),
 		
 		'timepicker'=>array(
 			'class'=>'application.extensions.timepicker.timepicker',
 		),
 		
-		'phpMailer'=>array(
-			'class'=>'application.extensions.phpmailer.CPhpMailer',
-			'host' => 'smtp.qq.com',
-			'port' => 25,
-			'from' => $username,
-			'fromName' => 'CSchedule',
-			'username' => $username,
-			'password' => $psw,
-		),
+		// 'phpMailer'=>array(
+			// 'class'=>'application.extensions.phpmailer.CPhpMailer',
+			// 'host' => 'smtp.qq.com',
+			// 'port' => 25,
+			// 'from' => $username,
+			// 'fromName' => 'CSchedule',
+			// 'username' => $username,
+			// 'password' => $psw,
+		// ),
 		
-		'RESTClient' => array(
-            'class' => 'application.extensions.RESTClient',
+		'RestClient' => array(
+            'class' => 'application.extensions.RestClient',
         ),
 		
 		// uncomment the following to enable URLs in path-format
@@ -77,13 +105,13 @@ return array(
 		// ),
 		// uncomment the following to use a MySQL database
 		
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=schedule',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		),
+		// 'db'=>array(
+			// 'connectionString' => 'mysql:host=localhost;dbname=schedule',
+			// 'emulatePrepare' => true,
+			// 'username' => 'root',
+			// 'password' => '',
+			// 'charset' => 'utf8',
+		// ),
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -111,5 +139,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+		'sessionTimeoutSeconds'=>1200, 
 	),
 );

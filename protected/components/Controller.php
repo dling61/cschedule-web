@@ -20,4 +20,26 @@ class Controller extends CController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+	/*
+	public $global=array();
+	
+	public function init()
+	{
+		$this->global = $this->setKey();
+	}
+	
+	private function setKey()
+	{
+		if(!Yii::app()->memcache->get('keywords'))
+		{
+			// $cache = Config::model()->findAll();
+			// foreach($cache as $key=>$n)
+			// {
+				// $keys[$n->attributes['name']] = $n->attributes['value'];
+			// }           
+			// Yii::app()->memcache->set('keywords',$keys);
+			Yii::app()->memcache->set('keywords','hello,memcache');
+		}
+		return Yii::app()->memcache->get('keywords'); 
+	}*/
 }

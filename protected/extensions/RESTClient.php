@@ -1,19 +1,40 @@
 <?php
+/*
+* @param  $type  identify if there is any urls behind  '?'
+*/
 class RESTClient extends CComponent
 {
 	private $_headers = array(
 	'Accept: application/json',
 	'Content-Type: application/json',
 	);
-	public $_url = "http://apitest.servicescheduler.net/"; //server url
+	public $_url = "http://apitest2.servicescheduler.net/"; //server url
 	
-	public function getResponse($url,$method,$info = NULL){
+	public function getResponse($url,$method,$info = NULL,$ownerid=NULL,$type=false){
+		$param = array(
+			'd'=>DEVICE,
+			'v'=>VERSION,
+			'sc'=>SCODE
+		);
+
 		if(is_array($info)){
 			$data = json_encode($info);
 			if(strtoupper($method) == 'GET'){
-				$url = $url."?".http_build_query($info, '', "&");
+				$url = $url."?".http_build_query($info, '', "&").'&'.http_build_query($param);
+			}else{
+				if($type)
+					$url = $url.'&'.http_build_query($param);
+				else
+					$url = $url.'?'.http_build_query($param);
 			}
+		}else{
+			$url = $url.'?'.http_build_query($param);
 		}
+
+		if($ownerid){
+			$url = $url.'&ownerid='.$ownerid;
+		}
+		// echo $this->_url.$url;exit;
 		$headers = $this->_headers;
 		$handle = curl_init();
 		curl_setopt($handle, CURLOPT_URL, $this->_url.$url);

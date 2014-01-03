@@ -1,0 +1,189 @@
+/* jqModal base Styling courtesy of;
+	Brice Burgess <bhb@iceburg.net> */
+
+/* The Window's CSS z-index value is respected (takes priority). If none is supplied,
+	the Window's z-index value will be set to 3000 by default (via jqModal.js). */
+	
+.jqmWindow1 {
+    display: none;
+    
+    position: fixed;
+    top: 17%;
+    left: 50%;
+    
+    margin-left: -300px;
+    width: 600px;
+    
+    background-color: #EEE;
+    color: #333;
+    border: 1px solid black;
+    padding: 12px;
+}
+
+.jqmWindow {
+    display: none;
+	position: fixed;
+	
+	height:250px;
+	
+	min-height:200px; 
+	
+	width: auto;
+	padding: 20px;
+	border: 1px solid #555;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: #333 0px 0px 10px;
+	-moz-box-shadow: #333 0px 0px 10px;
+	box-shadow: #333 0px 0px 10px;
+	background-color: #FFF;
+	overflow: visible;
+	top:40%;
+	left:70%;
+	margin-right: 0;
+	margin-left:-450px;	
+	
+}
+
+/*.jqmWindowContacts{
+width:652px; 
+padding-left:37px; 
+height:340px;
+background:url(../images/bg_92.png) no-repeat bottom left;
+color:#5d5d5d;
+display: none;
+position: fixed;
+top:40%;
+left:70%;
+margin-right: 0;
+margin-left:-450px;
+overflow: visible;
+}*/
+
+.jqmWindowContacts{
+width:644px; 
+padding-left:37px; 
+padding-top:7px; 
+height:321px; 
+background:url(../images/bg_92.png) no-repeat; 
+color:#5d5d5d;
+
+display: none;
+position: fixed;
+top:20%;
+left:55%;
+margin-right: 0;
+margin-left:-450px;
+overflow: visible;
+
+}
+
+.jqmWindowShareContacts{
+width:591px; 
+margin:0 auto;
+
+display: none;
+position: fixed;
+top:20%;
+left:55%;
+margin-right: 0;
+margin-left:-450px;
+overflow: visible;
+
+}
+
+.jqmWindowEditContacts{
+background:url(../images/bg_113.png) no-repeat; 
+width:377px; 
+padding-left:60px; 
+height:237px; 
+padding-top:20px;
+
+display: none;
+position: fixed;
+top:30%;
+left:65%;
+margin-right: 0;
+margin-left:-450px;
+overflow: visible;
+
+}
+
+.jqmWindowViewActivity{
+background:url(../images/bg_50.png) no-repeat; 
+width:452px; 
+padding-left:50px; 
+height:470px; 
+padding-top:7px; 
+margin:58px auto 60px auto; 
+color:#5d5d5d;
+
+display: none;
+position: fixed;
+top:16%;
+left:62%;
+margin-right: 0;
+margin-left:-450px;
+overflow: visible;
+}
+
+.jqmWindowEditActivity{
+background:url(../images/bg_50.png) no-repeat; 
+width:452px; 
+padding-left:50px; 
+height:480px; 
+padding-top:7px; 
+margin:58px auto 60px auto; 
+color:#5d5d5d;
+
+display: none;
+position: fixed;
+top:16%;
+left:62%;
+margin-right: 0;
+margin-left:-450px;
+overflow: visible;
+}
+
+.jqmWindowViewSchedule{
+width:721px; 
+margin:50px auto 50px auto;
+
+display: none;
+position: fixed;
+top:16%;
+left:50%;
+margin-right: 0;
+margin-left:-450px;
+overflow: visible;
+}
+
+.jqmWindowEditSchedule{
+width:721px;
+margin:50px auto 50px auto;
+
+display: none;
+position: fixed;
+top:2%;
+left:50%;
+margin-right: 0;
+margin-left:-450px;
+overflow: visible;
+}
+
+.jqmOverlay { background-color: #000; }
+
+/* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
+* iframe.jqm {position:absolute;top:0;left:0;z-index:-1;
+	width: expression(this.parentNode.offsetWidth+'px');
+	height: expression(this.parentNode.offsetHeight+'px');
+}
+
+/* Fixed posistioning emulation for IE6
+     Star selector used to hide definition from browsers other than IE6
+     For valid CSS, use a conditional include instead */
+* html .jqmWindow {
+     position: absolute;
+     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
