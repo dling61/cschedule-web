@@ -134,8 +134,7 @@
 	
 	<tr>
       <td height="48"><span class="fontsize1">Timezone</span></td>
-      <td><select id='viewtimezone' class="cname4" disabled>
-	  <option value='-11'>(GMT-11:00) Samoa</option><option value='-10'>(GMT-10:00) Hawaii</option><option value='-9'>(GMT-09:00) Alaska</option><option value='-8'>(GMT-08:00) Tijuana</option><option value='-7'>(GMT-07:00) Mazatlan</option><option value='-6'>(GMT-06:00) Central Time (US &amp; Canada)</option><option value='-5'>(GMT-05:00) Lima</option><option value='-4.5'>(GMT-04:30) Caracas</option><option value='-4'>(GMT-04:00) Santiago</option><option value='-3.5'>(GMT-03:30) Newfoundland</option><option value='-3'>(GMT-03:00) Buenos Aires</option>
+      <td><select id='viewtimezone' class="cname4" disabled><option value='-11'>US/Samoa</option><option value='-10'>US/Hawaii</option><option value='-9'>US/Alaska</option><option value='-8'>US/Pacific</option><option value='-7'>US/Arizona &amp; US/Mountain</option><option value='-6'>US/Central</option><option value='-5'>US/Eastern &amp; US/East-Indiana</option><option value='-4'>Canada/Atlantic</option><option value='-3.5'>Canada/Newfoundland</option>
 	  
 	  </select></td>
     </tr>
@@ -227,7 +226,7 @@
 	<tr>
       <td height="48"><span class="fontsize1">Timezone</span><img src="./images/bg_100.png" width="14" height="14"></td>
       <td colspan="2"><select id='edittimezone' class="cname4" disabled>
-	  <option value='-11'>(GMT-11:00) Samoa</option><option value='-10'>(GMT-10:00) Hawaii</option><option value='-9'>(GMT-09:00) Alaska</option><option value='-8'>(GMT-08:00) Tijuana</option><option value='-7'>(GMT-07:00) Mazatlan</option><option value='-6'>(GMT-06:00) Central Time (US &amp; Canada)</option><option value='-5'>(GMT-05:00) Lima</option><option value='-4.5'>(GMT-04:30) Caracas</option><option value='-4'>(GMT-04:00) Santiago</option><option value='-3.5'>(GMT-03:30) Newfoundland</option><option value='-3'>(GMT-03:00) Buenos Aires</option>
+	  <option value='-11'>US/Samoa</option><option value='-10'>US/Hawaii</option><option value='-9'>US/Alaska</option><option value='-8'>US/Pacific</option><option value='-7'>US/Arizona &amp; US/Mountain</option><option value='-6'>US/Central</option><option value='-5'>US/Eastern &amp; US/East-Indiana</option><option value='-4'>Canada/Atlantic</option><option value='-3.5'>Canada/Newfoundland</option>
 	  
 	  </select></td>
     </tr>
@@ -312,7 +311,8 @@
 			$count = count($services);
 			foreach($services as $vals){
 				if($i < $count){
-					$str .= "<li class='tablebg'>
+					if($vals->sharedrole == 0){
+						$str .= "<li class='tablebg'>
       <table width='812' border='0' cellspacing='0' cellpadding='0'>
         <tr>
           <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
@@ -329,7 +329,43 @@
         </tr>
       </table>
     </li><li class='cutoff'></li>";
-				}else $str .= "<li class='tablebg2'>
+					}else if($vals->sharedrole == 1){
+						$str .= "<li class='tablebg'>
+      <table width='812' border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
+          <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Share'
+></a></span></td>
+          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+></a></span></td>
+          <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
+></a></span></td>
+          <td width='58'><span class='table5'><a onclick='editActivity(".$vals->serviceid.")' cursor:pointer; title='Edit'
+></a></span></td>
+           <td width='59'><span class='table6img'></span></td>
+        </tr>
+      </table>
+    </li><li class='cutoff'></li>";
+					}else if($vals->sharedrole == 2){
+						$str .= "<li class='tablebg'>
+      <table width='812' border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
+        <td width='58'><span class='table2img'></span></td>
+          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+></a></span></td>
+          <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
+></a></span></td>
+         <td width='58'><span class='table5img'></span></td>
+		<td width='59'><span class='table6img'></span></td>
+        </tr>
+      </table>
+    </li><li class='cutoff'></li>";
+					}
+					
+				}else{
+					if($vals->sharedrole == 0){
+						$str .= "<li class='tablebg2'>
       <table width='812' border='0' cellspacing='0' cellpadding='0'>
         <tr>
           <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
@@ -346,22 +382,51 @@
         </tr>
       </table>
     </li>";
+			}else if($vals->sharedrole == 1){
+				$str .= "<li class='tablebg2'>
+      <table width='812' border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
+          <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Share'
+></a></span></td>
+          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+></a></span></td>
+          <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
+></a></span></td>
+          <td width='58'><span class='table5'><a  onclick='editActivity(".$vals->serviceid.")' cursor:pointer; title='Edit'
+></a></span></td>
+           <td width='59'><span class='table6img'></span></td>
+        </tr>
+      </table>
+    </li>";
+			}else if($vals->sharedrole == 2){
+				$str .= "<li class='tablebg2'>
+      <table width='812' border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+          <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
+          <td width='58'><span class='table2img'></span></td>
+          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+></a></span></td>
+          <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
+></a></span></td>
+          <td width='58'><span class='table5img'></span></td>
+    <td width='59'><span class='table6img'></span></td>
+        </tr>
+      </table>
+    </li>";
+			}
+		}
 			$i++;
 			}
 		}else $str.="<li class='tablebg2'>
       <table width='812' border='0' cellspacing='0' cellpadding='0'>
         <tr>
           <td width='521'><span class='table1'>No activities found.</span></td>
-          <td width='58'><span class='table2'><a  style='cursor:pointer;' title='Share'
-></a></span></td>
-          <td width='58'><span class='table3'><a  style='cursor:pointer;' title='Schedules'
-></a></span></td>
-          <td width='58'><span class='table4'><a style='cursor:pointer;' title='View'
-></a></span></td>
-          <td width='58'><span class='table5'><a style='cursor:pointer;' title='Edit'
-></a></span></td>
-          <td width='58'><span class='table6'><a style='cursor:pointer;' title='Delete'
-></a></span></td>
+           <td width='58'><span class='table2img'></span></td>
+          <td width='58'><span class='table3img'></span></td>
+         <td width='58'><span class='table4img'></span></td>
+    <td width='58'><span class='table5img'></span></td>
+    <td width='59'><span class='table6img'></span></td>
         </tr>
       </table>
     </li>";

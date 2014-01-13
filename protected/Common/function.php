@@ -398,29 +398,18 @@ return $timezones;
 
 function getPartTimezones(){
 	$timezones = array(
-		'-11'             => "(GMT-11:00) Samoa",
-		'-10'            => "(GMT-10:00) Hawaii",
-		'-9'            => "(GMT-09:00) Alaska",
-		'-8'           => "(GMT-08:00) Pacific Time (US &amp; Canada)",
-		'-8'      => "(GMT-08:00) Tijuana",
-		'-7'           => "(GMT-07:00) Arizona",
-		'-7'          => "(GMT-07:00) Mountain Time (US &amp; Canada)",
-		'-7'    => "(GMT-07:00) Chihuahua",
-		'-7'     => "(GMT-07:00) Mazatlan",
-		'-6'  => "(GMT-06:00) Mexico City",
-		'-6'    => "(GMT-06:00) Monterrey",
-		'-6'  => "(GMT-06:00) Saskatchewan",
-		'-6'           => "(GMT-06:00) Central Time (US &amp; Canada)",
-		'-5'           => "(GMT-05:00) Eastern Time (US &amp; Canada)",
-		'-5'      => "(GMT-05:00) Indiana (East)",
-		'-5'       => "(GMT-05:00) Bogota",
-		'-5'         => "(GMT-05:00) Lima",
-		'-4.5'      => "(GMT-04:30) Caracas",
-		'-4'      => "(GMT-04:00) Atlantic Time (Canada)",
-		'-4'       => "(GMT-04:00) La Paz",
-		'-4'     => "(GMT-04:00) Santiago",
-		'-3.5'  => "(GMT-03:30) Newfoundland",
-		'-3' => "(GMT-03:00) Buenos Aires",
+		'-11'             => "US/Samoa",
+		'-10'            => "US/Hawaii",
+		'-9'            => "US/Alaska",
+		'-8'           => "US/Pacific",
+		'-7'          => "US/Arizona &amp; US/Mountain",
+		'-6'  => "US/Central",
+		'-5'           => "US/Eastern &amp; US/East-Indiana",
+		
+		'-4'      => "Canada/Atlantic",
+		
+		'-3.5'  => "Canada/Newfoundland",
+		
 	);
 	return $timezones;
 }

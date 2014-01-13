@@ -238,17 +238,17 @@ onclick='deleteContact(".$member_vals->memberid.")'></a></span></td>
 </div>
 
 <div class="main9three" id="createfromemail" style="display:none">
-  <table width="566" border="0" cellspacing="0" cellpadding="0">
+  <table width="620" border="0" cellspacing="0" cellpadding="0">
   
   <tr>
-        <td width="146" ></td>
-        <td width="213" align="center"><span class="wrong" id='notice3'></span></td>
-        <td width="207">&nbsp;</td>
+        <td width="197" ></td>
+        <td width="200" align="center"><span class="wrong" id='notice3'></span></td>
+        <td width="223">&nbsp;</td>
   </tr>
   
     <tr>
-      <td width="173" height="51">Choose your emali sever <span><img src="./images/bg_100.png"></span></td>
-      <td width="208" height="52"><form id="form2" name="form2" method="post" action="">
+      <td width="197" height="52">Choose your email server <span><img src="./images/bg_100.png"></span></td>
+      <td width="200" height="52"><form id="form2" name="form2" method="post" action="">
         <label>
           <select name="select" class="conwen3" id='emailserver' onchange='changeEmail()'>
             <option name="emailserver" value='gmail' >Gmail</option>
@@ -256,7 +256,7 @@ onclick='deleteContact(".$member_vals->memberid.")'></a></span></td>
           </select>
           </label>
       </form></td>
-      <td width="219">&nbsp;</td>
+      <td width="223">&nbsp;</td>
     </tr>
     <tr>
       <td height="52">Email Name <span><img src="./images/bg_100.png"></span></td>
@@ -268,6 +268,11 @@ onclick='deleteContact(".$member_vals->memberid.")'></a></span></td>
       <td><input type="password" class="conwen1" placeholder="Password" id="psw"></td>
       <td><span class="wrong">We do not remember your password</span></td>
     </tr>
+	
+	<tr>
+        <td colspan="3" class="font1" style="font-weight:bold;"><hr>For a Gmail account, please first follow the instructions described in <a target="_blank" href="https://support.google.com/mail/answer/14257?p=client_login&rd=1" style="color:red">the following link</a>, then come to this page to import contacts.<hr></td>
+      </tr>
+	  
     <tr>
       <td>&nbsp;</td>
       <td height="52"><input type="button" class="conbu6" onclick='getMailContacts()'></td>

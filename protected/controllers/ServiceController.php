@@ -176,6 +176,7 @@ class ServiceController extends Controller
 				$addservice->enddatetime = $real_end;
 				$addservice->alert = $_POST['alerts'];
 				$addservice->utcoff = $_POST['timezone']*3600;
+				$addservice->sharedrole = 0;
 				array_push($myservices,$addservice);
 				Yii::app()->cache->set($ownerid.'_myservices',$myservices,CACHETIME);
 				echo 'ok';
@@ -549,6 +550,174 @@ class ServiceController extends Controller
 		}
 			
 	}
+	
+	
+	/*public function actionGetSharedMembers(){
+		$ownerid = $_SESSION['ownerid'];
+		
+		if(isset($_POST['activityid'])){
+			$serviceid = $_POST['activityid'];
+			
+			$sharedMembers = array();
+			$sharedMemberIds = array();
+			
+			//sharemembers cache
+			$cache_sharedMembers = Yii::app()->cache->get($serviceid.'_sharedmembers');
+			// print_r($cache_sharedMembers);exit;
+			
+			if($cache_sharedMembers === array() || $cache_sharedMembers){
+				//sharedmembers 所有的信息
+				$sharedmems = $cache_sharedMembers;
+				
+				foreach($cache_sharedMembers as $cache_sharedMembers_vals){
+					$sharedMembers[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->sharedrole;
+					array_push($sharedMemberIds,$cache_sharedMembers_vals->memberid);
+					
+					if($cache_sharedMembers_vals->sharedrole == 0){
+						$creator = $cache_sharedMembers_vals->membername;
+						$creatoremail = $cache_sharedMembers_vals->memberemail;
+						$creator_memberid = $cache_sharedMembers_vals->memberid;
+					}
+				}
+			}else{
+				$lastupdatetime = '0000-00-00 00:00:00';
+				$arr = array(
+					'ownerid'=>$ownerid,
+					'lastupdatetime'=>$lastupdatetime
+				);
+				$result = $this->rest()->getResponse('services/'.$serviceid.'/sharedmembers','get',$arr);
+			
+				if($result['code'] == 200){
+					$sharedmembers_result = json_decode($result['response'])->sharedmembers;
+					// dump($sharedmembers_result);exit;
+					
+					if($sharedmembers_result){
+					
+						$sharedmems = $sharedmembers_result;
+						foreach($sharedmembers_result as $key2=>$vals){
+							$sharedMembers[$vals->memberid] = $vals->sharedrole;
+							array_push($sharedMemberIds,$vals->memberid);
+							
+							if($vals->sharedrole == 0){
+								$creator = $vals->membername;
+								$creatoremail = $vals->memberemail;
+								$creator_memberid = $vals->memberid;
+							}
+						}
+					}
+					Yii::app()->cache->set($serviceid.'_sharedmembers',$sharedmembers_result,CACHETIME);
+				}
+			}
+			
+			// dump($sharedmems);exit;
+			
+			$cache_mymembers = Yii::app()->cache->get($ownerid."_mymembers");
+			$memberids = array();
+			if($cache_mymembers === array() || $cache_mymembers){
+				$members = $cache_mymembers;
+			}else{
+				$arr = array(
+					'ownerid'=>$ownerid,
+					'lastupdatetime'=>'00-00-00 00:00:00'
+				);
+				$result = $this->rest()->getResponse('members','get',$arr);
+				if($result['code'] == 200){
+					$members = json_decode($result['response'])->members;
+					Yii::app()->cache->set($ownerid."_mymembers",$members,CACHETIME);
+				}else{
+					//do something.
+					$members = array();
+				}
+			}
+			
+			if($members){
+				foreach($members as $member_v){
+					array_push($memberids,$member_v->memberid);
+				} 
+			}
+			
+			$sharedmembers_str = "";
+			if($sharedmems){							
+				if(substr($creator_memberid,0,-4) == $ownerid){
+					foreach($sharedmems as $sharedmems_vals){
+						if($sharedmems_vals->sharedrole == 0){
+							$sharedmembers_str .= "<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='35'>&nbsp;</td>
+    <td width='154' height='33'>".$sharedmems_vals->membername."</td>
+    <td width='222'>".$sharedmems_vals->memberemail."</td>
+    <td width='116'>Creator</td>
+  </tr>
+</table>
+</li>
+<li class='sharebg7'></li>";
+						}else{
+							$sharedmembers_str .= "<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='35'>&nbsp;</td>
+    <td width='154' height='33' id='name_".$sharedmems_vals->memberid."'>".$sharedmems_vals->membername."</td>
+    <td width='222' id='email_".$sharedmems_vals->memberid."'>".$sharedmems_vals->memberemail."</td>
+    <td width='116'><select  id=".$sharedmems_vals->memberid." name = 'selectdMembers' onchange=\"changerole('".$sharedmems_vals->memberid."')\"><option value='-1'>No share</option><option value ='2' ".(($sharedmems_vals->sharedrole == 2)?'selected':'').">Participant</option><option value ='1' ".(($sharedmems_vals->sharedrole == 1)?'selected':'').">Organizer</option></select></td>
+  </tr>
+</table>
+</li>
+<li class='sharebg7'></li>";
+
+						$sharedmembers_str .= "<input type='hidden' name='o_share' id='oshare_".$sharedmems_vals->memberid."' value='".$sharedmems_vals->sharedrole."'>";
+						$sharedmembers_str .= "<input type='hidden' name='n_share' id='nshare_".$sharedmems_vals->memberid."' value='".$sharedmems_vals->sharedrole."'>";	
+						}
+					}
+				}else{
+					foreach($sharedmems as $sharedmems_vals){
+						$sharedmembers_str .= "<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='35'>&nbsp;</td>
+    <td width='154' height='33'>".$sharedmems_vals->membername."</td>
+    <td width='222'>".$sharedmems_vals->memberemail."</td>";
+	
+						if(in_array($sharedmems_vals->memberid,$memberids)){
+							$sharedmembers_str .="<td width='116'><select  id=".$sharedmems_vals->memberid." name = 'selectdMembers' onchange=\"changerole('".$sharedmems_vals->memberid."')\"><option value='-1'>No share</option><option value ='2' ".(($sharedmems_vals->sharedrole == 2)?'selected':'').">Participant</option><option value ='1' ".(($sharedmems_vals->sharedrole == 1)?'selected':'').">Organizer</option></select></td>";
+							$sharedmembers_str .= "<input type='hidden' name='o_share' id='oshare_".$sharedmems_vals->memberid."' value='".$sharedmems_vals->sharedrole."'>";
+							$sharedmembers_str .= "<input type='hidden' name='n_share' id='nshare_".$sharedmems_vals->memberid."' value='".$sharedmems_vals->sharedrole."'>";	
+						}else{
+							if($sharedmems_vals->sharedrole == 0){
+								$sharedmembers_str .= "<td width='116'>Creator</td>";
+							}else if($sharedmems_vals->sharedrole == 1){
+								$sharedmembers_str .= "<td width='116'>Organizer</td>";
+							}else if($sharedmems_vals->sharedrole == 2){
+								$sharedmembers_str .= "<td width='116'>Participant</td>";
+							}
+						}
+						
+						$sharedmembers_str .="</tr></table></li><li class='sharebg7'></li>";
+						}
+					} 
+				
+				}
+			
+		if($members){
+			foreach($members as $membersvals){
+				if(!in_array($membersvals->memberid,$sharedMemberIds)){
+					$sharedmembers_str .= "<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='35'>&nbsp;</td>
+    <td width='154' height='33' id='name_".$membersvals->memberid."'>".$membersvals->membername."</td>
+    <td width='222' id='email_".$membersvals->memberid."'>".$membersvals->memberemail."</td>
+    <td width='116'><select  id=".$membersvals->memberid." name = 'selectdMembers' onchange=\"changerole('".$membersvals->memberid."')\"><option value='-1'>No share</option><option value ='2'>Participant</option><option value ='1'>Organizer</option></select></td>
+  </tr>
+</table>
+</li>
+<li class='sharebg7'></li>";
+					$sharedmembers_str .= "<input type='hidden' name='o_share' id='oshare_".$membersvals->memberid."' value='-1'>";
+						$sharedmembers_str .= "<input type='hidden' name='n_share' id='nshare_".$membersvals->memberid."' value='-1'>";
+				}				
+			}
+		}	
+		
+			echo $sharedmembers_str;
+	}
+			
+}*/
 
 	/*
 	* add one member to the shared member list

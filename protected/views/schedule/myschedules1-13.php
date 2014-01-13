@@ -75,7 +75,7 @@ echo $hidden_timezone;
     <td height="46"><span class="fontsize1">TimeZone</span></td>
     <td>&nbsp;</td>
     <td><select id='viewtimezone' class="cname4" disabled>
-	  <option value='-11'>(GMT-11:00) Samoa</option><option value='-10'>(GMT-10:00) Hawaii</option><option value='-9'>(GMT-09:00) Alaska</option><option value='-8'>(GMT-08:00) Tijuana</option><option value='-7'>(GMT-07:00) Mazatlan</option><option value='-6'>(GMT-06:00) Central Time (US &amp; Canada)</option><option value='-5'>(GMT-05:00) Lima</option><option value='-4.5'>(GMT-04:30) Caracas</option><option value='-4'>(GMT-04:00) Santiago</option><option value='-3.5'>(GMT-03:30) Newfoundland</option><option value='-3'>(GMT-03:00) Buenos Aires</option>
+	  <option value='-11'>US/Samoa</option><option value='-10'>US/Hawaii</option><option value='-9'>US/Alaska</option><option value='-8'>US/Pacific</option><option value='-7'>US/Arizona &amp; US/Mountain</option><option value='-6'>US/Central</option><option value='-5'>US/Eastern &amp; US/East-Indiana</option><option value='-4'>Canada/Atlantic</option><option value='-3.5'>Canada/Newfoundland</option>
 	  
 	  </select></td>
     <td>&nbsp;</td>
@@ -121,7 +121,7 @@ echo $hidden_timezone;
   </tr>
 </table>
 </div>
-  <div class="main10buttom"> </div>
+<div class="main10buttom"> </div>
 </div> 
 <!-- view schedule popup end-->
 
@@ -187,7 +187,7 @@ if($member){
     <td height="46" width="89"><span class="fontsize1">Timezone</span><span><img src="./images/bg_100.png" /></span></td>
     <td>&nbsp;</td>
     <td><select id='edittimezone' class="cname4" disabled>
-	  <option value='-11'>(GMT-11:00) Samoa</option><option value='-10'>(GMT-10:00) Hawaii</option><option value='-9'>(GMT-09:00) Alaska</option><option value='-8'>(GMT-08:00) Tijuana</option><option value='-7'>(GMT-07:00) Mazatlan</option><option value='-6'>(GMT-06:00) Central Time (US &amp; Canada)</option><option value='-5'>(GMT-05:00) Lima</option><option value='-4.5'>(GMT-04:30) Caracas</option><option value='-4'>(GMT-04:00) Santiago</option><option value='-3.5'>(GMT-03:30) Newfoundland</option><option value='-3'>(GMT-03:00) Buenos Aires</option>
+	  <option value='-11'>US/Samoa</option><option value='-10'>US/Hawaii</option><option value='-9'>US/Alaska</option><option value='-8'>US/Pacific</option><option value='-7'>US/Arizona &amp; US/Mountain</option><option value='-6'>US/Central</option><option value='-5'>US/Eastern &amp; US/East-Indiana</option><option value='-4'>Canada/Atlantic</option><option value='-3.5'>Canada/Newfoundland</option>
 	  
 	  </select></td>
     <td>&nbsp;</td>
@@ -273,7 +273,15 @@ if($member){
 	<div class="loadingWord"><img src="./images/waiting.gif">Please Wait...</div>
 </div>
 <!-- js loading end-->
-<a href="<?php echo Yii::app()->createUrl('Schedule/Create');?>"><input type="button" class="mname4"></a></div>
+
+<?php 
+	if(in_array(0,$servicerole) || in_array(1,$servicerole)){
+		echo "<a href='".Yii::app()->createUrl('Schedule/Create')."'><input type='button' class='mname4'></a>";
+	}
+?>
+</div>
+
+
 <div class="filter"><form name='filterform' action="<?php echo Yii::app()->createUrl('Schedule/admin');?>" method='post'><table width="934" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="48"><span class="fontweight">Activity</span></td>
@@ -333,14 +341,15 @@ if($member){
 				
 				if(explode(",",$schedules_vals->members)){
 					foreach(explode(",",$schedules_vals->members) as $members_vals){
-						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$member[$members_vals]."</span><br>";
+						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$sharedList[$members_vals]."</span><br>";
 						$mem .= "_".$members_vals;
 					}
 				}
 				
 				if($schedules_vals->serviceid == $activityname){
 					if($m < $count){
-						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+						if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -351,7 +360,7 @@ if($member){
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
     <td width='58'><span class='table4'><a cursor:pointer; title='view'
 onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"> </a></span></td>
-    <td width='58'><span class='table5'><a  cursor:pointer; title=' Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table5'><a  cursor:pointer; title='Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 ></a></span></td>
     <td width='59'><span class='table6'><a href='#' onclick='deleteSchedule(".$schedules_vals->scheduleid.")' cursor:pointer; title='Delete'
 ></a></span></td>
@@ -359,8 +368,28 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
  <li class='cutoff2'> </li>";
+						}else if($servicerole[$schedules_vals->serviceid] == 2){
+							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
+    <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
+    <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
+".$startdate[1]."</td>
+    <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
+".$enddate[1]."</td>
+    <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
+    <td width='58'><span class='table4'><a cursor:pointer; title='view'
+onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"> </a></span></td>
+    <td width='58'><span class='table5img'></span></td>
+    <td width='59'><span class='table6img'></span></td>
+  </tr>
+</table>
+</li>
+ <li class='cutoff2'> </li>";
+						}
 					}else{
-						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+						if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -379,6 +408,25 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
 <li class='cutoff3'></li>";
+						}else if($servicerole[$schedules_vals->serviceid] == 2){
+							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
+    <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
+    <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
+".$startdate[1]."</td>
+    <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
+".$enddate[1]."</td>
+    <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
+    <td width='58'><span class='table4'><a cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+> </a></span></td>
+   <td width='58'><span class='table5img'></span></td>
+    <td width='59'><span class='table6img'></span></td>
+  </tr>
+</table>
+</li>
+<li class='cutoff3'></li>";
+						}
 					}
 					$m++;
 				}
@@ -423,7 +471,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				
 				if(explode(",",$schedules_vals->members)){
 					foreach(explode(",",$schedules_vals->members) as $members_vals){
-						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$member[$members_vals]."</span><br>";
+						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$sharedList[$members_vals]."</span><br>";
 						$mem .= "_".$members_vals;
 					}
 				}
@@ -447,7 +495,8 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				}
 				if($time_condition && $activity_condition && $participant_condition){
 					if($i < $count){
-						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+						if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -466,8 +515,29 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
  <li class='cutoff2'> </li>";
-					}else{
-						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+ }else if($servicerole[$schedules_vals->serviceid] == 2){
+	$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
+    <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
+    <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
+".$startdate[1]."</td>
+    <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
+".$enddate[1]."</td>
+    <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
+    <td width='58'><span class='table4'><a cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+> </a></span></td>
+    <td width='58'><span class='table5img'></span></td>
+    <td width='59'><span class='table6img'></span></td>
+  </tr>
+</table>
+</li>
+ <li class='cutoff2'> </li>";
+ }
+	}else{
+		if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+		
+		$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -486,6 +556,25 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
 <li class='cutoff3'></li>";
+		}else if($servicerole[$schedules_vals->serviceid] == 2){
+			$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
+    <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
+    <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
+".$startdate[1]."</td>
+    <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
+".$enddate[1]."</td>
+    <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
+    <td width='58'><span class='table4'><a  cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+> </a></span></td>
+    <td width='58'><span class='table5img'></span></td>
+    <td width='59'><span class='table6img'></span></td>
+  </tr>
+</table>
+</li>
+<li class='cutoff3'></li>";
+		}
 					}
 					$i++;
 				}else{
@@ -524,14 +613,15 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				$mem = '';
 				if(explode(",",$schedules_vals->members)){
 					foreach(explode(",",$schedules_vals->members) as $members_vals){
-						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$member[$members_vals]."</span><br>";
+						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$sharedList[$members_vals]."</span><br>";
 						// $member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$members_vals."</span><br>";
 						$mem .= "_".$members_vals;
 					}
 				}
 				
 				if($j < $count){
-					$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+					if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -550,8 +640,29 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
  <li class='cutoff2'> </li>";
+					}else if($servicerole[$schedules_vals->serviceid] == 2){
+						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
+    <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
+    <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
+".$startdate[1]."</td>
+    <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
+".$enddate[1]."</td>
+    <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
+    <td width='58'><span class='table4'><a cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+> </a></span></td>
+    <td width='58'><span class='table5img'></span></td>
+    <td width='59'><span class='table6img'></span></td>
+  </tr>
+</table>
+</li>
+ <li class='cutoff2'> </li>";
+					}
+					
 				}else{
-					$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+					if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -570,6 +681,25 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
 <li class='cutoff3'></li>";
+					}else if($servicerole[$schedules_vals->serviceid] == 2){
+						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
+    <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
+    <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
+".$startdate[1]."</td>
+    <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
+".$enddate[1]."</td>
+    <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
+    <td width='58'><span class='table4'><a  cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+> </a></span></td>
+    <td width='58'><span class='table5img'></span></td>
+    <td width='59'><span class='table6img'></span></td>
+  </tr>
+</table>
+</li>
+<li class='cutoff3'></li>";
+					}
 				}
 				$j++;
 			}
@@ -618,6 +748,7 @@ jQuery(document).ready(function() {
 
 var homeUrl;
 var homeUrl = "<?php echo Yii::app()->homeUrl;?>";
+var schedulesurl = "<?php echo Yii::app()->createUrl("Schedule/Admin");?>";
 function deleteSchedule(i){
 	<?php
 		echo CHtml::ajax(
@@ -633,8 +764,10 @@ function deleteSchedule(i){
 						}
 					}",
 					"success"=>"js:function(data){
+							// $(\".showbox\").stop(true).animate({'margin-top':'250px','opacity':'0'},400);
 							// if(data=='ok'){
-								history.go(0);
+								// history.go(0);
+								location.href = schedulesurl;
 							// }else{
 								// alert('Fail to delete the schedule.');
 							// }

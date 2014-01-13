@@ -83,6 +83,18 @@ class ScheduleController extends Controller
 					Yii::app()->cache->set($ownerid.'_myservices',$services,CACHETIME);
 				}else $services = array();
 			}
+			
+			$ownSharedRole = array();
+			if($services){
+				foreach($services as $servicevals){
+					if($servicevals->sharedrole == 0 || $servicevals->sharedrole == 1){
+						$ownSharedRole[$servicevals->serviceid] = $servicevals->sharedrole;
+					}
+				}
+			}
+			
+			$myownservices = array_keys($ownSharedRole);
+			// dump($myownservices);exit;
 
 			$cache_members = Yii::app()->cache->get($ownerid.'_mymembers');
 			if($cache_members === array() || $cache_members){
@@ -95,10 +107,12 @@ class ScheduleController extends Controller
 				}else $members = array();
 			}
 			
+			// dump($services);exit;
+			
 			$sharedList = array();
-			if($services){
-				$serviceid = $services[0]->serviceid;
-				
+			if($myownservices){
+				$serviceid = $myownservices[0];
+				// echo $serviceid;exit;
 				$cache_sharedMembers = Yii::app()->cache->get($serviceid.'_sharedmembers');
 				// $sharedList = array();
 				if($cache_sharedMembers === array() || $cache_sharedMembers){
@@ -128,6 +142,8 @@ class ScheduleController extends Controller
 				}
 			
 			}
+			
+			// dump($sharedList);
 			
 			$this->render('createschedule',array(
 				'services'=>$services,
@@ -204,6 +220,17 @@ class ScheduleController extends Controller
 		if(isLogin()){
 			$this->redirect(Yii::app()->createUrl('User/login'));
 		}else{
+			if(isset($_POST['submit'])){
+				$activityselected = $_POST['activityfilter'];
+				$participantselected = $_POST['participantfilter'];
+				$timeselected = $_POST['timeselectfilter'];
+			}else{
+				$activityselected = 'all';
+				$participantselected = 'all';
+				$timeselected = 0;
+			}
+		
+		
 			$ownerid = $_SESSION['ownerid'];
 			$lastupdatetime = '0000-00-00 00:00:00';
 			$arr = array(
@@ -226,12 +253,14 @@ class ScheduleController extends Controller
 			$cache_myservices = Yii::app()->cache->get($ownerid.'_myservices');
 			$service = array();
 			$timezones = array();
+			$servicerole = array();
 			if($cache_myservices === array() || $cache_myservices){
 				$services = $cache_myservices;
 				if($services){
 					foreach($services as $servicevals){
 						$service[$servicevals->serviceid] = $servicevals->servicename;
 						$timezones[$servicevals->serviceid] = $servicevals->utcoff;
+						$servicerole[$servicevals->serviceid] = $servicevals->sharedrole;
 					}
 				}
 			}else{
@@ -244,6 +273,7 @@ class ScheduleController extends Controller
 						foreach($services as $servicevals){
 							$service[$servicevals->serviceid] = $servicevals->servicename;
 							$timezones[$servicevals->serviceid] = $servicevals->utcoff;
+							$servicerole[$servicevals->serviceid] = $servicevals->sharedrole;
 						}
 					}
 				}
@@ -308,8 +338,8 @@ class ScheduleController extends Controller
 			}
 			$member[$ownerid.'0000'] = $_SESSION['username'];
 			
-			// dump($member);exit;
-
+			$mixed_members = $member+$sharedList;
+			
 			$cache_myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
 			$schedules = array();
 			if($cache_myschedules === array() || $cache_myschedules){
@@ -335,7 +365,12 @@ class ScheduleController extends Controller
 				'member'=>$member,
 				'members'=>$members,
 				'timezones'=>$timezones,
-				'sharedList'=>$sharedList
+				'sharedList'=>$sharedList,
+				'servicerole'=>$servicerole,
+				'activityselected'=>$activityselected,
+				'participantselected'=>$participantselected,
+				'timeselected'=>$timeselected,
+				'mixed_members'=>$mixed_members
 			));
 		}
 	}
@@ -957,7 +992,7 @@ class ScheduleController extends Controller
 					}
 				}
 			}
-			
+			// dump($sharedList);exit;
 			
 			$cache_mymembers = Yii::app()->cache->get($ownerid.'_mymembers');
 			$member = array();

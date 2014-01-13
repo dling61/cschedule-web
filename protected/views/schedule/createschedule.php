@@ -69,7 +69,9 @@ echo $timezones_str;
 			$activity_str = '';
 			if($services){
 				foreach($services as $activity_vals){
-					$activity_str .= "<option value ='".$activity_vals->serviceid."'>".$activity_vals->servicename."</option>";
+					if(in_array($activity_vals->sharedrole,array(0,1))){
+						$activity_str .= "<option value ='".$activity_vals->serviceid."'>".$activity_vals->servicename."</option>";
+					}
 				}
 			}
 			echo $activity_str;
