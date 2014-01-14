@@ -17,7 +17,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('ResetPw','view','create','update','delete','login','SetToken','Info','ResetPswRequest','verifyEmail','Reset','About','Help','Privacy','Contact','SubmitComments','SessionTimeout','Blog'),
+				'actions'=>array('ResetPw','view','create','update','delete','login','SetToken','Info','ResetPswRequest','verifyEmail','Reset','About','Help','Privacy','Contact','SubmitComments','SessionTimeout'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -193,18 +193,6 @@ class UserController extends Controller
 				echo "Busy network, try it later.";
 			}
 		}
-	}
-	
-	public function actionBlog(){
-		$request_url = 'http://cschedule.tumblr.com/api/read?start=0&num=1000';
-		$xml = simplexml_load_file($request_url);
-		$posts = $xml->xpath("/tumblr/posts/post"); 
-		
-		// foreach($posts as $post) {
-			// $date = $post['date'];
-			// $regular_body = $post->{'regular-body'};
-		// }
-		$this->render('blog',array('posts'=>$posts));
 	}
 	
 	

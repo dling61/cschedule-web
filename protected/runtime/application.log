@@ -6121,3 +6121,103 @@ Stack trace:
 #5 {main}
 REQUEST_URI=/index.php?r=Schedule/Admin]
 ---
+2014/01/13 23:47:16 [error] [exception.CException] exception 'CException' with message 'UserController cannot find the requested view "blog".' in /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php:878
+Stack trace:
+#0 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(782): CController->renderPartial('blog', Array, true)
+#1 /home/content/55/9936855/html/cscheduletest/protected/controllers/UserController.php(207): CController->render('blog', Array)
+#2 /home/content/55/9936855/html/cscheduletest/yii/framework/web/actions/CInlineAction.php(49): UserController->actionBlog()
+#3 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(282): CController->run('Blog')
+#7 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('User/Blog')
+#8 /home/content/55/9936855/html/cscheduletest/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#9 /home/content/55/9936855/html/cscheduletest/index.php(22): CApplication->run()
+#10 {main}
+REQUEST_URI=/index.php?r=User/Blog
+HTTP_REFERER=http://test.cschedule.com/
+---
+2014/01/13 23:48:02 [error] [exception.CException] exception 'CException' with message 'UserController cannot find the requested view "blog".' in /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php:878
+Stack trace:
+#0 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(782): CController->renderPartial('blog', Array, true)
+#1 /home/content/55/9936855/html/cscheduletest/protected/controllers/UserController.php(207): CController->render('blog', Array)
+#2 /home/content/55/9936855/html/cscheduletest/yii/framework/web/actions/CInlineAction.php(49): UserController->actionBlog()
+#3 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(282): CController->run('Blog')
+#7 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('User/Blog')
+#8 /home/content/55/9936855/html/cscheduletest/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#9 /home/content/55/9936855/html/cscheduletest/index.php(22): CApplication->run()
+#10 {main}
+REQUEST_URI=/index.php?r=User/Blog
+HTTP_REFERER=http://test.cschedule.com/
+---
+2014/01/13 23:48:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "Users/Blog".' in /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('Users/Blog')
+#1 /home/content/55/9936855/html/cscheduletest/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /home/content/55/9936855/html/cscheduletest/index.php(22): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=Users/Blog
+---
+2014/01/13 23:48:18 [error] [exception.CException] exception 'CException' with message 'UserController cannot find the requested view "blog".' in /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php:878
+Stack trace:
+#0 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(782): CController->renderPartial('blog', Array, true)
+#1 /home/content/55/9936855/html/cscheduletest/protected/controllers/UserController.php(207): CController->render('blog', Array)
+#2 /home/content/55/9936855/html/cscheduletest/yii/framework/web/actions/CInlineAction.php(49): UserController->actionBlog()
+#3 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(282): CController->run('Blog')
+#7 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('User/Blog')
+#8 /home/content/55/9936855/html/cscheduletest/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#9 /home/content/55/9936855/html/cscheduletest/index.php(22): CApplication->run()
+#10 {main}
+REQUEST_URI=/index.php?r=User/Blog
+---
+2014/01/13 23:48:41 [error] [exception.CException] exception 'CException' with message 'UserController cannot find the requested view "blog".' in /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php:878
+Stack trace:
+#0 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(782): CController->renderPartial('blog', Array, true)
+#1 /home/content/55/9936855/html/cscheduletest/protected/controllers/UserController.php(207): CController->render('blog', Array)
+#2 /home/content/55/9936855/html/cscheduletest/yii/framework/web/actions/CInlineAction.php(49): UserController->actionBlog()
+#3 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(282): CController->run('Blog')
+#7 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('User/Blog')
+#8 /home/content/55/9936855/html/cscheduletest/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#9 /home/content/55/9936855/html/cscheduletest/index.php(22): CApplication->run()
+#10 {main}
+REQUEST_URI=/index.php?r=User/Blog
+---
+2014/01/13 23:49:12 [error] [exception.CException] exception 'CException' with message 'UserController cannot find the requested view "blog".' in /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php:878
+Stack trace:
+#0 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(782): CController->renderPartial('blog', Array, true)
+#1 /home/content/55/9936855/html/cscheduletest/protected/controllers/UserController.php(207): CController->render('blog', Array)
+#2 /home/content/55/9936855/html/cscheduletest/yii/framework/web/actions/CInlineAction.php(49): UserController->actionBlog()
+#3 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(282): CController->run('Blog')
+#7 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('User/Blog')
+#8 /home/content/55/9936855/html/cscheduletest/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#9 /home/content/55/9936855/html/cscheduletest/index.php(22): CApplication->run()
+#10 {main}
+REQUEST_URI=/index.php?r=User/Blog
+---
+2014/01/13 23:49:15 [error] [exception.CException] exception 'CException' with message 'UserController cannot find the requested view "blog".' in /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php:878
+Stack trace:
+#0 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(782): CController->renderPartial('blog', Array, true)
+#1 /home/content/55/9936855/html/cscheduletest/protected/controllers/UserController.php(207): CController->render('blog', Array)
+#2 /home/content/55/9936855/html/cscheduletest/yii/framework/web/actions/CInlineAction.php(49): UserController->actionBlog()
+#3 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(282): CController->run('Blog')
+#7 /home/content/55/9936855/html/cscheduletest/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('User/Blog')
+#8 /home/content/55/9936855/html/cscheduletest/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#9 /home/content/55/9936855/html/cscheduletest/index.php(22): CApplication->run()
+#10 {main}
+REQUEST_URI=/index.php?r=User/Blog
+---

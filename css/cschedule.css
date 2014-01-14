@@ -168,7 +168,7 @@ img{border:none;}
 .top3{width:960px; background:url(../images/bg_87.png) no-repeat; height:87px; margin:auto;}
 .top3 a{width:448px; height:86px; display:block;}
 .main12{width:960px; margin:0 auto; margin-top:30px;}
-.main12font{font-size:18px; font-weight:600; text-decoration:line-through;}
+.main12font{font-size:18px; font-weight:600; }
 .main12font2{color:#5d5d5d;}
 .main12font3{ font-weight:600; color:#000000;}
 .main12button{background:url(../images/bg_88.png) no-repeat; width:72px; height:30px; border:none; cursor:pointer;}
