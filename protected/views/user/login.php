@@ -87,13 +87,13 @@ if(isset($_COOKIE['cschedule_user']) && $_COOKIE['cschedule_user']!=''){
 
 <div class="main">
   <dl class="back1">
-  <dt> <span class="weight fontcolor1">Create schedules for all</span></dt> <dd><span class="weight fontcolor1"> your activities.</span></dd>
+  <dt> <span class="weight fontcolor1">Create schedules for all</span></dt> <dd><span class="weight fontcolor1"> your group activities.</span></dd>
   </dl>
   <dl class="back2">
-  <dt> <span class="weight fontcolor1">Share schedules with friends</span></dt> <dd><span class="weight fontcolor1"></span></dd>
+  <dt> <span class="weight fontcolor1">Share schedules with your </span></dt> <dd><span class="weight fontcolor1">contacts.</span></dd>
   </dl>
   <dl class="back3">
-  <dt> <span class="weight fontcolor1">Get reminders on your</span></dt> <dd><span class="weight fontcolor1"> phone or email. </span></dd>
+  <dt> <span class="weight fontcolor1">Get reminders on your phone or</span></dt> <dd><span class="weight fontcolor1"> email about schedules. </span></dd>
   </dl>
 </div>	
 

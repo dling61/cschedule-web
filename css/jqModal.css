@@ -70,13 +70,16 @@ background:url(../images/bg_92.png) no-repeat;
 color:#5d5d5d;
 
 display: none;
-position: fixed;
-top:20%;
+/*position: fixed;*/
+position:absolute;
+/*top:20%;
 left:55%;
-margin-right: 0;
-margin-left:-450px;
+margin-left:-450px;*/
+top:50%;
+left:50%;
+margin-left: -322px;
+margin-top: -160px;
 overflow: visible;
-
 }
 
 .jqmWindowShareContacts{
@@ -84,13 +87,21 @@ width:591px;
 margin:0 auto;
 
 display: none;
+left:50%;
+position: absolute;
+margin-left: -300px;
+margin-top: auto;
+margin-bottom: auto;
+overflow: visible;
+
+/*display: none;
 position: fixed;
 top:20%;
 left:55%;
 margin-right: 0;
 margin-left:-450px;
 overflow: visible;
-
+*/
 }
 
 .jqmWindowEditContacts{
@@ -101,11 +112,11 @@ height:237px;
 padding-top:20px;
 
 display: none;
-position: fixed;
-top:30%;
-left:65%;
-margin-right: 0;
-margin-left:-450px;
+position: absolute;
+top:50%;
+left:50%;
+margin-left:-190px;
+margin-top:-150px;
 overflow: visible;
 
 }
@@ -120,11 +131,11 @@ margin:58px auto 60px auto;
 color:#5d5d5d;
 
 display: none;
-position: fixed;
-top:16%;
-left:62%;
-margin-right: 0;
-margin-left:-450px;
+position: absolute;
+top:50%;
+left:50%;
+margin-left:-230px;
+margin-top:-235px;
 overflow: visible;
 }
 
@@ -138,11 +149,11 @@ margin:58px auto 60px auto;
 color:#5d5d5d;
 
 display: none;
-position: fixed;
-top:16%;
-left:62%;
-margin-right: 0;
-margin-left:-450px;
+position: absolute;
+top:50%;
+left:50%;
+margin-left:-225px;
+margin-top:-240px;
 overflow: visible;
 }
 
@@ -151,11 +162,11 @@ width:721px;
 margin:50px auto 50px auto;
 
 display: none;
-position: fixed;
-top:16%;
+position: absolute;
 left:50%;
-margin-right: 0;
-margin-left:-450px;
+margin-left:-360px;
+margin-top:auto;
+margin-bottom:auto;
 overflow: visible;
 }
 
@@ -164,11 +175,11 @@ width:721px;
 margin:50px auto 50px auto;
 
 display: none;
-position: fixed;
-top:2%;
+position: absolute;
 left:50%;
-margin-right: 0;
-margin-left:-450px;
+margin-left:-360px;
+margin-top:auto;
+margin-bottom:auto;
 overflow: visible;
 }
 
