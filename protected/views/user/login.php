@@ -7,7 +7,7 @@
 <script type="text/javascript" src='<?php echo Yii::app()->baseUrl."/js/jquery.js";?>'></script>
 </head>
 
-<body>
+<body style="background-color:#FFFFFF;" >
 <?php
 
 if(isset($_COOKIE['cschedule_user']) && $_COOKIE['cschedule_user']!=''){
@@ -20,7 +20,9 @@ if(isset($_COOKIE['cschedule_user']) && $_COOKIE['cschedule_user']!=''){
 
 <div class="bigbg">
   <div class="top">
-    <div class="logo"><a href="#"><img src="images/bg_03.png" /></a><br/><div class="learn"><a href="#"><img src="images/bg_22.png" /></a></div></div>
+    <!--<div class="logo"><a href="#"><img src="images/bg_03.png" /></a><br/><div class="learn"><a href="#"><img src="images/bg_22.png" /></a></div></div>-->
+	
+	<div style="width:147px; height:40px; padding-top:201px; margin-top:10px; padding-left:355px; background:url(./images/temp.png) no-repeat; float:left;"></div>
 	
 	<!-- sign in form start-->
   <div class="log" id='signinform'><table width="254" border="0" cellspacing="0" cellpadding="0">
@@ -97,7 +99,26 @@ if(isset($_COOKIE['cschedule_user']) && $_COOKIE['cschedule_user']!=''){
   </dl>
 </div>	
 
-<?php include_once(dirname(dirname(__FILE__)).'/footer.php');?>
+<div class="footer" style="border-top:1px solid #dddddd; background:none;">
+  <ul>
+    <li><a href="<?php echo Yii::app()->createUrl('User/About');?>">About CSchedule</a> </li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</li>
+    <li><a href="<?php echo Yii::app()->createUrl('User/Help');?>">Help</a> </li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</li>
+    <li><a href="<?php echo Yii::app()->createUrl('User/Blog');?>">Blog</a></li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</li>
+    <li><a href="<?php echo Yii::app()->createUrl('User/Privacy');?>">Privacy</a></li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;Copyright&copy;
+      E2WSTUDY,LLC </li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/bg_14.png" />&nbsp;&nbsp;&nbsp;&nbsp;</li>
+    <li>
+      <input type="button" class="forapp" title="Coming soon">
+    </li>
+    <li>
+      <input type="button" class="foraid" title="Coming soon">
+    </li>
+  </ul>
+</div>
 
 </body>
 

@@ -13,10 +13,10 @@
       E2WSTUDY,LLC </li>
     <li>&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/bg_14.png" />&nbsp;&nbsp;&nbsp;&nbsp;</li>
     <li>
-      <input type="button" class="forapp">
+      <input type="button" class="forapp" title="Coming soon">
     </li>
     <li>
-      <input type="button" class="foraid">
+      <input type="button" class="foraid" title="Coming soon">
     </li>
   </ul>
 </div>
