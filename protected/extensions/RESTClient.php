@@ -8,7 +8,7 @@ class RESTClient extends CComponent
 	'Accept: application/json',
 	'Content-Type: application/json',
 	);
-	public $_url = "http://apitest2.servicescheduler.net/"; //server url
+	// public $_url = "http://apitest2.servicescheduler.net/"; //server url
 	
 	public function getResponse($url,$method,$info = NULL,$ownerid=NULL,$type=false){
 		$param = array(
@@ -37,7 +37,8 @@ class RESTClient extends CComponent
 		// echo $this->_url.$url;exit;
 		$headers = $this->_headers;
 		$handle = curl_init();
-		curl_setopt($handle, CURLOPT_URL, $this->_url.$url);
+		// curl_setopt($handle, CURLOPT_URL, $this->_url.$url);
+		curl_setopt($handle, CURLOPT_URL, SERVERURL.$url);
 		curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
