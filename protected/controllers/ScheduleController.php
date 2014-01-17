@@ -1060,9 +1060,15 @@ class ScheduleController extends Controller
 			$serviceid = $_POST['activity'];
 			$scheduleid = $_POST['schedule'];
 			$desp = $_POST['desp'];
-			$start = $_POST['start'].':00';
-			$end = $_POST['end'].':00';
+			// $start = $_POST['start'].':00';
+			// $end = $_POST['end'].':00';
 			$members = explode(",",$_POST['onduty']);
+			
+			$timezone = $_POST['timezone'];
+			
+			$start = date('Y-m-d H:i:s',(strtotime($_POST['start'])-($_POST['timezone']*3600)));
+			$end = date('Y-m-d H:i:s',(strtotime($_POST['end'])-($_POST['timezone']*3600)));
+			
 			
 			$arr = array(
 				'ownerid'=>$ownerid,

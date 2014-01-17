@@ -193,12 +193,16 @@ class ServiceController extends Controller
 		if(isset($_POST)){
 			$ownerid = $_SESSION['ownerid'];
 			$id = $_POST['id'];
-			$start = $_POST['start'].":00";
-			$end = $_POST['end'].":00";
+			// $start = $_POST['start'].":00";
+			// $end = $_POST['end'].":00";
 			$desp = $_POST['desp'];
 			$repeat = $_POST['repeat'];
 			$alerts = $_POST['alerts'];
 			$name = $_POST['name'];
+			
+			
+			$start = date('Y-m-d H:i:s',(strtotime($_POST['start'])-($_POST['timezone']*3600)));
+			$end = date('Y-m-d H:i:s',(strtotime($_POST['end'])-($_POST['timezone']*3600)));
 			
 			$arr = array(
 				'ownerid'=>$ownerid,

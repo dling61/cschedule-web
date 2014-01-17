@@ -612,7 +612,7 @@ function addNewContact(){
 							
 							$(\"<input type='hidden' name='o_share' id='oshare_\"+obj.id+\"' value='-1' >\").appendTo('#newadded_share');
 							$(\"<input type='hidden' name='n_share' id='nshare_\"+obj.id+\"' value='-1' >\").appendTo('#newadded_share');	
-							$(\"<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'><tr><td width='35'>&nbsp;</td><td width='154' height='33' id='name_\"+obj.id+\"'>\"+name+\"</td><td width='222' id='email_\"+obj.id+\"'>\"+email+\"</td><td width='116'><select  id='\"+obj.id+\"' name = 'selectdMembers' onchange='changerole(\"+obj.id+\")'><option value='-1'>Unshare</option><option value ='2'>Participant</option><option value ='1'>Organizer</option></select></td></tr></table></li>\").appendTo('#shareloading');
+							$(\"<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'><tr><td width='35'>&nbsp;</td><td width='154' height='33' id='name_\"+obj.id+\"'>\"+name+\"</td><td width='222' id='email_\"+obj.id+\"'>\"+email+\"</td><td width='116'><select  id='\"+obj.id+\"' name = 'selectdMembers' onchange='changerole(\"+obj.id+\")'><option value='-1'>Noshare</option><option value ='2'>Participant</option><option value ='1'>Organizer</option></select></td></tr></table></li>\").appendTo('#shareloading');
 							
 							$('#email').val('');
 							$('#name').val('');
@@ -808,6 +808,7 @@ function saveActivity(){
 	var desp = document.getElementById('editdesp').value; 
 	var repeat = document.getElementById('editrepeat').value;
 	var alerts = document.getElementById('editalert').value;
+	var timezone = document.getElementById('edittimezone').value;
 	
 
 	if(activity == ''){
@@ -851,7 +852,7 @@ function saveActivity(){
 	<?php
 		echo CHtml::ajax(array(
 			"url" => CController::createUrl("Service/Update"),
-			"data" => "js:{id : id, name : activity, start : starttime, end : endtime, desp : desp, repeat : repeat, alerts : alerts}",
+			"data" => "js:{id : id, name : activity, start : starttime, end : endtime, desp : desp, repeat : repeat, alerts : alerts,timezone:timezone}",
 			"type"=>"POST",
 			'beforeSend'=>"js:function(){
 				$(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);

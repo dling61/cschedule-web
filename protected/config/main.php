@@ -51,12 +51,12 @@ return array(
               // ),
           // ),
 		 
-		'session'=>array(
-			'timeout'=>10,
-			'cookieparams'=>array(
-				'lifetime'=>10
-			)
-		),	
+		// 'session'=>array(
+			// 'timeout'=>10,
+			// 'cookieparams'=>array(
+				// 'lifetime'=>10
+			// )
+		// ),	
 		
 		'cache'=>array(
 			//cache files are in the runtime folder
@@ -139,6 +139,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
-		'sessionTimeoutSeconds'=>1200, 
+		'sessionTimeoutSeconds'=>3600, 
 	),
 );

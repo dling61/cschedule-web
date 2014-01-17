@@ -14,7 +14,7 @@
 $str = "";
 if($posts){
 	foreach($posts as $vals){
-		$str .= "<p class='size4'>".$vals['date']."</p><p>".$vals->{'regular-body'}."</p><hr>";
+		$str .= "<p style='font-size:16px;'>".$vals['date']."</p><p>".$vals->{'regular-body'}."</p><hr>";
 	}
 	echo substr($str,0,-4);
 }

@@ -1007,6 +1007,7 @@ function submitSchedule(){
 		var start = $('#editstart').val();
 		var end = $('#editend').val();
 		var desp = $('#editdesp').val();	
+		var timezone = $('#edittimezone').val();
 		
 		var schedule = $("#hidschedule").val();
 
@@ -1064,7 +1065,7 @@ function submitSchedule(){
 			echo CHtml::ajax(
 				array(
 					"url" => CController::createUrl("Schedule/EditSchedule"),
-					"data" => "js:{schedule:schedule,activity:activity,start:start,end:end,desp:desp,onduty:onduty}",
+					"data" => "js:{schedule:schedule,activity:activity,start:start,end:end,desp:desp,onduty:onduty,timezone:timezone}",
 					"type"=>"POST",
 					'beforeSend'=>"js:function(){	
 						$(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);	
