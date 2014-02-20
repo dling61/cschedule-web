@@ -280,13 +280,18 @@ class ScheduleController extends Controller
 			}
 			
 			$sharedList = array();
+			$emails = array();
+			$phones = array();
 			if($service){
 				foreach($service as $service_key=>$service_vals){
 				
 					$cache_sharedMembers = Yii::app()->cache->get($service_key.'_sharedmembers');
 					if($cache_sharedMembers === array() || $cache_sharedMembers){
+						// dump($cache_sharedMembers);exit;
 						foreach($cache_sharedMembers as $cache_sharedMembers_vals){
 							$sharedList[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->membername;
+							$emails[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->memberemail;
+							$phones[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->mobilenumber;
 						}
 					}else{
 						$lastupdatetime = '0000-00-00 00:00:00';
@@ -299,11 +304,13 @@ class ScheduleController extends Controller
 						if($result['code'] == 200){
 							$sharedmembers_result = json_decode($result['response'])->sharedmembers;
 						
-							//dump($sharedmembers_result);exit;
+							// dump($sharedmembers_result);exit;
 						
 							if($sharedmembers_result){
 								foreach($sharedmembers_result as $sharedmembers_result_vals){
 									$sharedList[$sharedmembers_result_vals->memberid] = $sharedmembers_result_vals->membername;
+									$emails[$sharedmembers_result_vals->memberid] = $sharedmembers_result_vals->memberemail;
+									$phones[$sharedmembers_result_vals->memberid] = $sharedmembers_result_vals->mobilenumber;
 								}						
 							}
 						}
@@ -370,7 +377,9 @@ class ScheduleController extends Controller
 				'activityselected'=>$activityselected,
 				'participantselected'=>$participantselected,
 				'timeselected'=>$timeselected,
-				'mixed_members'=>$mixed_members
+				'mixed_members'=>$mixed_members,
+				'emails'=>$emails,
+				'phones'=>$phones
 			));
 		}
 	}
