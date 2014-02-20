@@ -341,7 +341,10 @@ if($mixed_members){
 				
 				if(explode(",",$schedules_vals->members)){
 					foreach(explode(",",$schedules_vals->members) as $members_vals){
-						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$sharedList[$members_vals]."</span><br>";
+						// $member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$sharedList[$members_vals]."</span><br>";
+						
+						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."' title='Name: ".$sharedList[$members_vals]."\nEmail: ".$emails[$members_vals]."\nPhone: ".$phones[$members_vals]."'>".$sharedList[$members_vals]."</span><br>";
+						
 						$mem .= "_".$members_vals;
 					}
 				}
@@ -349,7 +352,7 @@ if($mixed_members){
 				if($schedules_vals->serviceid == $activityname){
 					if($m < $count){
 						if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
-							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -369,7 +372,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </li>
  <li class='cutoff2'> </li>";
 						}else if($servicerole[$schedules_vals->serviceid] == 2){
-							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -389,7 +392,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 						}
 					}else{
 						if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
-							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -409,7 +412,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </li>
 <li class='cutoff3'></li>";
 						}else if($servicerole[$schedules_vals->serviceid] == 2){
-							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -471,7 +474,10 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				
 				if(explode(",",$schedules_vals->members)){
 					foreach(explode(",",$schedules_vals->members) as $members_vals){
-						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$sharedList[$members_vals]."</span><br>";
+						// $member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$sharedList[$members_vals]."</span><br>";
+						
+						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."' title='Name: ".$sharedList[$members_vals]."\nEmail: ".$emails[$members_vals]."\nPhone: ".$phones[$members_vals]."'>".$sharedList[$members_vals]."</span><br>";
+						
 						$mem .= "_".$members_vals;
 					}
 				}
@@ -496,7 +502,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				if($time_condition && $activity_condition && $participant_condition){
 					if($i < $count){
 						if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
-							$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -516,7 +522,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </li>
  <li class='cutoff2'> </li>";
  }else if($servicerole[$schedules_vals->serviceid] == 2){
-	$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+	$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -537,7 +543,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 	}else{
 		if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
 		
-		$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+		$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -557,7 +563,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </li>
 <li class='cutoff3'></li>";
 		}else if($servicerole[$schedules_vals->serviceid] == 2){
-			$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+			$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -617,7 +623,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				$mem = '';
 				if(explode(",",$schedules_vals->members)){
 					foreach(explode(",",$schedules_vals->members) as $members_vals){
-						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$sharedList[$members_vals]."</span><br>";
+						$member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."' title='Name: ".$sharedList[$members_vals]."\nEmail: ".$emails[$members_vals]."\nPhone: ".$phones[$members_vals]."'>".$sharedList[$members_vals]."</span><br>";
 						// $member_str .= "<span name='membersid_".$schedules_vals->scheduleid."' id='".$schedules_vals->scheduleid.'_'.$members_vals."'>".$members_vals."</span><br>";
 						$mem .= "_".$members_vals;
 					}
@@ -625,7 +631,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				
 				if($j < $count){
 					if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
-						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+						$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -645,7 +651,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </li>
  <li class='cutoff2'> </li>";
 					}else if($servicerole[$schedules_vals->serviceid] == 2){
-						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+						$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -666,7 +672,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 					
 				}else{
 					if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
-						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+						$schedule_str .= "<li class='tablebg3' id='end'><table id='".$schedules_vals->scheduleid."' width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -686,7 +692,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </li>
 <li class='cutoff3'></li>";
 					}else if($servicerole[$schedules_vals->serviceid] == 2){
-						$schedule_str .= "<li class='tablebg3'><table width='951' border='0' cellspacing='0' cellpadding='0'>
+						$schedule_str .= "<li class='tablebg3' id='end'><table id='".$schedules_vals->scheduleid."' width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
@@ -1072,16 +1078,21 @@ function submitSchedule(){
 					}",
 					"success"=>"js:function(data){
 					// console.info(data);
-						$(\".showbox\").stop(true).animate({'margin-top':'250px','opacity':'0'},400);
+						
 						if(data == 'ajaxsessionout'){
 							location.href = homeUrl;
 							return;
 						}
 						if(data=='ok'){
-							location.href=url;
+							// $(\"#editschedulepopup\").jqmHide();
+							// window.location.reload();
+							location.href = url;
+							// location.href = url+'#'+schedule;
 						}else{
 							document.getElementById('error1').innerHTML = '<font color = \'red\'>'+data+'</font>'
 						}
+						
+						$(\".showbox\").stop(true).animate({'margin-top':'250px','opacity':'0'},400);
 						// alert(data);
 					}",
 				)
