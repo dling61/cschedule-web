@@ -4,9 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>My schedules</title>
 <link href="./css/cschedule.css" rel="stylesheet" type="text/css" />
-<script src="./datepicker/WdatePicker.js" type="text/javascript"></script>
+
 <link href="<?php echo Yii::app()->baseUrl.'/css/jqModal.css';?>" rel="stylesheet" type="text/css" />
 <script src="<?php echo Yii::app()->baseUrl.'/js/jqModal.js';?>" type="text/javascript"></script>
+
 
 <style type="text/css">
 .showbox{position:fixed;top:0;left:50%;z-index:9999;opacity:0;filter:alpha(opacity=0);margin-left:-80px;}
@@ -170,7 +171,7 @@ if($mixed_members){
   <tr>
     <td height="46"><span class="fontsize1">Start</span><span><img src="./images/bg_100.png" /></span></td>
     <td>&nbsp;</td>
-    <td><input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',lang:'en'})" / class="cname3" id="editstart"></td>
+    <td><input type="text" class="cname3" id="editstart"></td>
     <td>&nbsp;</td>
   </tr>
   
@@ -181,7 +182,7 @@ if($mixed_members){
   <tr>
     <td height="46"><span class="fontsize1">End</span><span><img src="./images/bg_100.png" /></span></td>
     <td>&nbsp;</td>
-    <td><input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'editstart\')}',dateFmt:'yyyy-MM-dd HH:mm',lang:'en'})" / class="cname3" id="editend"></td>
+    <td><input type="text" class="cname3" id="editend"></td>
     <td>&nbsp;</td>
   </tr>
   
@@ -277,7 +278,8 @@ if($mixed_members){
 <!-- js loading end-->
 
 <?php 
-	if(in_array(0,$servicerole) || in_array(1,$servicerole)){
+	// if(in_array(0,$servicerole) || in_array(1,$servicerole)){
+	if(in_array(0,$servicerole)){
 		echo "<a href='".Yii::app()->createUrl('Schedule/Create')."'><input type='button' class='mname4'></a>";
 	}
 ?>
@@ -326,11 +328,14 @@ if($mixed_members){
 			$activityname = $_GET['activity'];
 			
 			foreach($schedules as $schedules_vals){
-				$real_start = date("Y-m-d H:i:s",(strtotime($schedules_vals->startdatetime)+$timezones[$schedules_vals->serviceid]));
-				$real_end = date("Y-m-d H:i:s",(strtotime($schedules_vals->enddatetime)+$timezones[$schedules_vals->serviceid]));
+				$real_start = date("m/d/Y h:i A",(strtotime($schedules_vals->startdatetime)+$timezones[$schedules_vals->serviceid]));
+				$real_end = date("m/d/Y h:i A",(strtotime($schedules_vals->enddatetime)+$timezones[$schedules_vals->serviceid]));
 			
 				$startdate = explode(" ",$real_start);
 				$enddate = explode(" ",$real_end);
+				
+				//时区的简写
+				$tz = "<br>（".getTimezoneAbbr(($timezones[$schedules_vals->serviceid])/3600)."）";
 				
 				// $startdate = explode(" ",$schedules_vals->startdatetime);
 				// $enddate = explode(" ",$schedules_vals->enddatetime);
@@ -351,17 +356,18 @@ if($mixed_members){
 				
 				if($schedules_vals->serviceid == $activityname){
 					if($m < $count){
-						if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+						// if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+						if(in_array($servicerole[$schedules_vals->serviceid],array(0))){
 							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a cursor:pointer; title='view'
+    <td width='58'><span class='table4'><a cursor:pointer; title='View'
 onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"> </a></span></td>
     <td width='58'><span class='table5'><a  cursor:pointer; title='Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 ></a></span></td>
@@ -371,17 +377,18 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
  <li class='cutoff2'> </li>";
-						}else if($servicerole[$schedules_vals->serviceid] == 2){
+						// }else if($servicerole[$schedules_vals->serviceid] == 2){
+						}else if(in_array($servicerole[$schedules_vals->serviceid],array(1,2))){
 							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a cursor:pointer; title='view'
+    <td width='58'><span class='table4'><a cursor:pointer; title='View'
 onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"> </a></span></td>
     <td width='58'><span class='table5img'></span></td>
     <td width='59'><span class='table6img'></span></td>
@@ -391,19 +398,20 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
  <li class='cutoff2'> </li>";
 						}
 					}else{
-						if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+						// if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+						if(in_array($servicerole[$schedules_vals->serviceid],array(0))){
 							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
-    <td width='58'><span class='table5'><a  cursor:pointer; title=' Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table5'><a  cursor:pointer; title='Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 ></a></span></td>
     <td width='59'><span class='table6'><a href='#' cursor:pointer; title='Delete' onclick='deleteSchedule(".$schedules_vals->scheduleid.")'
 ></a></span></td>
@@ -411,17 +419,18 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
 <li class='cutoff3'></li>";
-						}else if($servicerole[$schedules_vals->serviceid] == 2){
+						// }else if($servicerole[$schedules_vals->serviceid] == 2){
+						}else if(in_array($servicerole[$schedules_vals->serviceid],array(1,2))){
 							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
    <td width='58'><span class='table5img'></span></td>
     <td width='59'><span class='table6img'></span></td>
@@ -436,7 +445,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 			}
 			
 			if($m == 1){
-				$schedule_str .= "<li class='tablebg4'>No results found.</li>
+				$schedule_str .= "<li class='tablebg4'><font size='3'>When you have already created a schedule or you are participating in an activity created by someone else, you’ll see it here.</font></li>
 <li class='cutoff3'></li>";
 			}
 		}
@@ -460,11 +469,16 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 			$timename = $_POST['timeselectfilter'];
 			
 			foreach($schedules as $schedules_vals){
-				$real_start = date("Y-m-d H:i:s",(strtotime($schedules_vals->startdatetime)+$timezones[$schedules_vals->serviceid]));
-				$real_end = date("Y-m-d H:i:s",(strtotime($schedules_vals->enddatetime)+$timezones[$schedules_vals->serviceid]));
+				$real_start = date("m/d/Y h:i A",(strtotime($schedules_vals->startdatetime)+$timezones[$schedules_vals->serviceid]));
+				$real_end = date("m/d/Y h:i A",(strtotime($schedules_vals->enddatetime)+$timezones[$schedules_vals->serviceid]));
 			
 				$startdate = explode(" ",$real_start);
 				$enddate = explode(" ",$real_end);
+				
+				
+				//时区的简写
+				$tz = "<br>（".getTimezoneAbbr(($timezones[$schedules_vals->serviceid])/3600)."）";
+				
 				// $startdate = explode(" ",$schedules_vals->startdatetime);
 				// $enddate = explode(" ",$schedules_vals->enddatetime);
 				$dateadded = explode(" ",$schedules_vals->createdtime);
@@ -501,19 +515,20 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				}
 				if($time_condition && $activity_condition && $participant_condition){
 					if($i < $count){
-						if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+						// if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+						if(in_array($servicerole[$schedules_vals->serviceid],array(0))){
 							$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
-    <td width='58'><span class='table5'><a  cursor:pointer; title=' Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table5'><a  cursor:pointer; title='Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 ></a></span></td>
     <td width='59'><span class='table6'><a href='#' onclick='deleteSchedule(".$schedules_vals->scheduleid.")' cursor:pointer; title='Delete'
 ></a></span></td>
@@ -521,17 +536,18 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
  <li class='cutoff2'> </li>";
- }else if($servicerole[$schedules_vals->serviceid] == 2){
+ // }else if($servicerole[$schedules_vals->serviceid] == 2){
+  }else if(in_array($servicerole[$schedules_vals->serviceid],array(1,2))){
 	$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
     <td width='58'><span class='table5img'></span></td>
     <td width='59'><span class='table6img'></span></td>
@@ -541,20 +557,21 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
  <li class='cutoff2'> </li>";
  }
 	}else{
-		if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+		// if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+		if(in_array($servicerole[$schedules_vals->serviceid],array(0))){
 		
 		$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a  cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a  cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
-    <td width='58'><span class='table5'><a  cursor:pointer; title=' Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table5'><a  cursor:pointer; title='Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 ></a></span></td>
     <td width='59'><span class='table6'><a href='#' cursor:pointer; title='Delete' onclick='deleteSchedule(".$schedules_vals->scheduleid.")'
 ></a></span></td>
@@ -562,17 +579,18 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
 <li class='cutoff3'></li>";
-		}else if($servicerole[$schedules_vals->serviceid] == 2){
+		// }else if($servicerole[$schedules_vals->serviceid] == 2){
+		}else if(in_array($servicerole[$schedules_vals->serviceid],array(1,2))){
 			$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a  cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a  cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
     <td width='58'><span class='table5img'></span></td>
     <td width='59'><span class='table6img'></span></td>
@@ -601,7 +619,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 		// }
 		
 		if($i == 1){
-			$schedule_str .= "<li class='tablebg4'>No results found.</li><li class='cutoff3'></li>";
+			$schedule_str .= "<li class='tablebg4'><font size='3'>When you have already created a schedule or you are participating in an activity created by someone else, you’ll see it here.</font></li><li class='cutoff3'></li>";
 		}
 		
 	}else if(!isset($_GET['activity'])){
@@ -609,15 +627,18 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 			$j = 1;
 			$count = count($schedules);
 			
-			
+			// dump($schedules);exit;
 			foreach($schedules as $schedules_vals){
-				$real_start = date("Y-m-d H:i:s",(strtotime($schedules_vals->startdatetime)+$timezones[$schedules_vals->serviceid]));
-				$real_end = date("Y-m-d H:i:s",(strtotime($schedules_vals->enddatetime)+$timezones[$schedules_vals->serviceid]));
+				$real_start = date("m/d/Y h:i A",(strtotime($schedules_vals->startdatetime)+$timezones[$schedules_vals->serviceid]));
+				$real_end = date("m/d/Y h:i A",(strtotime($schedules_vals->enddatetime)+$timezones[$schedules_vals->serviceid]));
 			
 				$startdate = explode(" ",$real_start);
 				$enddate = explode(" ",$real_end);
 				$dateadded = explode(" ",$schedules_vals->createdtime);
 				
+				
+				//时区的简写
+				$tz = "<br>（".getTimezoneAbbr(($timezones[$schedules_vals->serviceid])/3600)."）";
 				
 				$member_str = "";
 				$mem = '';
@@ -630,19 +651,20 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				}
 				
 				if($j < $count){
-					if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+					// if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+					if(in_array($servicerole[$schedules_vals->serviceid],array(0))){
 						$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
-    <td width='58'><span class='table5'><a  cursor:pointer; title=' Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table5'><a  cursor:pointer; title='Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 ></a></span></td>
     <td width='59'><span class='table6'><a href='#' onclick='deleteSchedule(".$schedules_vals->scheduleid.")' cursor:pointer; title='Delete'
 ></a></span></td>
@@ -650,17 +672,18 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
  <li class='cutoff2'> </li>";
-					}else if($servicerole[$schedules_vals->serviceid] == 2){
+					// }else if($servicerole[$schedules_vals->serviceid] == 2){
+					}else if(in_array($servicerole[$schedules_vals->serviceid],array(1,2))){
 						$schedule_str .= "<li class='tablebg3' id='".$schedules_vals->scheduleid."'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
     <td width='58'><span class='table5img'></span></td>
     <td width='59'><span class='table6img'></span></td>
@@ -671,19 +694,20 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 					}
 					
 				}else{
-					if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+					// if(in_array($servicerole[$schedules_vals->serviceid],array(0,1))){
+					if(in_array($servicerole[$schedules_vals->serviceid],array(0))){
 						$schedule_str .= "<li class='tablebg3' id='end'><table id='".$schedules_vals->scheduleid."' width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a  cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a  cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
-    <td width='58'><span class='table5'><a  cursor:pointer; title=' Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table5'><a  cursor:pointer; title='Edit' onclick=\"editSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 ></a></span></td>
     <td width='59'><span class='table6'><a href='#' cursor:pointer; title='Delete'
  onclick='deleteSchedule(".$schedules_vals->scheduleid.")'></a></span></td>
@@ -691,17 +715,18 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 </table>
 </li>
 <li class='cutoff3'></li>";
-					}else if($servicerole[$schedules_vals->serviceid] == 2){
+					// }else if($servicerole[$schedules_vals->serviceid] == 2){
+					}else if(in_array($servicerole[$schedules_vals->serviceid],array(1,2))){
 						$schedule_str .= "<li class='tablebg3' id='end'><table id='".$schedules_vals->scheduleid."' width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td width='53' height='56' align='center'><input name='ischeck' type='checkbox' id='".$schedules_vals->scheduleid."_".$schedules_vals->serviceid.$mem."_check'/></td>
     <td width='176' align='center'><span class='fontweight' id='".$schedules_vals->scheduleid."_se'>".$service[$schedules_vals->serviceid]."</span></td>
     <td width='108' align='center' id='".$schedules_vals->scheduleid."_st'>".$startdate[0]."<br/>
-".$startdate[1]."</td>
+".$startdate[1]." ".$startdate[2].$tz."</td>
     <td width='110' align='center' id='".$schedules_vals->scheduleid."_en'>".$enddate[0]."<br/>
-".$enddate[1]."</td>
+".$enddate[1]." ".$enddate[2].$tz."</td>
     <td align='center' id='".$schedules_vals->scheduleid."_me'>".$member_str."</td>
-    <td width='58'><span class='table4'><a  cursor:pointer; title='view' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
+    <td width='58'><span class='table4'><a  cursor:pointer; title='View' onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->serviceid."')\"
 > </a></span></td>
     <td width='58'><span class='table5img'></span></td>
     <td width='59'><span class='table6img'></span></td>
@@ -714,7 +739,7 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 				$j++;
 			}
 		}else{
-			$schedule_str .= "<li class='tablebg4'>No results found.</li>
+			$schedule_str .= "<li class='tablebg4'><font size='3'>When you have already created a schedule or you are participating in an activity created by someone else, you’ll see it here.</font></li>
 <li class='cutoff3'></li>";
 		}
 	}
@@ -730,8 +755,8 @@ onclick=\"viewSchedule('".$schedules_vals->scheduleid."_".$schedules_vals->servi
 
 </body>
 <script language='javascript'>
-jQuery(document).ready(function() {	
-	jQuery("#viewschedulepopup").jqm({
+$(function() {	
+	$("#viewschedulepopup").jqm({
         modal: true,
         overlay: 40,
         onShow: function(h) {
@@ -743,7 +768,7 @@ jQuery(document).ready(function() {
         }
     });
 	
-	jQuery("#editschedulepopup").jqm({
+	$("#editschedulepopup").jqm({
         modal: true,
         overlay: 40,
         onShow: function(h) {
@@ -1050,11 +1075,15 @@ function submitSchedule(){
 		
 		var checkbox = document.getElementsByName('contact_check');
 		var participants = "";
+		var part_name = "";
 		
 		for(var i=0;i<checkbox.length;i++){
 			if(checkbox[i].checked){
 				var par = checkbox[i].id;	
 				participants += ","+par.substring(0,par.length-6);
+				
+				var p_name = $('#'+(par.substring(0,par.length-6))+'_name').html();
+				part_name += "<br>"+p_name;
 			}
 		}
 		if(participants.length == 0){
@@ -1065,29 +1094,31 @@ function submitSchedule(){
 			return;
 		}
 		var onduty = participants.substr(1);
+		var names = part_name.substr(4);
 		
 		var url = "<?php echo Yii::app()->createUrl('Schedule/admin');?>";
 		<?php
 			echo CHtml::ajax(
 				array(
 					"url" => CController::createUrl("Schedule/EditSchedule"),
-					"data" => "js:{schedule:schedule,activity:activity,start:start,end:end,desp:desp,onduty:onduty,timezone:timezone}",
+					"data" => "js:{schedule:schedule,activity:activity,start:start,end:end,desp:desp,onduty:onduty,timezone:timezone,names:names}",
 					"type"=>"POST",
 					'beforeSend'=>"js:function(){	
 						$(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);	
 					}",
 					"success"=>"js:function(data){
-					// console.info(data);
-						
+												
 						if(data == 'ajaxsessionout'){
 							location.href = homeUrl;
 							return;
 						}
-						if(data=='ok'){
-							// $(\"#editschedulepopup\").jqmHide();
-							// window.location.reload();
-							location.href = url;
-							// location.href = url+'#'+schedule;
+						var json = eval('('+data+')');
+						if(json.status == 'ok'){
+							$(\"#editschedulepopup\").jqmHide();
+							$('#'+schedule+'_st').html(json.start);
+							$('#'+schedule+'_en').html(json.end);
+							$('#'+schedule+'_me').html(json.participant);
+							
 						}else{
 							document.getElementById('error1').innerHTML = '<font color = \'red\'>'+data+'</font>'
 						}
@@ -1101,5 +1132,13 @@ function submitSchedule(){
 	}
 	
 
+</script>
+
+<!--日期样式-->
+<link rel="stylesheet" type="text/css" href="./css/jquery.datetimepicker.css"/>
+<script type="text/javascript" src="./js/jquery.datetimepicker.js"></script>
+<script language='javascript'>
+	$('#editstart').datetimepicker({step:10});
+	$('#editend').datetimepicker({step:10});
 </script>
 </html>

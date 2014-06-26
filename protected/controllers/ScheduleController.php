@@ -87,7 +87,8 @@ class ScheduleController extends Controller
 			$ownSharedRole = array();
 			if($services){
 				foreach($services as $servicevals){
-					if($servicevals->sharedrole == 0 || $servicevals->sharedrole == 1){
+					// if($servicevals->sharedrole == 0 || $servicevals->sharedrole == 1){
+					if($servicevals->sharedrole == 0){
 						$ownSharedRole[$servicevals->serviceid] = $servicevals->sharedrole;
 					}
 				}
@@ -1050,7 +1051,7 @@ class ScheduleController extends Controller
 							}
 						}
 						
-						$str .= "{'name':'".$servicename[$activityid]."','start':'".date('Y-m-d H:i:s',(strtotime($schedulesval->startdatetime)+$timezones[$schedulesval->serviceid]))."','end':'".date('Y-m-d H:i:s',(strtotime($schedulesval->enddatetime)+$timezones[$schedulesval->serviceid]))."','desp':'".$schedulesval->desp."','onduty':'".$memberstr."'}";
+						$str .= "{'name':'".$servicename[$activityid]."','start':'".date('Y/m/d H:i',(strtotime($schedulesval->startdatetime)+$timezones[$schedulesval->serviceid]))."','end':'".date('Y/m/d H:i:s',(strtotime($schedulesval->enddatetime)+$timezones[$schedulesval->serviceid]))."','desp':'".$schedulesval->desp."','onduty':'".$memberstr."'}";
 					}
 				}
 			}
@@ -1072,6 +1073,9 @@ class ScheduleController extends Controller
 			// $start = $_POST['start'].':00';
 			// $end = $_POST['end'].':00';
 			$members = explode(",",$_POST['onduty']);
+			
+			//对应的member name
+			$names = $_POST['names'];
 			
 			$timezone = $_POST['timezone'];
 			
@@ -1112,7 +1116,13 @@ class ScheduleController extends Controller
 				Yii::app()->cache->set($ownerid.'_myschedules',$myschedules,CACHETIME);
 				
 				//success to create schedule
-				echo 'ok';
+				// echo 'ok';
+				//返回的start end
+				$tz = "<br>（".getTimezoneAbbr($timezone)."）";
+				$re_start = date("m/d/Y h:i A",strtotime($_POST['start'])).$tz;
+				$re_end = date("m/d/Y h:i A",strtotime($_POST['end'])).$tz;
+				
+				echo "{'status':'ok','start':'".$re_start."','end':'".$re_end."','participant':'".$names."'}";
 			}else{
 				//do something
 				echo 'Fail to create the schedule.';

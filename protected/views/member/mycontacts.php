@@ -37,7 +37,7 @@
     <div class="title1b">My contacts</div>
   </div>
 </div>
-<div class="main7">
+<div class="main7" style="background:none;margin-bottom:0px;">
 <!-- js loading start -->
 <div id="AjaxLoading" class="showbox">
 	<div class="loadingWord"><img src="./images/waiting.gif">Please Wait...</div>
@@ -148,9 +148,10 @@
 <table width="474" border="0" cellspacing="0" cellpadding="0">
     <tr>
 	 <td width="162"></td>
-      <td width="160"><a href = "#createcontact"><input type="button"  class="conbu1" onclick="showCreateContact()"></a></td>
+	 <td width="160"></td>
+      <td width="152"><a href = "#createcontact"><input type="button"  class="conbu1" onclick="showCreateContact()"></a></td>
       <!--<td width="160"><a href = "#createfromcsv"><input type="button"  class="conbu2" onclick="showCreateFromCsv()"></a></td>-->
-      <td width="152"><a href = "#createfromemail"><input type="button"  class="conbu3" onclick="showCreateFromEmail()"></a></td>
+      <!--<td width="152"><a href = "#createfromemail"><input type="button"  class="conbu3" onclick="showCreateFromEmail()"></a></td>-->
     </tr>
   </table></div>
   
@@ -164,7 +165,7 @@
 		if($members){
 			$count = count($members);
 			foreach($members as $member_vals){
-				if($i>1){
+				// if($i>1){
 					if($i < $count){
 						$member_str .= "<li class='conbg2'><table width='800' height='56' border='0' cellpadding='0' cellspacing='0'>
   <tr>
@@ -194,7 +195,7 @@ onclick='deleteContact(".$member_vals->memberid.")'></a></span></td>
 </li>
 <li class='conbg3'></li>"; 
 					}
-				}
+				// }
 				$i++;
 			
 			}
@@ -391,7 +392,16 @@ var reg = /^[\!\@\#\$\%\^\&\*\~\-\+\=\?\<\>\.\,\w]+@\w+(\.[a-zA-Z]{2,3}){1,2}$/;
 		document.getElementById('notice1').innerHTML = 'Name cannot be empty.';
 		document.getElementById('enter_name').focus();
 		return;
-	}else if(email == ''){
+	}
+	if(name != ''){
+		var namearr = name.split('@');
+		if(namearr.length > 1){
+			document.getElementById('notice1').innerHTML = 'No @ in the name.';
+			document.getElementById('enter_name').focus();
+			return;
+		}
+	}
+	if(email == ''){
 		document.getElementById('notice1').innerHTML = 'Email cannot be empty.';
 		document.getElementById('enter_email').focus();
 		return;
@@ -416,16 +426,16 @@ var url = "<?php echo Yii::app()->createUrl('Member/admin')?>";
 					}",
 					"success"=>"js:function(data){
 						var obj = eval('('+data+')');
-						location.href = url;
-						// if(typeof(obj.data) == 'undefined'){
-							// if(obj.tip == 'ok'){
-								// location.href = url;
-							// }else{
-								// document.getElementById('notice1').innerHTML = obj.tip;
-							// }
-						// }else{
-							// location.href = homeUrl;
-						// } 
+						// location.href = url;
+						if(typeof(obj.data) != 'undefined'){
+							if(obj.tip == 'ok'){
+								location.href = url;
+							}else{
+								document.getElementById('notice1').innerHTML = obj.data;
+							}
+						}else{
+							location.href = homeUrl;
+						} 
 						$(\".showbox\").stop(true).animate({'margin-top':'250px','opacity':'0'},400);
 					}",
 				)
@@ -802,7 +812,8 @@ var reg = /^[\!\@\#\$\%\^\&\*\~\-\+\=\?\<\>\.\,\w]+@\w+(\.[a-zA-Z]{2,3}){1,2}$/;
 		document.getElementById('error1').innerHTML = 'Name cannot be empty.';
 		document.getElementById('edit_name').focus();
 		return;
-	}else if(email == ''){
+	}
+	if(email == ''){
 		document.getElementById('tr1').style.display = 'none';
 		document.getElementById('tr2').style.display = '';
 		document.getElementById('tr3').style.display = 'none';

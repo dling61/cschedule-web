@@ -158,7 +158,7 @@ class MemberController extends Controller
 				}
 			}else if($result['code'] == 201){
 				//This member already exists
-				echo "{'tip':'This member already exists.'}";
+				echo "{'tip':'fail','data':'This member already exists.'}";
 			}
 		}
 	}

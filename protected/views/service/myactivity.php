@@ -39,79 +39,120 @@
   </div>
 </div>
 
+
+
 <!--dialog content-->
 <!--<div class="main14">-->
 <div class="jqmWindowShareContacts" id="sharepopup">
-  <div class="sharebg1"></div>
-  <div class="sharebg2">
-    <div class="sharebg4"></div>
-    <div class="sharebg5">
-      <ul id="shareloading">
-	  
-
-      </ul>
-	  <span id='newadded_share'></span>
-	  <span id="hiddenactivity"></span>
-    </div>
-	<div class="sharebg8"></div>
-	<div class="sharebg9"></div>
-	<div class="share10"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-    <td colspan="5" align="center"><span class="wrong" id="notice"></span></td>
+ <span id="hiddenactivity"></span>
+ <span id="selectedemail"></span>
+ 
+<div class="main10top"></div><div class="main10inter"><table width="670"  border="0" cellpadding="0" cellspacing="0"><tr>
+    <td height="30" colspan="4" align="center" valign="middle"><span style=" font-size:18px;">Participants</span></td>
     </tr>
-	
+<!--<tr>
+    <td height="30" colspan="4" align="center" valign="middle"><span class="wrong">错误信息</span></td>
+    </tr>-->
+  
+  <tr id="shareloading"> <!--
+    <td valign="top"><span class="fontsize1" style="visibility:hidden;">On Duty</span></td>
+    <td>&nbsp;</td>
+    <td><div class="cschbg1"></div>
+	<div class="cschbg2"><table width="563" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td width="4%" align="right"><img src="./images/bg_100.png" /></td>
-    <td width="29%"><input type="text" class="sharebg11" placeholder="Name" id="name" onkeyup="showAddButton()"></td>
-    <td width="3%"><img src="./images/bg_100.png"></td>
-    <td width="32%"><input type="text" class="sharebg11" placeholder="Email" id="email" onfocus="showAddButton()"></td>
-    <td width="32%"><input type="text" class="sharebg11" placeholder="Mobile" id="mobile" onfocus="showAddButton()"></td>
-  </tr>
- <tr><td height="20"></td>
- </tr>
-   <tr>
-    <td width="4%" align="right"></td>
-    <td colspan="4"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <td><div class="cschb">
+    <ul>
 	
-<!-- add a new contact-->
-  <tr id="addnewcontact" style="display:none">
-    <td width="46%" align="right"><input type="button" class="conbu4" onclick="addNewContact()"></td>
-    <td width="6%">&nbsp;</td>
-    <td width="48%"><input type="button" class="cname6" onclick="hideAddButton()"></td>
-  </tr>
-<!-- add a new contact--> 
-
-</table>
-</td>
+		<span id = "editonduty"></span>
+		<div class="clear"></div>
+		
+    </ul>
+    </div></td>
     </tr>
 </table>
 </div>
-<div class="sharebg8"></div>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<div style="width:563px; border-left:1px solid #dbe2e7; border-right:1px solid #dbe2e7; border-bottom:1px solid #dbe2e7; ">&nbsp;&nbsp;<span class="color1">Please select contacts to add particpants into activity.</span></div>
+<div class="schtable">
+  <ul id="shareloading">
+   <li class="schbg1">
+      <table width="546" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="35" align="center"><input name="Input" type="checkbox" value="" /></td>
+          <td width="147" height="35">Tony Tang </td>
+          <td width="35" align="center"><input name="Input" type="checkbox" value="" /></td>
+          <td width="147">Wang Na</td>
+          <td width="35" align="center"><input name="Input" type="checkbox" value="" /></td>
+          <td width="147">David Wang</td>
+        </tr>
+      </table>
+    </li>
+    <li class="schbg2"></li>
+	
+  </ul>
+</div>
+<div class="schbg3"></div></td>
+    <td>&nbsp;</td>-->
+  </tr></table>
+  <br>
+  <table style="width:563px; border:1px solid #dbe2e7;margin-left:60px;">
   <tr>
-    <td width="46%">&nbsp;</td>
-    <td width="5%">&nbsp;</td>
-    <td width="49%">&nbsp;</td>
+    <td height="45">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><span class="color1">Can't find out a contact, add here.</span></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan='3'><span class="wrong" id="notice"></span></td>
+  </tr>
+  <tr>
+    <td height="25" valign="top"></td>
+    <td></td>
+    <td><table width="500" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="3%" align="right"><img src="./images/bg_100.png" /></td>
+        <td width="26%"><input type="text" class="sharebg209" placeholder="Name" id="name"></td>
+        <td width="2%"><img src="./images/bg_100.png"></td>
+        <td width="27%"><input type="text" class="sharebg209" placeholder="Email" id="email"></td>
+        <td width="28%"><input type="text" class="sharebg209" placeholder="Mobile" id="mobile"></td>
+        <td width="14%"><input class="conbu4" onclick="addNewContact()"></td>
+      </tr>  
+    </table></td>
+    <td>&nbsp;</td>
   </tr>
   
- <!-- share contacts--> 
-  <tr id="sharecontacts" style="display:none">
-    <td align="right">  <input type="button" class="cname5" onclick="submitSharedMembers()"></td>
+    <tr>
+    <td height="25" valign="top"></td>
+    <td></td>
+    <td></td>
     <td>&nbsp;</td>
-    <td><input type="button" class="cname6" onclick="cancelSharedMembers()"></td>
   </tr>
- <!-- share contacts--> 
- 
-  <tr id="done">
-    <td colspan="3" align="center"><span class='jqmClose'><input type="button" class="main13bu3"></span></td>
-    </tr>
-</table>
-
-
-  </div>
-  <div class="sharebg3"></div>
+  </table>
+  
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="43%" align="right">
+        <label>
+          <input type="button" class="cname5" onclick="submitSharedMembers()">
+          </label>
+      </td>
+        <td width="6%">&nbsp;</td>
+        <td width="51%">
+        <label>
+          <input type="button" class="cname6" onclick="cancelPopup()">
+          </label>
+     </td>
+      </tr>
+    </table></td>
+    <td>&nbsp;</td>
+  </tr>
+</div>
+  <!--<div class="main10buttom"> </div>-->
 </div>
 <!--dialog content-->
+
 
 
 
@@ -123,14 +164,14 @@
       <td width="89" height="48"><span class="fontsize1">Name</span></td>
       <td><input type="text" id='viewname' class="cname" disabled></td>
     </tr>
-    <tr>
+    <!--<tr>
       <td height="48"><span class="fontsize1">Start</span></td>
       <td><input type="text" id='viewstart' class="cname3" disabled></td>
     </tr>
     <tr>
       <td height="48"><span class="fontsize1">End</span></td>
       <td><input type="text" class="cname3" id='viewend' disabled></td>
-    </tr>
+    </tr>-->
 	
 	<tr>
       <td height="48"><span class="fontsize1">Timezone</span></td>
@@ -147,7 +188,7 @@
           </label>
           </td>
     </tr>
-    <tr>
+   <!-- <tr>
       <td height="48"><span class="fontsize1">Repeat</span></td>
       <td>
         <label>
@@ -161,7 +202,7 @@
           </select>
           </label>
            </td>
-    </tr>
+    </tr>-->
     <tr>
       <td height="48"><span class="fontsize1">Alert</span></td>
       <td>
@@ -208,20 +249,20 @@
       <td colspan="2" align="center"><span class="wrong" id="error2"></span> </td>
     </tr>
 	
-    <tr>
+    <!--<tr>
       <td height="48"><span class="fontsize1">Start</span><img src="./images/bg_100.png" width="14" height="14"></td>
       <td colspan="2"><input type="text" class="cname3" id="editstart" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',lang:'en'})"></td>
-    </tr>
+    </tr>-->
 	
 	<tr id="tr3" style="display:none">
       <td width="89" height="20"></td>
       <td colspan="2" align="center"><span class="wrong" id="error3"></span> </td>
     </tr>
 	
-    <tr>
+    <!--<tr>
       <td height="48"><span class="fontsize1">End</span><img src="./images/bg_100.png" width="14" height="14"></td>
       <td colspan="2"><input type="text" class="cname3" id="editend" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',lang:'en'})"></td>
-    </tr>
+    </tr>-->
 	
 	<tr>
       <td height="48"><span class="fontsize1">Timezone</span><img src="./images/bg_100.png" width="14" height="14"></td>
@@ -239,7 +280,7 @@
           </label>
       </td>
     </tr>
-    <tr>
+    <!--<tr>
       <td height="48"><span class="fontsize1">Repeat</span></td>
       <td colspan="2">
         <label>
@@ -255,7 +296,7 @@
           </select>
           </label>
       </td>
-    </tr>
+    </tr>-->
     <tr>
       <td height="48"><span class="fontsize1">Alert</span></td>
       <td colspan="2">
@@ -303,10 +344,12 @@
 <!-- js loading end-->
 
   <ul>
-    <li class="tabletitle"></li>
+    
 	<?php
 		$str = "";
 		if($services){
+			$str .= "<li class='tabletitle'></li>";
+			
 			$i = 1;
 			$count = count($services);
 			foreach($services as $vals){
@@ -316,9 +359,9 @@
       <table width='812' border='0' cellspacing='0' cellpadding='0'>
         <tr>
           <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
-          <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Share'
+          <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Participant'
 ></a></span></td>
-          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedule'
 ></a></span></td>
           <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
 ></a></span></td>
@@ -329,30 +372,33 @@
         </tr>
       </table>
     </li><li class='cutoff'></li>";
-					}else if($vals->sharedrole == 1){
-						$str .= "<li class='tablebg'>
-      <table width='812' border='0' cellspacing='0' cellpadding='0'>
-        <tr>
-          <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
-          <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Share'
-></a></span></td>
-          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
-></a></span></td>
-          <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
-></a></span></td>
-          <td width='58'><span class='table5'><a onclick='editActivity(".$vals->serviceid.")' cursor:pointer; title='Edit'
-></a></span></td>
-           <td width='59'><span class='table6img'></span></td>
-        </tr>
-      </table>
-    </li><li class='cutoff'></li>";
-					}else if($vals->sharedrole == 2){
+					}
+					
+					// else if($vals->sharedrole == 1){
+						// $str .= "<li class='tablebg'>
+      // <table width='812' border='0' cellspacing='0' cellpadding='0'>
+        // <tr>
+          // <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
+          // <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Share'
+// ></a></span></td>
+          // <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+// ></a></span></td>
+          // <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
+// ></a></span></td>
+          // <td width='58'><span class='table5'><a onclick='editActivity(".$vals->serviceid.")' cursor:pointer; title='Edit'
+// ></a></span></td>
+           // <td width='59'><span class='table6img'></span></td>
+        // </tr>
+      // </table>
+    // </li><li class='cutoff'></li>";
+					// }
+					else if($vals->sharedrole == 1 || $vals->sharedrole == 2){
 						$str .= "<li class='tablebg'>
       <table width='812' border='0' cellspacing='0' cellpadding='0'>
         <tr>
           <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
         <td width='58'><span class='table2img'></span></td>
-          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedule'
 ></a></span></td>
           <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
 ></a></span></td>
@@ -369,9 +415,9 @@
       <table width='812' border='0' cellspacing='0' cellpadding='0'>
         <tr>
           <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
-          <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Share'
+          <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Participant'
 ></a></span></td>
-          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedule'
 ></a></span></td>
           <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
 ></a></span></td>
@@ -382,30 +428,34 @@
         </tr>
       </table>
     </li>";
-			}else if($vals->sharedrole == 1){
-				$str .= "<li class='tablebg2'>
-      <table width='812' border='0' cellspacing='0' cellpadding='0'>
-        <tr>
-          <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
-          <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Share'
-></a></span></td>
-          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
-></a></span></td>
-          <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
-></a></span></td>
-          <td width='58'><span class='table5'><a  onclick='editActivity(".$vals->serviceid.")' cursor:pointer; title='Edit'
-></a></span></td>
-           <td width='59'><span class='table6img'></span></td>
-        </tr>
-      </table>
-    </li>";
-			}else if($vals->sharedrole == 2){
+			}
+			
+			// else if($vals->sharedrole == 1){
+				// $str .= "<li class='tablebg2'>
+      // <table width='812' border='0' cellspacing='0' cellpadding='0'>
+        // <tr>
+          // <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
+          // <td width='58'><span class='table2'><a onclick='sharePopup(".$vals->serviceid.")' cursor:pointer; title='Share'
+// ></a></span></td>
+          // <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+// ></a></span></td>
+          // <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
+// ></a></span></td>
+          // <td width='58'><span class='table5'><a  onclick='editActivity(".$vals->serviceid.")' cursor:pointer; title='Edit'
+// ></a></span></td>
+           // <td width='59'><span class='table6img'></span></td>
+        // </tr>
+      // </table>
+    // </li>";
+			// }
+			
+			else if($vals->sharedrole == 1 || $vals->sharedrole == 2){
 				$str .= "<li class='tablebg2'>
       <table width='812' border='0' cellspacing='0' cellpadding='0'>
         <tr>
           <td width='521'><span class='table1' id='activityname_".$vals->serviceid."'>".$vals->servicename."</span></td>
           <td width='58'><span class='table2img'></span></td>
-          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedules'
+          <td width='58'><span class='table3'><a href='".Yii::app()->createUrl('Schedule/Admin',array('activity'=>$vals->serviceid))."' cursor:pointer; title='Schedule'
 ></a></span></td>
           <td width='58'><span class='table4' onclick='viewActivity(".$vals->serviceid.")'><a cursor:pointer; title='View'
 ></a></span></td>
@@ -418,15 +468,12 @@
 		}
 			$i++;
 			}
-		}else $str.="<li class='tablebg2'>
+		}else $str.="<li class='tabletitle' style='background:url(./images/bg_205.png) no-repeat;'></li><li class='tablebg2' style='background:url(./images/bg_204.png) no-repeat;'>
       <table width='812' border='0' cellspacing='0' cellpadding='0'>
         <tr>
-          <td width='521'><span class='table1'>No activities found.</span></td>
-           <td width='58'><span class='table2img'></span></td>
-          <td width='58'><span class='table3img'></span></td>
-         <td width='58'><span class='table4img'></span></td>
-    <td width='58'><span class='table5img'></span></td>
-    <td width='59'><span class='table6img'></span></td>
+          <td width='812' style='text-align:center;'><span style='height:56px; text-align:center; line-height:56px; font-size:14px; color:#5d5d5d;' >When you have already created an activity or you are participating in an activity created by someone else, you’ll see it here.
+</span></td>
+        
         </tr>
       </table>
     </li>";
@@ -500,9 +547,6 @@ function sharePopup(q){
 	
 	document.getElementById("notice").innerHTML = "";
 	
-	document.getElementById("addnewcontact").style.display = "none";
-	document.getElementById("sharecontacts").style.display = "none";
-	
 	$("<input type='hidden' value='"+q+"' id='sharedActivityid'>").appendTo('#hiddenactivity');
 	
 	
@@ -517,7 +561,7 @@ function sharePopup(q){
 			}",
 			"success"=>"js:function(data){
 				if(data == 'ajaxsessionout'){
-								location.href = url;
+					location.href = url;
 				}else{
 					document.getElementById('shareloading').innerHTML = '';
 					$('#shareloading').html('');
@@ -527,6 +571,10 @@ function sharePopup(q){
 		));
 	?>
 	
+}
+
+function cancelPopup(){
+	$("#sharepopup").jqmHide();
 }
 
 function deleteActivity(i){	
@@ -575,6 +623,8 @@ function hideAddButton(){
 }
 
 function addNewContact(){
+	document.getElementById('notice').innerHTML = '';
+	
 	var name = document.getElementById("name").value;
 	var email = document.getElementById("email").value;
 	var mobile = document.getElementById("mobile").value;
@@ -583,6 +633,14 @@ function addNewContact(){
 		document.getElementById("notice").innerHTML = "Name can not be empty.";
 		document.getElementById("name").focus();
 		return;
+	}
+	if(name != ''){
+		var namearr = name.split('@');
+		if(namearr.length > 1){
+			document.getElementById('notice').innerHTML = 'No @ in the name.';
+			document.getElementById('name').focus();
+			return;
+		}
 	}
 	if(email == ""){
 		document.getElementById("notice").innerHTML = "Email can not be empty.";
@@ -610,19 +668,24 @@ function addNewContact(){
 						var obj = eval('('+data+')');
 						if(typeof(obj.data) != 'undefined'){
 							
-							$(\"<input type='hidden' name='o_share' id='oshare_\"+obj.id+\"' value='-1' >\").appendTo('#newadded_share');
-							$(\"<input type='hidden' name='n_share' id='nshare_\"+obj.id+\"' value='-1' >\").appendTo('#newadded_share');	
-							$(\"<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'><tr><td width='35'>&nbsp;</td><td width='154' height='33' id='name_\"+obj.id+\"'>\"+name+\"</td><td width='222' id='email_\"+obj.id+\"'>\"+email+\"</td><td width='116'><select  id='\"+obj.id+\"' name = 'selectdMembers' onchange='changerole(\"+obj.id+\")'><option value='-1'>Noshare</option><option value ='2'>Participant</option><option value ='1'>Organizer</option></select></td></tr></table></li>\").appendTo('#shareloading');
+							// $(\"<input type='hidden' name='o_share' id='oshare_\"+obj.id+\"' value='-1' >\").appendTo('#newadded_share');
+							// $(\"<input type='hidden' name='n_share' id='nshare_\"+obj.id+\"' value='-1' >\").appendTo('#newadded_share');	
+							// $(\"<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'><tr><td width='35'>&nbsp;</td><td width='154' height='33' id='name_\"+obj.id+\"'>\"+name+\"</td><td width='222' id='email_\"+obj.id+\"'>\"+email+\"</td><td width='116'><select  id='\"+obj.id+\"' name = 'selectdMembers' onchange='changerole(\"+obj.id+\")'><option value='-1'>Noshare</option><option value ='2'>Participant</option><option value ='1'>Organizer</option></select></td></tr></table></li>\").appendTo('#shareloading');
+							// $(\"<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'><tr><td width='35'>&nbsp;</td><td width='154' height='33' id='name_\"+obj.id+\"'>\"+name+\"</td><td width='222' id='email_\"+obj.id+\"'>\"+email+\"</td><td width='116'><select  id='\"+obj.id+\"' name = 'selectdMembers' onchange='changerole(\"+obj.id+\")'><option value='-1'>Noshare</option><option value ='2'>Participant</option></select></td></tr></table></li>\").appendTo('#shareloading');
 							
-							$('#email').val('');
-							$('#name').val('');
-							$('#mobile').val('');
+							if(obj.tip == 'ok'){
+								$(\"<li><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='25'><input name='contact_check' type='checkbox' id='\"+obj.id+\"_check' onclick='is_Checked(\"+obj.id+\")'></td><td width='75' height='25' id='\"+obj.id+\"_name'>\"+name+\"</td></tr></table></li>\").appendTo('#addnewcontact');
+								
+								$('#notice').html('');
+								$('#email').val('');
+								$('#name').val('');
+								$('#mobile').val('');
+							}else{
+								document.getElementById('notice').innerHTML = obj.data;
+							}
 							
-						}else if(obj.tip == 'ok'){
-							location.href = url;
 						}else{
-							document.getElementById('notice1').innerHTML = obj.tip;
-							
+							location.href = url;
 						}
 						$(\".showbox\").stop(true).animate({'margin-top':'250px','opacity':'0'},400);
 					}",
@@ -664,43 +727,28 @@ function cancelSharedMembers(){
 
 function submitSharedMembers(){
 	var activity = $('#sharedActivityid').val();
-
-	var o_share = document.getElementsByName('o_share');
-	var n_share = document.getElementsByName('n_share');
 	
-	var ids = new Array();
-	for(var i=0;i<o_share.length;i++){
-		var memberid = o_share[i].id;
-		ids.push(memberid.substr(7));
-	}
+	var members = '';
+	var names = '';
+	var emails = '';
+	var mobiles = '';
 	
-	var members = new Array();
-	var roles = new Array();
-	
-	var name = new Array();
-	var email = new Array();
-	
-	if(ids){
-		for(var j=0;j<ids.length;j++){
-			var oshareid = o_share[j].id;
-			var nshareid = n_share[j].id;
-			
-			if(oshareid.substr(7) == nshareid.substr(7) && o_share[j].value != n_share[j].value){
-				members.push(nshareid.substr(7));
-				roles.push(n_share[j].value);
-				
-				name.push($("#name_"+oshareid.substr(7)).html());
-				email.push($("#email_"+oshareid.substr(7)).html());
-			}
+	var checked = document.getElementsByName("contact_check");
+	for(var i=0;i<checked.length;i++){
+		if(checked[i].checked){
+			var id = checked[i].id;
+			names += ','+$('#'+id.substr(0,id.length-6)+'_name').html();
+			emails += ','+$('#'+id.substr(0,id.length-6)+'_all').val();
+			members += '_'+id.substr(0,id.length-6);
+			mobiles += ','+$('#'+id.substr(0,id.length-6)+'_allmobile').val();
 		}
 	}
-	
 
 	var url = "<?php echo Yii::app()->homeUrl;?>";
 	<?php
 		echo CHtml::ajax(array(
 			"url" => CController::createUrl("Service/AddSharedMembers"),
-			"data" => "js:{activity : activity, members : members, roles : roles,name : name,email : email}",
+			"data" => "js:{activity : activity, members : members.substr(1),emails:emails.substr(1),names:names.substr(1),mobiles:mobiles.substr(1)}",
 			"type"=>"POST",
 			'beforeSend'=>"js:function(){
 				$(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);
@@ -712,10 +760,8 @@ function submitSharedMembers(){
 					location.href = url;
 					return;
 				}
-				
-				//alert(str);
-				$('#sharecontacts').hide();
-				$('#done').show();
+
+				$('#sharepopup').jqmHide();
 			}",
 		));
 	?>
@@ -742,10 +788,10 @@ function viewActivity(i){
 				
 				if(typeof(data.data) == 'undefined'){
 					document.getElementById('viewname').value = data.name;
-					document.getElementById('viewstart').value = data.start;
-					document.getElementById('viewend').value = data.end;
+					// document.getElementById('viewstart').value = data.start;
+					// document.getElementById('viewend').value = data.end;
 					document.getElementById('viewdesp').value = data.desp;
-					document.getElementById('viewrepeat').value = data.repeat;
+					// document.getElementById('viewrepeat').value = data.repeat;
 					document.getElementById('viewalert').value = data.alert;
 					document.getElementById('viewtimezone').value = data.timezone;					
 				}else{
@@ -782,10 +828,10 @@ function editActivity(i){
 				
 				if(typeof(data.data) == 'undefined'){
 					document.getElementById('editname').value = data.name;
-					document.getElementById('editstart').value = data.start;
-					document.getElementById('editend').value = data.end;
+					// document.getElementById('editstart').value = data.start;
+					// document.getElementById('editend').value = data.end;
 					document.getElementById('editdesp').value = data.desp;
-					document.getElementById('editrepeat').value = data.repeat;
+					// document.getElementById('editrepeat').value = data.repeat;
 					document.getElementById('editalert').value = data.alert;
 					document.getElementById('edittimezone').value = data.timezone;
 				}else{
@@ -803,10 +849,10 @@ function saveActivity(){
 	var id = document.getElementById("activityid").value;
 	
 	var activity = document.getElementById("editname").value;
-	var starttime = document.getElementById('editstart').value;
-	var endtime = document.getElementById('editend').value; 
+	// var starttime = document.getElementById('editstart').value;
+	// var endtime = document.getElementById('editend').value; 
 	var desp = document.getElementById('editdesp').value; 
-	var repeat = document.getElementById('editrepeat').value;
+	// var repeat = document.getElementById('editrepeat').value;
 	var alerts = document.getElementById('editalert').value;
 	var timezone = document.getElementById('edittimezone').value;
 	
@@ -819,40 +865,42 @@ function saveActivity(){
 		document.getElementById('error1').innerHTML = 'Name cannot be blank.';
 		document.getElementById('editname').focus();
 		return false;
-	}else if(starttime == ''){
-		document.getElementById('tr1').style.display = "none";
-		document.getElementById('tr2').style.display = "";
-		document.getElementById('tr3').style.display = "none";
+	}
+	// else if(starttime == ''){
+		// document.getElementById('tr1').style.display = "none";
+		// document.getElementById('tr2').style.display = "";
+		// document.getElementById('tr3').style.display = "none";
 	
-		document.getElementById('error2').innerHTML = 'Start Time cannot be blank.';
-		document.getElementById('editstart').focus();
-		return false;
-	}else if(endtime == ''){
-		document.getElementById('tr1').style.display = "none";
-		document.getElementById('tr2').style.display = "none";
-		document.getElementById('tr3').style.display = "";
+		// document.getElementById('error2').innerHTML = 'Start Time cannot be blank.';
+		// document.getElementById('editstart').focus();
+		// return false;
+	// }else if(endtime == ''){
+		// document.getElementById('tr1').style.display = "none";
+		// document.getElementById('tr2').style.display = "none";
+		// document.getElementById('tr3').style.display = "";
 		
-		document.getElementById('error3').innerHTML = 'End Time cannot be blank.';
-		document.getElementById('editend').focus();
-		return false;
-	}
+		// document.getElementById('error3').innerHTML = 'End Time cannot be blank.';
+		// document.getElementById('editend').focus();
+		// return false;
+	// }
 		
-	if(starttime >= endtime){
+	// if(starttime >= endtime){
 		
-		document.getElementById('tr1').style.display = "none";
-		document.getElementById('tr2').style.display = "";
-		document.getElementById('tr3').style.display = "none";
+		// document.getElementById('tr1').style.display = "none";
+		// document.getElementById('tr2').style.display = "";
+		// document.getElementById('tr3').style.display = "none";
 		
-		document.getElementById('error2').innerHTML = 'Start should be smaller than End.';
-		document.getElementById('editstart').focus();
-		return false;
-	}
+		// document.getElementById('error2').innerHTML = 'Start should be smaller than End.';
+		// document.getElementById('editstart').focus();
+		// return false;
+	// }
 	
 	var url = "<?php echo Yii::app()->homeUrl;?>";
 	<?php
 		echo CHtml::ajax(array(
 			"url" => CController::createUrl("Service/Update"),
-			"data" => "js:{id : id, name : activity, start : starttime, end : endtime, desp : desp, repeat : repeat, alerts : alerts,timezone:timezone}",
+			// "data" => "js:{id : id, name : activity, start : starttime, end : endtime, desp : desp, repeat : repeat, alerts : alerts,timezone:timezone}",
+			"data" => "js:{id : id, name : activity, desp : desp, alerts : alerts,timezone:timezone}",
 			"type"=>"POST",
 			'beforeSend'=>"js:function(){
 				$(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);
@@ -868,6 +916,22 @@ function saveActivity(){
 			}",
 		));
 	?>
+}
+
+function is_Checked(i){
+	var status = document.getElementById(i+'_check').checked;
+	if(status){
+		var name = document.getElementById(i+'_name').innerHTML;
+			
+		$("<li id='"+i+"_selected'><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='75' height='25'><span class='name'><a href='#'>"+name+"</a></span></td><td width='25' onclick='deleteContact("+i+")'><span class='cha' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
+	}else{
+		$('#'+i+'_selected').remove();
+	}
+}
+
+function deleteContact(i){
+	$('#'+i+'_selected').remove();
+	$('#'+i+'_check').removeAttr("checked");;
 }
 </script>
 </html>

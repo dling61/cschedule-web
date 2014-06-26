@@ -157,6 +157,9 @@ img{border:none;}
 .cha a{width:25px; height:25px; display:block;}
 .name a{color:#FFFFFF;}
 
+.memberlist{width:558px; padding-left:4px; border:1px solid #cec8a9; padding-top:5px; background-color:#faf8ef; height:160px;overflow-y:scroll;}
+.memberlist ul li{ width:150px; padding-left:9px; height:25px;  line-height:25px; margin-left:10px; float:left; margin-bottom:5px;}
+
 .schtable{width:563px;  height:160px; overflow:scroll; overflow-x:hidden;   border-left:1px solid #dbe2e7;  border-right:1px solid #dbe2e7;}
 .schtable2{ border-left:1px solid #dbe2e7; border-right:1px solid #dbe2e7; width:563px; height:50px; font-size:
 ; text-align:center; line-height:50px; }
@@ -206,3 +209,7 @@ img{border:none;}
 .sub a{background:url(../images/bg_114.png) no-repeat; width:72px; height:31px; border:none; display:block;}
 .sub2 a{background:url(../images/bg_115.png) no-repeat; width:72px; height:31px; border:none; display:block;}
 .font1{font-size:12px;}
+
+.main17{background:url(../images/bg206.png) no-repeat; width:569px; height:181px; padding:50px 60px 0px 60px; margin:130px  auto 150px auto; color:#4f8bd6; font-size:18px;}
+
+.sharebg209{ background:url(../images/bg_209.png) no-repeat; width:116px; height:32px; border:none;}

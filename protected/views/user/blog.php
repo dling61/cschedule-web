@@ -14,7 +14,12 @@
 $str = "";
 if($posts){
 	foreach($posts as $vals){
-		$str .= "<p style='font-size:16px;'>".$vals['date']."</p><p>".$vals->{'regular-body'}."</p><hr>";
+		//获取的时间数组
+		$o_timearr = explode(",",$vals['date']);
+		$n_timearr = explode(" ",$o_timearr[1]);
+		$date = $o_timearr[0].', '.$n_timearr[2]." ".$n_timearr[1]." ".$n_timearr[3]." ".$n_timearr[4];
+		
+		$str .= "<p style='font-size:16px;'>".$date."</p><p>".$vals->{'regular-body'}."</p><hr>";
 	}
 	echo substr($str,0,-4);
 }

@@ -414,4 +414,43 @@ function getPartTimezones(){
 	return $timezones;
 }
 
+//获取时区缩写
+function getTimezoneAbbr($timezone){
+	$abbrs = array(
+		'-12'             => "IDLW",
+		'-11'             => "NT",
+		'-10'            => "CAT",
+		'-9'            => "HDT",
+		'-8'           => "PST",
+		'-7'          => "PDT",
+		'-6'  => "CST",
+		'-5'           => "EST",
+		'-4'      => "EDT",
+		'-3.5'  => "NST",
+		
+		'-3'  => "ADT",
+		'-2.5'  => "NDT",
+		
+		'-1'  => "WAT",
+		'0'  => "GMT",
+		'1'  => "CET",
+		'2'  => "EET",
+		'3'  => "BT",
+		'3.5'  => "IT",
+		'7.5'  => "JT",
+		'8'  => "CCT",
+		
+		'8.5'  => "MT",
+		'9'  => "JST",
+		'9.5'  => "SAT",
+		'10'  => "GST",
+		'10.5'  => "CST",
+		'11'  => "AESST",
+		'12'  => "NZT",
+		'13'  => "NZDT",
+	);
+	$tz = (string)$timezone;
+	return $abbrs[$tz];
+}
+
 ?>

@@ -4,8 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Create a schedule</title>
 <link href="./css/cschedule.css" rel="stylesheet" type="text/css" />
-<script src="./datepicker/WdatePicker.js" type="text/javascript"></script>
-<script src="./js/jquery.js" type="text/javascript"></script>
+
+<!--日期样式-->
+<link rel="stylesheet" type="text/css" href="./css/jquery.datetimepicker.css"/>
+<script type="text/javascript" src="./js/jquery1.10.js"></script>
+<script type="text/javascript" src="./js/jquery.datetimepicker.js"></script>
 
 <style type="text/css">
 .showbox{position:fixed;top:0;left:50%;z-index:9999;opacity:0;filter:alpha(opacity=0);margin-left:-80px;}
@@ -69,7 +72,8 @@ echo $timezones_str;
 			$activity_str = '';
 			if($services){
 				foreach($services as $activity_vals){
-					if(in_array($activity_vals->sharedrole,array(0,1))){
+					// if(in_array($activity_vals->sharedrole,array(0,1))){
+					if(in_array($activity_vals->sharedrole,array(0))){
 						$activity_str .= "<option value ='".$activity_vals->serviceid."'>".$activity_vals->servicename."</option>";
 					}
 				}
@@ -82,13 +86,13 @@ echo $timezones_str;
   <tr>
     <td height="46"><span class="fontsize1">Start</span><span><img src="./images/bg_100.png" /></span></td>
     <td>&nbsp;</td>
-    <td><input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',lang:'en'})" class="cname3" id='starttime'></td>
+    <td><input type="text" class="cname3" id='starttime' onblur="js:if(document.getElementById('endtime').value == ''){document.getElementById('endtime').value = this.value;}"></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td height="46"><span class="fontsize1">End</span><span><img src="./images/bg_100.png" /></span></td>
     <td>&nbsp;</td>
-    <td><input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',lang:'en'})" class="cname3" id='endtime'></td>
+    <td><input type="text" class="cname3" id='endtime'></td>
     <td>&nbsp;</td>
   </tr>
   
@@ -194,7 +198,7 @@ echo $timezones_str;
   <tr>
     <td height="35">&nbsp;</td>
     <td>&nbsp;</td>
-    <td><span class="color1">If you want to share with another contact ,please go to my activity "share" option</span></td>
+    <td><span class="color1">If you want to share with another contact ,please go to my activity "Participant" option.</span></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
@@ -226,6 +230,11 @@ echo $timezones_str;
 </body>
 
 <script language='javascript'>
+	$(function(){
+		$('#starttime').datetimepicker({step:10});
+		$('#endtime').datetimepicker({step:10});
+	});
+	
 	var homeUrl = "<?php echo Yii::app()->homeUrl;?>";
 
 	function submitSchedule(){
