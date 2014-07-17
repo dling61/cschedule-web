@@ -173,12 +173,12 @@
       <td><input type="text" class="cname3" id='viewend' disabled></td>
     </tr>-->
 	
-	<tr>
+	<!--<tr>
       <td height="48"><span class="fontsize1">Timezone</span></td>
       <td><select id='viewtimezone' class="cname4" disabled><option value='-11'>US/Samoa</option><option value='-10'>US/Hawaii</option><option value='-9'>US/Alaska</option><option value='-8'>US/Pacific</option><option value='-7'>US/Arizona &amp; US/Mountain</option><option value='-6'>US/Central</option><option value='-5'>US/Eastern &amp; US/East-Indiana</option><option value='-4'>Canada/Atlantic</option><option value='-3.5'>Canada/Newfoundland</option>
-	  
+
 	  </select></td>
-    </tr>
+    </tr>-->
 	
     <tr>
       <td height="140"><span class="fontsize1">Descripion</span></td>
@@ -203,7 +203,7 @@
           </label>
            </td>
     </tr>-->
-    <tr>
+    <!--<tr>
       <td height="48"><span class="fontsize1">Alert</span></td>
       <td>
         <label>
@@ -221,7 +221,7 @@
         </select>
         </label>
      </td>
-    </tr>
+    </tr>-->
     <tr>
       <td height="48">&nbsp;</td>
       <td align="center"> <span class="jqmClose"><input type="button" class="main13bu3"></span></td>
@@ -264,13 +264,13 @@
       <td colspan="2"><input type="text" class="cname3" id="editend" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',lang:'en'})"></td>
     </tr>-->
 	
-	<tr>
+	<!--<tr>
       <td height="48"><span class="fontsize1">Timezone</span><img src="./images/bg_100.png" width="14" height="14"></td>
       <td colspan="2"><select id='edittimezone' class="cname4" disabled>
 	  <option value='-11'>US/Samoa</option><option value='-10'>US/Hawaii</option><option value='-9'>US/Alaska</option><option value='-8'>US/Pacific</option><option value='-7'>US/Arizona &amp; US/Mountain</option><option value='-6'>US/Central</option><option value='-5'>US/Eastern &amp; US/East-Indiana</option><option value='-4'>Canada/Atlantic</option><option value='-3.5'>Canada/Newfoundland</option>
 	  
 	  </select></td>
-    </tr>
+    </tr>-->
 	
     <tr>
       <td height="140"><span class="fontsize1">Descripion</span></td>
@@ -297,7 +297,7 @@
           </label>
       </td>
     </tr>-->
-    <tr>
+    <!--<tr>
       <td height="48"><span class="fontsize1">Alert</span></td>
       <td colspan="2">
         <label>
@@ -317,7 +317,7 @@
           </select>
           </label>
       </td>
-    </tr>
+    </tr>-->
     <tr>
       <td height="48">&nbsp;</td>
       <td width="144">
@@ -792,8 +792,8 @@ function viewActivity(i){
 					// document.getElementById('viewend').value = data.end;
 					document.getElementById('viewdesp').value = data.desp;
 					// document.getElementById('viewrepeat').value = data.repeat;
-					document.getElementById('viewalert').value = data.alert;
-					document.getElementById('viewtimezone').value = data.timezone;					
+					// document.getElementById('viewalert').value = data.alert;
+					// document.getElementById('viewtimezone').value = data.timezone;
 				}else{
 					// $(\"#viewactivitypopup\").jqmHide();
 					location.href = url;
@@ -832,8 +832,8 @@ function editActivity(i){
 					// document.getElementById('editend').value = data.end;
 					document.getElementById('editdesp').value = data.desp;
 					// document.getElementById('editrepeat').value = data.repeat;
-					document.getElementById('editalert').value = data.alert;
-					document.getElementById('edittimezone').value = data.timezone;
+					// document.getElementById('editalert').value = data.alert;
+					// document.getElementById('edittimezone').value = data.timezone;
 				}else{
 					location.href = url;
 				}
@@ -853,8 +853,8 @@ function saveActivity(){
 	// var endtime = document.getElementById('editend').value; 
 	var desp = document.getElementById('editdesp').value; 
 	// var repeat = document.getElementById('editrepeat').value;
-	var alerts = document.getElementById('editalert').value;
-	var timezone = document.getElementById('edittimezone').value;
+	// var alerts = document.getElementById('editalert').value;
+	// var timezone = document.getElementById('edittimezone').value;
 	
 
 	if(activity == ''){
@@ -900,7 +900,7 @@ function saveActivity(){
 		echo CHtml::ajax(array(
 			"url" => CController::createUrl("Service/Update"),
 			// "data" => "js:{id : id, name : activity, start : starttime, end : endtime, desp : desp, repeat : repeat, alerts : alerts,timezone:timezone}",
-			"data" => "js:{id : id, name : activity, desp : desp, alerts : alerts,timezone:timezone}",
+			"data" => "js:{id : id, name : activity, desp : desp}",
 			"type"=>"POST",
 			'beforeSend'=>"js:function(){
 				$(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);

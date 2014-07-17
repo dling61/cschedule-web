@@ -95,11 +95,18 @@ class ServiceController extends Controller
 		if($services){
 			foreach($services as $vals){
 				if($vals->serviceid == $id){
-					$timezone = -28800/3600;
-					$timezone = ($vals->utcoff)/3600;
+					//$timezone = -28800/3600;
+					//$timezone = ($vals->utcoff)/3600;
 					// $str .= "{'name':'".my_nl2br($vals->servicename)."','start':'".strtotime(substr($vals->startdatetime,0,-3))."','end':'".strtotime(substr($vals->enddatetime,0,-3))."','desp':'".my_nl2br($vals->desp)."','repeat':'".$vals->repeat."','alert':'".$vals->alert."','timezone':'"."-28800"."'}";
 					
-					$str .= "{'name':'".my_nl2br($vals->servicename)."','start':'".date('Y-m-d H:i:s',(strtotime($vals->startdatetime)+($timezone*3600)))."','end':'".date('Y-m-d H:i:s',(strtotime($vals->enddatetime)+$timezone*3600))."','desp':'".my_nl2br($vals->desp)."','repeat':'".$vals->repeat."','alert':'".$vals->alert."','timezone':'".$timezone."'}";
+					$str .= "{'name':'".my_nl2br($vals->servicename)
+                        //."','start':'".date('Y-m-d H:i:s',(strtotime($vals->startdatetime)+($timezone*3600)))
+                        //."','end':'".date('Y-m-d H:i:s',(strtotime($vals->enddatetime)+$timezone*3600))
+                        ."','desp':'".my_nl2br($vals->desp)
+                        //."','repeat':'".$vals->repeat
+                        //."','alert':'".$vals->alert
+                        //."','timezone':'".$timezone
+                        ."'}";
 				}
 			}
 		}
@@ -148,14 +155,14 @@ class ServiceController extends Controller
 					'serviceid'=>$serviceid,
 					'servicename'=>$_POST['name'],
 					'desp'=>$_POST['desp'],
-					'repeat'=>0,
-					'startdatetime'=>'00:00:00 00:00:00',
-					'enddatetime'=>'00:00:00 00:00:00',
+					//'repeat'=>0,
+					//'startdatetime'=>'00:00:00 00:00:00',
+					//'enddatetime'=>'00:00:00 00:00:00',
 					// 'repeat'=>$_POST['repeat'],
 					// 'startdatetime'=>$real_start,
 					// 'enddatetime'=>$real_end,
-					'alert'=>$_POST['alerts'],
-					'utcoff'=>$_POST['timezone']*3600
+					//'alert'=>$_POST['alerts'],
+					//'utcoff'=>$_POST['timezone']*3600
 				)
 			);
 			// dump($arr);exit;
@@ -182,8 +189,8 @@ class ServiceController extends Controller
 				$addservice->startdatetime = '00:00:00 00:00:00';
 				$addservice->enddatetime = '00:00:00 00:00:00';
 				
-				$addservice->alert = $_POST['alerts'];
-				$addservice->utcoff = $_POST['timezone']*3600;
+				//$addservice->alert = $_POST['alerts'];
+				//$addservice->utcoff = $_POST['timezone']*3600;
 				$addservice->sharedrole = 0;
 				array_push($myservices,$addservice);
 				Yii::app()->cache->set($ownerid.'_myservices',$myservices,CACHETIME);
@@ -416,7 +423,7 @@ class ServiceController extends Controller
 			$desp = $_POST['desp'];
 			// $repeat = $_POST['repeat'];
 			$repeat = 0;
-			$alerts = $_POST['alerts'];
+			//$alerts = $_POST['alerts'];
 			$name = $_POST['name'];
 			
 			
@@ -430,9 +437,9 @@ class ServiceController extends Controller
 					'servicename'=>$name,
 					"desp"=>$desp,
 					"repeat"=>$repeat,  
-					"startdatetime"=>$start,
-					"enddatetime"=>$end,
-					"alert"=>$alerts,
+					// "startdatetime"=>$start,
+					// "enddatetime"=>$end,
+					// "alert"=>$alerts,
 					// "utcoff"=>"0"
 				)
 			);
@@ -447,9 +454,9 @@ class ServiceController extends Controller
 							$servicevals->servicename = $name;
 							$servicevals->desp = $desp;
 							$servicevals->repeat = $repeat;
-							$servicevals->startdatetime = $start;
-							$servicevals->enddatetime = $end;
-							$servicevals->alert = $alerts;
+							// $servicevals->startdatetime = $start;
+							// $servicevals->enddatetime = $end;
+							// $servicevals->alert = $alerts;
 						}
 					}
 					Yii::app()->cache->set($ownerid.'_myservices',$myservices,CACHETIME);

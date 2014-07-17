@@ -20,6 +20,32 @@
     padding: 12px;
 }
 
+.jqmWindowConfirm {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    margin-left: -200px;
+    width: 400px;
+    background-color: #EEE;
+    color: #333;
+    border: 1px solid #555;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: #333 0px 0px 10px;
+    -moz-box-shadow: #333 0px 0px 10px;
+    box-shadow: #333 0px 0px 10px;
+    background-color: #FFF;
+    overflow: visible;
+    padding: 20px;
+    text-align: center;
+}
+
+.buttons{
+    margin: 20px auto 0;
+}
+
 .jqmWindow {
     display: none;
 	position: fixed;

@@ -27,7 +27,7 @@ class ScheduleController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','create','update','admin','delete','createSchedule','repeatSelected','Search','CheckFolder','Calendar','Test','ScheduleInfo','GetSharedMembers','view','EditSchedule'),
+				'actions'=>array('index','create','update','admin','delete','createSchedule','repeatSelected','Search','CheckFolder','Calendar','Test','ScheduleInfo','GetSharedMembers','view','EditSchedule', 'UpdateJoinStatus'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -141,7 +141,6 @@ class ScheduleController extends Controller
 						}
 					}
 				}
-			
 			}
 			
 			// dump($sharedList);
@@ -163,12 +162,19 @@ class ScheduleController extends Controller
 			$desp = $_POST['desp'];
 			$start = $_POST['start'].':00';
 			$end = $_POST['end'].':00';
-			$members = explode(",",$_POST['onduty']);
+
 			$scheduleid = ($_SESSION['scheduleid'] == 0)?($_SESSION['ownerid'].'0001'):($_SESSION['scheduleid']+1);
 			$timezone = $_POST['timezone'];
-			
-			$real_start = date('Y-m-d H:i:s',(strtotime($start)-($timezone*3600)));
-			$real_end = date('Y-m-d H:i:s',(strtotime($end)-($timezone*3600)));
+            $alert = $_POST['alert'];
+
+            $onduties = explode(",",$_POST['onduty']);
+            $members = array();
+            foreach($onduties as $member){
+                array_push($members, array('memberid'=>$member, 'confirm'=>0));
+            }
+
+			$real_start = date('Y-m-d H:i:s',(strtotime($start)));
+			$real_end = date('Y-m-d H:i:s',(strtotime($end)));
 			
 			$arr = array(
 				'ownerid'=>$ownerid,
@@ -178,35 +184,33 @@ class ScheduleController extends Controller
 					'desp'=>$desp,
 					'startdatetime'=>$real_start,
 					'enddatetime'=>$real_end,
-					'utcoffset'=>$timezone*3600,
-					'members'=>$members
+					'tzid'=>$timezone,
+					'members'=>$members,
+                    'alert'=>$alert
 				)
 			);
-			
-			// if(is_array($members))
-			$cache_member_string = implode(",",$members);
-			// else $cache_member_string = $members;
+
 			$result = $this->rest()->getResponse('schedules','post',$arr);
 			if($result['code'] == 200){
 				$_SESSION['scheduleid'] = $scheduleid;
 				
 				$myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
-				if(!$myschedules){
-					Yii::app()->cache->set($ownerid.'_myschedules',array(),CACHETIME);
-				}
-				$myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
-				$addschedule = new stdClass();
-				$addschedule->serviceid = $serviceid;
-				$addschedule->scheduleid = $scheduleid;
-				$addschedule->desp = $desp;
-				$addschedule->startdatetime = $real_start;
-				$addschedule->enddatetime = $real_end;
-				$addschedule->utcoffset = $timezone*3600;
-				$addschedule->members = $cache_member_string;
-				$addschedule->createdtime = date('Y-m-d H:i:s');
-				array_push($myschedules,$addschedule);
-				Yii::app()->cache->set($ownerid.'_myschedules',$myschedules,CACHETIME);
-				
+                if($myschedules === array() || $myschedules){
+                    $myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
+                    $addschedule = new stdClass();
+                    $addschedule->serviceid = $serviceid;
+                    $addschedule->scheduleid = $scheduleid;
+                    $addschedule->desp = $desp;
+                    $addschedule->startdatetime = $real_start;
+                    $addschedule->enddatetime = $real_end;
+                    $addschedule->tzid = $timezone;
+                    $addschedule->alert = $alert;
+                    $addschedule->members = $members;
+                    $addschedule->createdtime = date('Y-m-d H:i:s');
+
+                    array_push($myschedules,$addschedule);
+                    Yii::app()->cache->set($ownerid.'_myschedules',$myschedules,CACHETIME);
+                }
 				//success to create schedule
 				echo 'ok';
 			}else{
@@ -253,14 +257,15 @@ class ScheduleController extends Controller
 			
 			$cache_myservices = Yii::app()->cache->get($ownerid.'_myservices');
 			$service = array();
-			$timezones = array();
+			$timezones = getPartTimezones();
+
 			$servicerole = array();
 			if($cache_myservices === array() || $cache_myservices){
 				$services = $cache_myservices;
 				if($services){
 					foreach($services as $servicevals){
 						$service[$servicevals->serviceid] = $servicevals->servicename;
-						$timezones[$servicevals->serviceid] = $servicevals->utcoff;
+						//$timezones[$servicevals->serviceid] = $servicevals->utcoff;
 						$servicerole[$servicevals->serviceid] = $servicevals->sharedrole;
 					}
 				}
@@ -273,7 +278,7 @@ class ScheduleController extends Controller
 					if($services){
 						foreach($services as $servicevals){
 							$service[$servicevals->serviceid] = $servicevals->servicename;
-							$timezones[$servicevals->serviceid] = $servicevals->utcoff;
+							//$timezones[$servicevals->serviceid] = $servicevals->utcoff;
 							$servicerole[$servicevals->serviceid] = $servicevals->sharedrole;
 						}
 					}
@@ -283,52 +288,18 @@ class ScheduleController extends Controller
 			$sharedList = array();
 			$emails = array();
 			$phones = array();
-			if($service){
-				foreach($service as $service_key=>$service_vals){
-				
-					$cache_sharedMembers = Yii::app()->cache->get($service_key.'_sharedmembers');
-					if($cache_sharedMembers === array() || $cache_sharedMembers){
-						// dump($cache_sharedMembers);exit;
-						foreach($cache_sharedMembers as $cache_sharedMembers_vals){
-							$sharedList[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->membername;
-							$emails[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->memberemail;
-							$phones[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->mobilenumber;
-						}
-					}else{
-						$lastupdatetime = '0000-00-00 00:00:00';
-						$arr = array(
-							'ownerid'=>$ownerid,
-							'lastupdatetime'=>$lastupdatetime
-						);
-						$result = $this->rest()->getResponse('services/'.$service_key.'/sharedmembers','get',$arr);
-			
-						if($result['code'] == 200){
-							$sharedmembers_result = json_decode($result['response'])->sharedmembers;
-						
-							// dump($sharedmembers_result);exit;
-						
-							if($sharedmembers_result){
-								foreach($sharedmembers_result as $sharedmembers_result_vals){
-									$sharedList[$sharedmembers_result_vals->memberid] = $sharedmembers_result_vals->membername;
-									$emails[$sharedmembers_result_vals->memberid] = $sharedmembers_result_vals->memberemail;
-									$phones[$sharedmembers_result_vals->memberid] = $sharedmembers_result_vals->mobilenumber;
-								}						
-							}
-						}
-					}
-				}
-			
-			}
-			
-			
-			
+
 			$cache_mymembers = Yii::app()->cache->get($ownerid.'_mymembers');
 			$member = array();
+
 			if($cache_mymembers === array() || $cache_mymembers){
 				$members = $cache_mymembers;
 				if($members){
 					foreach($members as $membervals){
 						$member[$membervals->memberid] = $membervals->membername;
+                        $sharedList[$membervals->memberid] = $membervals->membername;
+                        $emails[$membervals->memberid] = $membervals->memberemail;
+                        $phones[$membervals->memberid] = $membervals->mobilenumber;
 					}
 				}		
 			}else{
@@ -340,19 +311,22 @@ class ScheduleController extends Controller
 					if($members){
 						foreach($members as $membervals){
 							$member[$membervals->memberid] = $membervals->membername;
+                            $sharedList[$membervals->memberid] = $membervals->membername;
+                            $emails[$membervals->memberid] = $membervals->memberemail;
+                            $phones[$membervals->memberid] = $membervals->mobilenumber;
 						}
 					}	
 				}else $members = array();
 			}
 			$member[$ownerid.'0000'] = $_SESSION['username'];
-			
 			$mixed_members = $member+$sharedList;
 			
 			$cache_myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
 			$schedules = array();
-			if($cache_myschedules === array() || $cache_myschedules){
-				$schedules = $cache_myschedules;
-			}else{
+//			if($cache_myschedules === array() || $cache_myschedules){
+//				$schedules = $cache_myschedules;
+//			}
+//            else{
 				if($service){
 					foreach ($service as $servicekey=>$serviceval) {
 						$result = $this->rest()->getResponse('services/'.$servicekey.'/schedules','get',$arr);
@@ -363,7 +337,7 @@ class ScheduleController extends Controller
 					}
 					Yii::app()->cache->set($ownerid.'_myschedules',$schedules,CACHETIME);			
 				}
-			}
+			//}
 			
 			// dump($schedules);exit;	
 
@@ -947,7 +921,7 @@ class ScheduleController extends Controller
 			$scheduleid = $_POST['schedule'];
 			$ownerid = $_SESSION['ownerid'];
 			$cache_myservices = Yii::app()->cache->get($ownerid.'_myservices');
-			
+
 			$services = array();
 			$servicename = array();
 			
@@ -955,110 +929,85 @@ class ScheduleController extends Controller
 					'ownerid'=>$ownerid,
 					'lastupdatetime'=>'0000-00-00 00:00:00'
 			);
-			
-			$timezones = array();
-			
+
+
+
 			if($cache_myservices === array() || $cache_myservices){
 				$services = $cache_myservices;
-			}else{ 		
+			}else{
 				$result = $this->rest()->getResponse('services','get',$arr);
 				if($result['code'] == 200){
 					$services = json_decode($result['response'])->services;
 					Yii::app()->cache->set($ownerid.'_myservices',$services,CACHETIME);
 				}
 			}
-			
+
 			if($services){
 				foreach($services as $vals){
 					$servicename[$vals->serviceid] = $vals->servicename;
-					$timezones[$vals->serviceid] = $vals->utcoff;
 				}
 			}
-			
-			
-			$sharedList = array();
-			
-				
-			$cache_sharedMembers = Yii::app()->cache->get($activityid.'_sharedmembers');
-			if($cache_sharedMembers === array() || $cache_sharedMembers){
-				foreach($cache_sharedMembers as $cache_sharedMembers_vals){
-					$sharedList[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->membername;
-				}
-			}else{
-				$lastupdatetime = '0000-00-00 00:00:00';
-				$arr = array(
-					'ownerid'=>$ownerid,
-					'lastupdatetime'=>$lastupdatetime
-				);
-				$result = $this->rest()->getResponse('services/'.$activityid.'/sharedmembers','get',$arr);
-			
-				if($result['code'] == 200){
-					$sharedmembers_result = json_decode($result['response'])->sharedmembers;
-						
-					if($sharedmembers_result){
-						foreach($sharedmembers_result as $sharedmembers_result_vals){
-							$sharedList[$sharedmembers_result_vals->memberid] = $sharedmembers_result_vals->membername;
-						}						
-					}
-				}
-			}
-			// dump($sharedList);exit;
-			
-			$cache_mymembers = Yii::app()->cache->get($ownerid.'_mymembers');
-			$member = array();
-			if($cache_mymembers === array() || $cache_mymembers){
-				$members = $cache_mymembers;		
-			}else{
-				$members_result = $this->rest()->getResponse('members','get',$arr);
-				if($members_result['code'] == 200){
-					$members = json_decode($members_result['response'])->members;
-					Yii::app()->cache->set($ownerid.'_mymembers',$members,CACHETIME);	
-				}
-			}
-			
-			if($members){
-				foreach($members as $membervals){
-					$member[$membervals->memberid] = $membervals->membername;
-				}
-			}
-			// dump($members);exit;
-			
-			$cache_myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
-			$schedules = array();
-			if($cache_myschedules === array() || $cache_myschedules){
-				$schedules = $cache_myschedules;
-			}else{
-				if($services){
-					foreach ($services as $servicekey=>$serviceval) {
-						$result = $this->rest()->getResponse('services/'.$servicekey.'/schedules','get',$arr);
-						if($result['code'] == 200){
-							$schedules = array_merge(json_decode($result['response'])->schedules,$schedules);
-						}
-					}
-					Yii::app()->cache->set($ownerid.'_myschedules',$schedules,CACHETIME);			
-				}
-			}
-			
-			$str = "";
-			if($schedules){
-				foreach($schedules as $schedulesval){
-					if($schedulesval->serviceid == $activityid && $schedulesval->scheduleid == $scheduleid){
-						$memberarr = explode(",",$schedulesval->members);
-						$memberstr = "";
-						if($memberarr){
-							foreach($memberarr as $memberarrval){
-								$memberstr .= "<li id=\"".$memberarrval."_selected\" name=\"selectedmembers\"><table width=\"117\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td width=\"75\" height=\"25\"><span class=\"name\">".$sharedList[$memberarrval]."</span></td><td width=\"25\"><span class=\"cha\" onclick=\"deleteContact(".$memberarrval.")\" style=\"cursor:pointer;\"></span></td></tr></table></li>";
-							}
-						}
-						
-						$str .= "{'name':'".$servicename[$activityid]."','start':'".date('Y/m/d H:i',(strtotime($schedulesval->startdatetime)+$timezones[$schedulesval->serviceid]))."','end':'".date('Y/m/d H:i:s',(strtotime($schedulesval->enddatetime)+$timezones[$schedulesval->serviceid]))."','desp':'".$schedulesval->desp."','onduty':'".$memberstr."'}";
-					}
-				}
-			}
-			
-			echo $str;		
-			
-		}
+
+            $member = array();
+            $cache_mymembers = Yii::app()->cache->get($ownerid.'_mymembers');
+
+            if($cache_mymembers === array() || $cache_mymembers){
+                $members = $cache_mymembers;
+            }else{
+                $members_result = $this->rest()->getResponse('members','get',$arr);
+                if($members_result['code'] == 200){
+                    $members = json_decode($members_result['response'])->members;
+                    Yii::app()->cache->set($ownerid.'_mymembers',$members,CACHETIME);
+                }
+            }
+
+            if($members){
+                foreach($members as $membervals){
+                    $member[$membervals->memberid] = $membervals->membername;
+                }
+            }
+
+            $schedules = array();
+
+
+            if($activityid){
+                $result = $this->rest()->getResponse('services/'.$activityid.'/schedules','get',$arr);
+                if($result['code'] == 200){
+                    $schedules = array_merge(json_decode($result['response'])->schedules,$schedules);
+                }
+            }
+
+            $str = "";
+            if($schedules){
+                foreach($schedules as $schedulesval){
+                    if($schedulesval->scheduleid == $scheduleid){
+                        $memberstr = "";
+
+                        foreach($schedulesval->members as $mem){
+                            if (in_array( $mem->memberid, array_keys($member))){
+                                $memberstr .= "<li id=\"".$mem->memberid."_selected\" name=\"selectedmembers\">"
+                                    ."<table width=\"117\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">"
+                                    ."<tr><td width=\"75\" height=\"25\">"
+                                    ."<span class=\"name\">".$member[$mem->memberid]."</span></td>"
+                                    ."<td width=\"25\"><span class=\"cha\" onclick=\"deleteContact(".$mem->memberid.")\" style=\"cursor:pointer;\"></span></td>"
+                                    ."</tr></table></li>";
+                            }
+                        }
+
+                        $str .= "{'name':'".$servicename[$activityid]
+                            ."','start':'".date('Y/m/d H:i',(strtotime($schedulesval->startdatetime)))
+                            ."','end':'".date('Y/m/d H:i',(strtotime($schedulesval->enddatetime)))
+                            ."','desp':'".$schedulesval->desp
+                            ."','alert':'".$schedulesval->alert
+                            ."','tzid':'".$schedulesval->tzid
+                            ."','onduty':'".$memberstr."'}";
+                    }
+                }
+            }
+
+            echo $str;
+
+        }
 
 	}
 	
@@ -1070,17 +1019,21 @@ class ScheduleController extends Controller
 			$serviceid = $_POST['activity'];
 			$scheduleid = $_POST['schedule'];
 			$desp = $_POST['desp'];
-			// $start = $_POST['start'].':00';
-			// $end = $_POST['end'].':00';
-			$members = explode(",",$_POST['onduty']);
+            $alert = $_POST['alert'];
+
+            $onduties = explode(",",$_POST['onduty']);
+            $members = array();
+            foreach($onduties as $member){
+                array_push($members, array('memberid'=>$member, 'confirm'=>0));
+            }
 			
 			//对应的member name
 			$names = $_POST['names'];
 			
 			$timezone = $_POST['timezone'];
 			
-			$start = date('Y-m-d H:i:s',(strtotime($_POST['start'])-($_POST['timezone']*3600)));
-			$end = date('Y-m-d H:i:s',(strtotime($_POST['end'])-($_POST['timezone']*3600)));
+			$start = date('Y-m-d H:i:s',(strtotime($_POST['start'])));
+			$end = date('Y-m-d H:i:s',(strtotime($_POST['end'])));
 			
 			
 			$arr = array(
@@ -1090,14 +1043,12 @@ class ScheduleController extends Controller
 					'desp'=>$desp,
 					'startdatetime'=>$start,
 					'enddatetime'=>$end,
-					'utcoffset'=>'0',
+					'tzid'=>$timezone,
+                    'alert'=>$alert,
 					'members'=>$members
 				)
 			);
-			
-			// if(is_array($members))
-			$cache_member_string = implode(",",$members);
-			// else $cache_member_string = $members;
+
 			$result = $this->rest()->getResponse('schedules/'.$scheduleid,'put',$arr);
 			if($result['code'] == 200){
 				
@@ -1108,26 +1059,98 @@ class ScheduleController extends Controller
 							$myschedules_vals->startdatetime = $start;
 							$myschedules_vals->enddatetime = $end;
 							$myschedules_vals->desp = $desp;
-							$myschedules_vals->members = $_POST['onduty'];
+							$myschedules_vals->members = $members;
+                            $myschedules_vals->alert = $alert;
+                            $myschedules_vals->tzid = $timezone;
 						}
 					}
 				}
 				
 				Yii::app()->cache->set($ownerid.'_myschedules',$myschedules,CACHETIME);
-				
-				//success to create schedule
-				// echo 'ok';
-				//返回的start end
+
 				$tz = "<br>（".getTimezoneAbbr($timezone)."）";
 				$re_start = date("m/d/Y h:i A",strtotime($_POST['start'])).$tz;
 				$re_end = date("m/d/Y h:i A",strtotime($_POST['end'])).$tz;
-				
-				echo "{'status':'ok','start':'".$re_start."','end':'".$re_end."','participant':'".$names."'}";
+
+
+
+                $emails = array();
+                $phones = array();
+                $names = array();
+                $members_data = array();
+
+                $cache_mymembers = Yii::app()->cache->get($ownerid.'_mymembers');
+                if($cache_mymembers === array() || $cache_mymembers){
+                    $members_data = $cache_mymembers;
+
+                }else{
+                    $members_result = $this->rest()->getResponse('members','get',$arr);
+                    if($members_result['code'] == 200){
+                        $members_data = json_decode($members_result['response'])->members;
+                        Yii::app()->cache->set($ownerid.'_mymembers',$members_data,CACHETIME);
+                    }
+                }
+
+                if($members_data){
+                    foreach($members_data as $membervals){
+                        $names[$membervals->memberid] = $membervals->membername;
+                        $emails[$membervals->memberid] = $membervals->memberemail;
+                        $phones[$membervals->memberid] = $membervals->mobilenumber;
+                    }
+                }
+
+                $member_str = "";
+                foreach($members as $member){
+                    $mem_id = $member["memberid"];
+                    if ($_SESSION['ownerid'].'0000'==$mem_id){
+                        $member_str = "<a "
+                            . "' id='" . $scheduleid . '_' . $mem_id
+                            . "' title='Name: " . $names[$mem_id] . "\nEmail: " . $emails[$mem_id] . "\nPhone: " . $phones[$mem_id]
+                            . "' class='confirm-0"
+                            . "' href='javascript:void(0);'"
+                            . "' onclick='showConfirm(this);'"
+                            . "'>"
+                            . $names[$mem_id] . "</a>"
+                            .$member_str;
+                    }
+                    else{
+                        $member_str .= "<span name='membersid_" . $scheduleid
+                            . "' id='" .$scheduleid . '_' . $mem_id
+                            . "' title='Name: " . $names[$mem_id] . "\nEmail: " . $emails[$mem_id] . "\nPhone: " . $phones[$mem_id]
+                            . "' class='confirm-0"
+                            . "'>"
+                            . $names[$mem_id] . "</span>";
+                    }
+                }
+                $return = json_encode(array('status'=>"ok",
+                    'start'=>$re_start,
+                    'end'=>$re_end,
+                    'participant'=>$member_str));
+				echo $return;
 			}else{
 				//do something
 				echo 'Fail to create the schedule.';
 			}
 		}	 
 	}
+
+    public function actionUpdateJoinStatus(){
+        $ids = explode("_", $_POST['ids']);
+        $confirm =  $_POST['confirm'];
+
+        if (is_array($ids) && count($ids)==2){
+            $link = 'schedules/'.$ids[0].'/onduty/'.$ids[1];
+            $arr = array(
+                'ownerid'=> $_SESSION['ownerid'],
+                'confirm'=> $confirm
+            );
+
+            $result = $this->rest()->getResponse($link, 'put', $arr);
+            if($result['code'] == 200){
+                echo 'ok';
+            }
+        }
+
+    }
 	
 }
