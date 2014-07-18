@@ -485,7 +485,7 @@ if (isset($_GET['activity'])) {
             $enddate = explode(" ", $real_end);
 
             //时区的简写
-            $tz = "<br>（" . getTimezoneAbbr([$schedules_vals->tzid]) . "）";
+            $tz = "<br>（" . getTimezoneAbbr($schedules_vals->tzid) . "）";
 
             // $startdate = explode(" ",$schedules_vals->startdatetime);
             // $enddate = explode(" ",$schedules_vals->enddatetime);
