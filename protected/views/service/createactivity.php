@@ -161,7 +161,7 @@
     </tr>-->
 
     <tr>
-      <td height="140"><span class="fontsize1">Descripion</span></td>
+      <td height="140"><span class="fontsize1">Description</span></td>
       <td colspan="2">
         <label>
           <textarea name="textarea" class="cname2" id="description"></textarea>

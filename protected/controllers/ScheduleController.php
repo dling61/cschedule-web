@@ -160,8 +160,8 @@ class ScheduleController extends Controller
 			
 			$serviceid = $_POST['activity'];
 			$desp = $_POST['desp'];
-			$start = $_POST['start'].':00';
-			$end = $_POST['end'].':00';
+			$start = $_POST['start'];
+			$end = $_POST['end'];
 
 			$scheduleid = ($_SESSION['scheduleid'] == 0)?($_SESSION['ownerid'].'0001'):($_SESSION['scheduleid']+1);
 			$timezone = $_POST['timezone'];
@@ -986,8 +986,8 @@ class ScheduleController extends Controller
                         foreach($schedulesval->members as $mem){
                             if (in_array( $mem->memberid, array_keys($member))){
                                 $memberstr .= "<li id=\"".$mem->memberid."_selected\" name=\"selectedmembers\">"
-                                    ."<table width=\"117\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">"
-                                    ."<tr><td width=\"75\" height=\"25\">"
+                                    ."<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">"
+                                    ."<tr><td>"
                                     ."<span class=\"name\">".$member[$mem->memberid]."</span></td>"
                                     ."<td width=\"25\"><span class=\"cha\" onclick=\"deleteContact(".$mem->memberid.")\" style=\"cursor:pointer;\"></span></td>"
                                     ."</tr></table></li>";

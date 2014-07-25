@@ -368,7 +368,7 @@ if ($members) {
             <tr>
                 <td height="35">&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><span class="color1">If you want to share with another contact, please go to my activity "share" option.</span>
+                <td width="575"><span class="color1">If you can't find a participant here, please go to the activity's "Participants" option to add it.</span>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -1085,7 +1085,7 @@ function is_Checked(i) {
     if (status) {
         var name = document.getElementById(i + '_name').innerHTML;
 
-        $("<li id='" + i + "_selected'><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='75' height='25'><span class='name'><a href='#'>" + name + "</a></span></td><td width='25'><span class='cha' onclick='deleteContact(" + i + ")' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
+        $("<li id='" + i + "_selected'><table border='0' cellspacing='0' cellpadding='0'><tr><td><span class='name'><a href='#'>" + name + "</a></span></td><td width='25'><span class='cha' onclick='deleteContact(" + i + ")' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
     } else {
         $('#' + i + '_selected').remove();
     }
@@ -1260,7 +1260,15 @@ function sendConfirmStatus(confirm){
 <link rel="stylesheet" type="text/css" href="./css/jquery.datetimepicker.css"/>
 <script type="text/javascript" src="./js/jquery.datetimepicker.js"></script>
 <script language='javascript'>
-    $('#editstart').datetimepicker({step: 10});
-    $('#editend').datetimepicker({step: 10});
+    $('#editstart').datetimepicker({
+        step: 10,
+        format: 'Y/m/d g:i A',
+        formatTime: 'g:i A'
+    });
+    $('#editend').datetimepicker({
+        step: 10,
+        format: 'Y/m/d g:i A',
+        formatTime: 'g:i A'
+    });
 </script>
 </html>

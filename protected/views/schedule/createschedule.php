@@ -104,7 +104,7 @@ echo $timezones_str;
 <div class="main10">
     <div class="main10top"></div>
     <div class="main10inter">
-        <table width="670" border="0" cellpadding="0" cellspacing="0">
+        <table width="700" border="0" cellpadding="0" cellspacing="0">
 
             <tr>
                 <td height="30" colspan="4" align="center" valign="middle"><span class="wrong" id='notice'></span></td>
@@ -193,7 +193,7 @@ echo $timezones_str;
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td height="143" valign="top"><span class="fontsize1">Descripion</span></td>
+                <td height="143" valign="top"><span class="fontsize1">Description</span></td>
                 <td>&nbsp;</td>
                 <td><label>
                         <textarea name="textarea" class="cname2" id="description"></textarea>
@@ -280,7 +280,7 @@ echo $timezones_str;
             <tr>
                 <td height="35">&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><span class="color1">If you want to share with another contact ,please go to my activity "Participant" option.</span>
+                <td width="575"><span class="color1">If you can't find a participant here, please go to the activity's "Participants" option to add it.</span>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -319,8 +319,14 @@ echo $timezones_str;
 
 <script language='javascript'>
     $(function () {
-        $('#starttime').datetimepicker({step: 10});
-        $('#endtime').datetimepicker({step: 10});
+        $('#starttime').datetimepicker({
+            step: 10,
+            format: 'Y/m/d g:i A',
+            formatTime: 'g:i A'});
+        $('#endtime').datetimepicker({
+            step: 10,
+            format: 'Y/m/d g:i A',
+            formatTime: 'g:i A'});
     });
 
     var homeUrl = "<?php echo Yii::app()->homeUrl;?>";
@@ -434,7 +440,7 @@ echo $timezones_str;
         var status = document.getElementById(i + '_check').checked;
         if (status) {
             var name = document.getElementById(i + '_name').innerHTML;
-            $("<li id='" + i + "_selected'><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='75' height='25'><span class='name'><a href='#'>" + name + "</a></span></td><td width='25'><span class='cha' onclick='deleteContact(" + i + ")' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#selectedcontacts');
+            $("<li id='" + i + "_selected'><table border='0' cellspacing='0' cellpadding='0'><tr><td><span class='name'><a href='#'>" + name + "</a></span></td><td width='25'><span class='cha' onclick='deleteContact(" + i + ")' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#selectedcontacts');
         } else {
             $('#' + i + '_selected').remove();
         }

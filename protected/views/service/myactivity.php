@@ -54,44 +54,7 @@
     <td height="30" colspan="4" align="center" valign="middle"><span class="wrong">错误信息</span></td>
     </tr>-->
   
-  <tr id="shareloading"> <!--
-    <td valign="top"><span class="fontsize1" style="visibility:hidden;">On Duty</span></td>
-    <td>&nbsp;</td>
-    <td><div class="cschbg1"></div>
-	<div class="cschbg2"><table width="563" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-  <td><div class="cschb">
-    <ul>
-	
-		<span id = "editonduty"></span>
-		<div class="clear"></div>
-		
-    </ul>
-    </div></td>
-    </tr>
-</table>
-</div>
-<div style="width:563px; border-left:1px solid #dbe2e7; border-right:1px solid #dbe2e7; border-bottom:1px solid #dbe2e7; ">&nbsp;&nbsp;<span class="color1">Please select contacts to add particpants into activity.</span></div>
-<div class="schtable">
-  <ul id="shareloading">
-   <li class="schbg1">
-      <table width="546" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td width="35" align="center"><input name="Input" type="checkbox" value="" /></td>
-          <td width="147" height="35">Tony Tang </td>
-          <td width="35" align="center"><input name="Input" type="checkbox" value="" /></td>
-          <td width="147">Wang Na</td>
-          <td width="35" align="center"><input name="Input" type="checkbox" value="" /></td>
-          <td width="147">David Wang</td>
-        </tr>
-      </table>
-    </li>
-    <li class="schbg2"></li>
-	
-  </ul>
-</div>
-<div class="schbg3"></div></td>
-    <td>&nbsp;</td>-->
+  <tr id="shareloading">
   </tr></table>
   <br>
   <table style="width:563px; border:1px solid #dbe2e7;margin-left:60px;">
@@ -485,7 +448,6 @@
 </div>
 
 <?php include_once(dirname(dirname(__FILE__)).'/footer.php');?>
-
 </body>
 
 <script language='javascript'>
@@ -674,7 +636,7 @@ function addNewContact(){
 							// $(\"<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'><tr><td width='35'>&nbsp;</td><td width='154' height='33' id='name_\"+obj.id+\"'>\"+name+\"</td><td width='222' id='email_\"+obj.id+\"'>\"+email+\"</td><td width='116'><select  id='\"+obj.id+\"' name = 'selectdMembers' onchange='changerole(\"+obj.id+\")'><option value='-1'>Noshare</option><option value ='2'>Participant</option></select></td></tr></table></li>\").appendTo('#shareloading');
 							
 							if(obj.tip == 'ok'){
-								$(\"<li><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='25'><input name='contact_check' type='checkbox' id='\"+obj.id+\"_check' onclick='is_Checked(\"+obj.id+\")'></td><td width='75' height='25' id='\"+obj.id+\"_name'>\"+name+\"</td></tr></table></li>\").appendTo('#addnewcontact');
+								$(\"<li><table border='0' cellspacing='0' cellpadding='0'><tr><td width='25'><input name='contact_check' type='checkbox' id='\"+obj.id+\"_check' onclick='is_Checked(\"+obj.id+\")'></td><td id='\"+obj.id+\"_name'>\"+name+\"</td></tr></table></li>\").appendTo('#addnewcontact');
 								
 								$('#notice').html('');
 								$('#email').val('');
@@ -923,7 +885,7 @@ function is_Checked(i){
 	if(status){
 		var name = document.getElementById(i+'_name').innerHTML;
 			
-		$("<li id='"+i+"_selected'><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='75' height='25'><span class='name'><a href='#'>"+name+"</a></span></td><td width='25' onclick='deleteContact("+i+")'><span class='cha' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
+		$("<li id='"+i+"_selected'><table border='0' cellspacing='0' cellpadding='0'><tr><td><span class='name'><a href='#'>"+name+"</a></span></td><td width='25' onclick='deleteContact("+i+")'><span class='cha' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
 	}else{
 		$('#'+i+'_selected').remove();
 	}
