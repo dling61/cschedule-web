@@ -995,8 +995,8 @@ class ScheduleController extends Controller
                         }
 
                         $str .= "{'name':'".$servicename[$activityid]
-                            ."','start':'".date('Y/m/d H:i',(strtotime($schedulesval->startdatetime)))
-                            ."','end':'".date('Y/m/d H:i',(strtotime($schedulesval->enddatetime)))
+                            ."','start':'".date('Y/m/d h:i A',(strtotime($schedulesval->startdatetime)))
+                            ."','end':'".date('Y/m/d h:i A',(strtotime($schedulesval->enddatetime)))
                             ."','desp':'".$schedulesval->desp
                             ."','alert':'".$schedulesval->alert
                             ."','tzid':'".$schedulesval->tzid
