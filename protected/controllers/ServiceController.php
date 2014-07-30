@@ -275,10 +275,11 @@ class ServiceController extends Controller
     <ul>
 	
 		 <li>
-        <table width='117' border='0' cellspacing='0' cellpadding='0'>
+        <table border='0' cellspacing='0' cellpadding='0'>
           <tr>
-            <td width='75' height='25'><span class='name'>" . $creator . "</span></td>
-                  <td width='25'><span class='cha'></span></td>
+            <td>
+                <span class='name'>" . $creator . "</span></td>
+            <td width='25'><span class='cha'></span></td>
                 </tr>
           </table>
             </li>
@@ -319,10 +320,10 @@ class ServiceController extends Controller
                 </li>";
                         }else{*/
                         $str .= "<li>
-        <table width='117' border='0' cellspacing='0' cellpadding='0'>
+        <table border='0' cellspacing='0' cellpadding='0'>
           <tr>
 		   <td width='25'><input name='contact_check' type='checkbox' id='" . $membersvals->memberid . "_check' onclick='is_Checked(" . $membersvals->memberid . ")'></td>
-            <td width='75' height='25' id='" . $membersvals->memberid . "_name'>" . $membersvals->membername . "</td>
+            <td id='" . $membersvals->memberid . "_name'>" . $membersvals->membername . "</td>
 			</tr>
           </table>
             </li>";

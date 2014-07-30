@@ -441,7 +441,7 @@ function addNewContact(){
 							// $(\"<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'><tr><td width='35'>&nbsp;</td><td width='154' height='33' id='name_\"+obj.id+\"'>\"+name+\"</td><td width='222' id='email_\"+obj.id+\"'>\"+email+\"</td><td width='116'><select  id='\"+obj.id+\"' name = 'selectdMembers' onchange='changerole(\"+obj.id+\")'><option value='-1'>Noshare</option><option value ='2'>Participant</option></select></td></tr></table></li>\").appendTo('#shareloading');
 							
 							if(obj.tip == 'ok'){
-								$(\"<li><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='25'><input name='contact_check' type='checkbox' id='\"+obj.id+\"_check' onclick='is_Checked(\"+obj.id+\")'></td><td width='75' height='25' id='\"+obj.id+\"_name'>\"+name+\"</td></tr></table></li>\").appendTo('#addnewcontact');
+								$(\"<li><table border='0' cellspacing='0' cellpadding='0'><tr><td width='25'><input name='contact_check' type='checkbox' id='\"+obj.id+\"_check' onclick='is_Checked(\"+obj.id+\")'></td><td id='\"+obj.id+\"_name'>\"+name+\"</td></tr></table></li>\").appendTo('#addnewcontact');
 								
 								$('#notice').html('');
 								$('#email').val('');
@@ -554,7 +554,7 @@ function is_Checked(i){
 	if(status){
 		var name = document.getElementById(i+'_name').innerHTML;
 			
-		$("<li id='"+i+"_selected'><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='75' height='25'><span class='name'><a href='#'>"+name+"</a></span></td><td width='25' onclick='deleteContact("+i+")'><span class='cha' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
+		$("<li id='"+i+"_selected'><table border='0' cellspacing='0' cellpadding='0'><tr><td><span class='name'><a href='#'>"+name+"</a></span></td><td width='25' onclick='deleteContact("+i+")'><span class='cha' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
 	}else{
 		$('#'+i+'_selected').remove();
 	}
