@@ -48,8 +48,8 @@ img{border:none;}
 .footer ul li{float:left; color:#7a7a7a; font-size:14px;}
 .footer ul li a{color:#7a7a7a; font-size:14px;}
 .footer ul li a:hover{ color:#7a7a7a; text-decoration:underline;}
-.forapp{background:url(../images/bg_15.png) no-repeat; width:126px; height:42px; border:none; cursor:pointer;}
-.foraid{background:url(../images/bg_16.png) no-repeat; width:126px; height:42px; border:none; cursor:pointer;}
+.forapp{background:url(../images/bg_15.png) no-repeat; display: inline-block; font-size: 0 !important; width:126px; height:42px; border:none; cursor:pointer;}
+.foraid{background:url(../images/bg_16.png) no-repeat; display: inline-block; font-size: 0 !important; width:126px; height:42px; border:none; cursor:pointer;}
 .top2{width:100%; background:url(../images/bg_23.png) repeat-x; height:149px;}
 .logo2{background:url(../images/bg_24.png) no-repeat; width:573px; padding-left:427px;  height:86px; margin:0 auto;}
 

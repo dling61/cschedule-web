@@ -252,6 +252,9 @@ if ($members) {
 <div class="jqmWindowEditSchedule" id="editschedulepopup">
     <div class="main10top"></div>
     <div class="main10inter">
+        <div>
+            <h2 id="schedulePopupTitle" ></h2>
+        </div>
         <table width="670" border="0" cellpadding="0" cellspacing="0">
             <input type="hidden" id='hidschedule'>
             <input type="hidden" id='hidactivity'>
@@ -708,8 +711,12 @@ else {
 
         // dump($schedules);exit;
         foreach ($schedules as $schedules_vals) {
-            $real_start = date("m/d/Y h:i A", (strtotime($schedules_vals->startdatetime)));
-            $real_end = date("m/d/Y h:i A", (strtotime($schedules_vals->enddatetime)));
+            //$real_start = date("m/d/Y h:i A", (strtotime($schedules_vals->startdatetime)));
+            //$real_end = date("m/d/Y h:i A", (strtotime($schedules_vals->)));
+            $real_start = (new DateTime($schedules_vals->startdatetime, new DateTimeZone('UTC')))
+                ->setTimezone(new DateTimeZone(getTimezoneAbbr($schedules_vals->tzid)))->format('m/d/Y h:i A');
+            $real_end = (new DateTime($schedules_vals->enddatetime, new DateTimeZone('UTC')))
+                ->setTimezone(new DateTimeZone(getTimezoneAbbr($schedules_vals->tzid)))->format('m/d/Y h:i A');
 
             $startdate = explode(" ", $real_start);
             $enddate = explode(" ", $real_end);
@@ -798,12 +805,14 @@ echo $schedule_str;
 
 </ul>
 </div>
-<div class="main5" style="display:none"><input type="button" class="mname3" onclick='repeatSelected()'></div>
+<div class="main5">
+    <input type="button" class="mname3" onclick='repeatSelected()'>
+</div>
 
 <?php include_once(dirname(dirname(__FILE__)) . '/footer.php'); ?>
 
 </body>
-<script language='javascript'>
+<script type='text/javascript'>
 $(function () {
     $("#viewschedulepopup").jqm({
         modal: true,
@@ -845,6 +854,8 @@ $(function () {
 var homeUrl;
 var homeUrl = "<?php echo Yii::app()->homeUrl;?>";
 var schedulesurl = "<?php echo Yii::app()->createUrl("Schedule/Admin");?>";
+
+
 function deleteSchedule(i) {
     <?php
         echo CHtml::ajax(
@@ -883,89 +894,23 @@ function repeatSelected() {
     var selected = document.getElementsByName('ischeck');
 
     var activityid = new Array();
-    var activityname = new Array();
-
-    var start = new Array();
-    var end = new Array();
-    var desp = new Array();
-    var participants = new Array();
-    var membersname = new Array();
-
-    var strs = new Array();
     var count = 0;
-
     for (var i = 0; i < length; i++) {
         if (selected[i].checked) {
             count++;
+            var selectedids = selected[i].id;
+            activityid.push(selectedids);
         }
     }
     if (count == 0) {
-        alert('Please select at least one schedule!');
+        alert('Please select a schedule!');
         return;
-    } else {
-        for (var i = 0; i < length; i++) {
-            if (selected[i].checked) {
-                var selectedids = selected[i].id;
-
-                var select_ids = selectedids.substring(0, selectedids.length - 6);
-                var ids = select_ids.split('_');
-
-                var limembers = document.getElementsByName('membersid_' + ids[0]);
-                var membername = new Array();
-                for (var k = 0; k < limembers.length; k++) {
-                    var limembersid = limembers[k].id;
-                    membername.push(document.getElementById(limembersid).innerHTML);
-                }
-                membersname.push(membername);
-
-                activityid.push(ids[1]);
-
-                start.push(document.getElementById(ids[0] + '_st').innerHTML);
-                end.push(document.getElementById(ids[0] + '_en').innerHTML);
-
-                activityname.push(document.getElementById(ids[0] + '_se').innerHTML);
-                // membersname.push(document.getElementById(ids[0]+'_me').innerHTML);
-
-                var participant = new Array();
-                var str = '';
-                for (var j = 2; j < ids.length; j++) {
-                    participant.push(ids[j]);
-                    str += '_' + ids[j];
-                }
-
-                participants.push(participant);
-                strs.push(str);
-            }
-        }
-
-        <?php
-            echo CHtml::ajax(
-            array(
-                "url" => CController::createUrl("Schedule/repeatSelected"),
-                "data" => "js:{name:activityid, start : start, end : end,participant:participants,str:strs,count:count,activityname:activityname,membersname:membersname}",
-                "type"=>"POST",
-                'beforeSend'=>"js:function(){
-                    $(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);
-                }",
-                "success"=>"js:function(data){
-                    // var data = eval('('+json+')');
-                    // if(data.tip == 'ok'){
-                        // $(\".showbox\").stop(true).animate({'margin-top':'250px','opacity':'0'},400);
-                        // $('tbody').prepend(data.strings);
-                    // }
-                    if(data == 'ok'){
-                        history.go(0);
-                    }
-                    if(data == 'ajaxsessionout'){
-                        location.href = homeUrl;
-                        return;
-                    }
-
-                }",
-        )
-    );
-?>
+    } else if (count> 1){
+        alert('Please select one schedule only!');
+        return;
     }
+
+    editSchedule(activityid[0], true);
 }
 
 function viewSchedule(i) {
@@ -1002,7 +947,18 @@ function viewSchedule(i) {
     ?>
 }
 
-function editSchedule(i) {
+var isRepeat = false;
+function editSchedule(i, repeat) {
+
+    if ((typeof repeat !== 'undefined') && (repeat)){
+        $("#schedulePopupTitle").html("Repeat schedule");
+        isRepeat = true;
+    }
+    else{
+        $("#schedulePopupTitle").html("Edit schedule");
+        isRepeat = false;
+    }
+
     $("#editschedulepopup").jqmShow();
 
     document.getElementById('sharememberlist').innerHTML = "";
@@ -1015,7 +971,7 @@ function editSchedule(i) {
     var arr = i.split('_');
     var activity = arr[1];
 
-    document.getElementById("hidschedule").value = arr[0];
+    document.getElementById("hidschedule").value = isRepeat ? 0 : arr[0];
     document.getElementById("hidactivity").value = arr[1];
 
     document.getElementById("editactivity").value = document.getElementById(arr[0] + "_se").value;
@@ -1102,7 +1058,7 @@ function submitSchedule() {
     var end = $('#editend').val();
     var desp = $('#editdesp').val();
     var timezone = $('#edittimezone').val();
-    var alert = $('#editalert').val();
+    var alertId = $('#editalert').val();
 
     var schedule = $("#hidschedule").val();
 
@@ -1158,13 +1114,13 @@ function submitSchedule() {
     }
     var onduty = participants.substr(1);
     var names = part_name.substr(4);
-
     var url = "<?php echo Yii::app()->createUrl('Schedule/admin');?>";
+    if (isRepeat==false){
     <?php
         echo CHtml::ajax(
             array(
                 "url" => CController::createUrl("Schedule/EditSchedule"),
-                "data" => "js:{schedule:schedule,activity:activity,start:start,end:end,desp:desp,onduty:onduty,timezone:timezone,names:names, alert:alert}",
+                "data" => "js:{schedule:schedule,activity:activity,start:start,end:end,desp:desp,onduty:onduty,timezone:timezone,names:names, alert:alertId}",
                 "type"=>"POST",
                 'beforeSend'=>"js:function(){
                     $(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);
@@ -1187,11 +1143,41 @@ function submitSchedule() {
                     }
 
                     $(\".showbox\").stop(true).animate({'margin-top':'250px','opacity':'0'},400);
-                    // alert(data);
                 }",
             )
         );
     ?>
+    }
+    else{
+        <?php
+           echo CHtml::ajax(
+               array(
+                   "url" => CController::createUrl("Schedule/createSchedule"),
+                   "data" => "js:{activity:activity,start:start,end:end,desp:desp,onduty:onduty,timezone:timezone,names:names, alert:alertId}",
+                   "type"=>"POST",
+                   'beforeSend'=>"js:function(){
+                       $(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);
+                   }",
+                   "success"=>"js:function(data){
+
+                       if(data == 'ajaxsessionout'){
+                           location.href = homeUrl;
+                           return;
+                       }
+
+                       if(data == 'ok'){
+                            alert(\"New schedule is created.\");
+                            location.reload();
+                       }else{
+                            alert(\"Sorry, please try late.\");
+                       }
+
+                       $(\".showbox\").stop(true).animate({'margin-top':'250px','opacity':'0'},400);
+                   }",
+               )
+           );
+       ?>
+    }
 }
 
 var currentStatus;

@@ -635,6 +635,7 @@ class ServiceController extends Controller
     public function actionGetSharedMembers()
     {
         $ownerid = $_SESSION['ownerid'];
+        $creatorId = $ownerid.'0000';
 
         if (isset($_POST['activityid'])) {
             $serviceid = $_POST['activityid'];
@@ -703,59 +704,69 @@ class ServiceController extends Controller
             }
             // dump($members);exit;
             $sharedmembers_str = "
-    <td valign='top'><span class='fontsize1' style='visibility:hidden;'>On Duty</span></td>
-    <td>&nbsp;</td>
-    <td>
-	<div class='cschbg2'><table width='563' border='0' cellspacing='0' cellpadding='0'>
-  <tr>
-  <td><div class='cschb'>
-    <ul>
-	
-		 <li>
-        <table border='0' cellspacing='0' cellpadding='0'>
-          <tr>
-            <td><span class='name'>" . $creator . "</span></td>
-                  <td width='25'><span class='cha'></span></td>
-                </tr>
-          </table>
-            </li>
-			
-			<span id='editonduty'>";
+                <td valign='top'>
+                    <span class='fontsize1' style='visibility:hidden;'>On Duty</span>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+	                <div class='cschbg2'>
+	                    <table width='563' border='0' cellspacing='0' cellpadding='0'>
+                            <tr>
+                                 <td>
+                                    <div class='cschb'>
+                                        <ul>
+
+                                            <li>
+                                                <table border='0' cellspacing='0' cellpadding='0'>
+                                                    <tr>
+                                                        <td>
+                                                            <span class='name'>" . $creator . "</span>
+                                                        </td>
+                                                        <td width='25'><span class='cha'></span></td>
+                                                    </tr>
+                                                </table>
+                                            </li>
+
+                                            <span id='editonduty'>";
 
             $str = "";
             if ($members) {
                 foreach ($members as $memberkey => $membersvals) {
 
-                    if (in_array($membersvals->memberid, $sharedMemberIds)) {
-                        $str .= "<li>
-        <table border='0' cellspacing='0' cellpadding='0'>
-          <tr>
-		   <td width='25'><input name='contact_check' type='checkbox' id='" . $membersvals->memberid . "_check' onclick='is_Checked(" . $membersvals->memberid . ")' checked></td>
-            <td id='" . $membersvals->memberid . "_name'>" . $membersvals->membername . "</td>
-			</tr>
-          </table>
-            </li>";
-
-
-                        $sharedmembers_str .= "<li id='" . $membersvals->memberid . "_selected'>
-        <table border='0' cellspacing='0' cellpadding='0'>
-          <tr>
-            <td ><span class='name'>" . $membersvals->membername . "</span></td>
-                  <td width='25' onclick='deleteContact(" . $membersvals->memberid . ")'><span class='cha' style='cursor:pointer;'></span></td>
-                </tr>
-          </table>
-            </li>";
-                    } else {
-
-                        $str .= "<li>
-        <table border='0' cellspacing='0' cellpadding='0'>
-          <tr>
-		   <td width='25'><input name='contact_check' type='checkbox' id='" . $membersvals->memberid . "_check' onclick='is_Checked(" . $membersvals->memberid . ")'></td>
-            <td id='" . $membersvals->memberid . "_name'>" . $membersvals->membername . "</td>
-			</tr>
-          </table>
-            </li>";
+                    if ($membersvals->memberid != $creatorId){
+                        if (in_array($membersvals->memberid, $sharedMemberIds)) {
+                            $str .=
+                                "<li>
+                                    <table border='0' cellspacing='0' cellpadding='0'>
+                                        <tr>
+                                            <td width='25'><input name='contact_check' type='checkbox' id='" . $membersvals->memberid . "_check' onclick='is_Checked(" . $membersvals->memberid . ")' checked></td>
+                                            <td id='" . $membersvals->memberid . "_name'>" . $membersvals->membername . "</td>
+                                        </tr>
+                                    </table>
+                                </li>";
+                            $sharedmembers_str .=
+                                "<li id='" . $membersvals->memberid . "_selected'>
+                                    <table border='0' cellspacing='0' cellpadding='0'>
+                                        <tr>
+                                            <td ><span class='name'>" . $membersvals->membername . "</span></td>
+                                            <td width='25' onclick='deleteContact(" . $membersvals->memberid . ")'><span class='cha' style='cursor:pointer;'></span></td>
+                                        </tr>
+                                    </table>
+                                </li>";
+                        }
+                        else {
+                            $str .=
+                                "<li>
+                                    <table border='0' cellspacing='0' cellpadding='0'>
+                                        <tr>
+                                            <td width='25'><input name='contact_check' type='checkbox' id='" . $membersvals->memberid . "_check' onclick='is_Checked(" . $membersvals->memberid . ")'></td>
+                                            <td id='" . $membersvals->memberid . "_name'>" . $membersvals->membername . "</td>
+                                        </tr>
+                                     </table>
+                                </li>";
+                        }
                     }
+
                     //存储member id 和对应的email
                     $str .= "<input type='hidden' id='" . $membersvals->memberid . "_all' value='" . $membersvals->memberemail . "'>";
                     $str .= "<input type='hidden' id='" . $membersvals->memberid . "_allmobile' value='" . $membersvals->mobilenumber . "'>";
@@ -1169,7 +1180,11 @@ class ServiceController extends Controller
                 $schedule_response = json_decode($schedule_result['response'])->schedules;
                 if ($schedule_response) {
                     foreach ($schedule_response as $schedule_vals) {
-                        $members = explode(',', $schedule_vals->members);
+                        $members = array();
+                        foreach($schedule_vals->members as $mem){
+                            array_push($members, $mem->memberid);
+                        }
+
                         // if this shared member is assigned to schedules,delete the schedule if the shared member is the only member in the schedule
                         if (in_array($memberid, $members) && count($members) == 1) {
 
@@ -1208,7 +1223,11 @@ class ServiceController extends Controller
                             if ($query) {
                                 foreach ($query as $vals) {
                                     // print_r($vals->members);exit;
-                                    $vals_arr = explode(',', $vals->members);
+                                    $vals_arr = array();
+                                    foreach($vals->members as $mem){
+                                        array_push($vals_arr, $mem->memberid);
+                                    }
+
                                     if (in_array($memberid, $vals_arr)) {
                                         // delete the $memberid in array $vals_arr
                                         $key = array_search($memberid, $vals_arr);

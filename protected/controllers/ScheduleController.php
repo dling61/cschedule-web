@@ -164,7 +164,7 @@ class ScheduleController extends Controller
 			$end = $_POST['end'];
 
 			$scheduleid = ($_SESSION['scheduleid'] == 0)?($_SESSION['ownerid'].'0001'):($_SESSION['scheduleid']+1);
-			$timezone = $_POST['timezone'];
+			$tzid = $_POST['timezone'];
             $alert = $_POST['alert'];
 
             $onduties = explode(",",$_POST['onduty']);
@@ -173,9 +173,22 @@ class ScheduleController extends Controller
                 array_push($members, array('memberid'=>$member, 'confirm'=>0));
             }
 
-			$real_start = date('Y-m-d H:i:s',(strtotime($start)));
-			$real_end = date('Y-m-d H:i:s',(strtotime($end)));
-			
+            $timezone = "UTC";
+            foreach (getPartTimezones() as $timezonekey => $timezoneval) {
+                if($timezonekey==$tzid) {
+                    $timezone = $timezoneval;
+                    break;
+                }
+            }
+
+			//$real_start = date('Y-m-d H:i:s',(strtotime($start)));
+			//$real_end = date('Y-m-d H:i:s',(strtotime($end)));
+
+            $real_start = (new DateTime($start, new DateTimeZone($timezone)))
+                ->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+            $real_end = (new DateTime($end, new DateTimeZone($timezone)))
+                ->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+
 			$arr = array(
 				'ownerid'=>$ownerid,
 				'serviceid'=>$serviceid,
@@ -184,7 +197,7 @@ class ScheduleController extends Controller
 					'desp'=>$desp,
 					'startdatetime'=>$real_start,
 					'enddatetime'=>$real_end,
-					'tzid'=>$timezone,
+					'tzid'=>$tzid,
 					'members'=>$members,
                     'alert'=>$alert
 				)
@@ -203,7 +216,7 @@ class ScheduleController extends Controller
                     $addschedule->desp = $desp;
                     $addschedule->startdatetime = $real_start;
                     $addschedule->enddatetime = $real_end;
-                    $addschedule->tzid = $timezone;
+                    $addschedule->tzid = $tzid;
                     $addschedule->alert = $alert;
                     $addschedule->members = $members;
                     $addschedule->createdtime = date('Y-m-d H:i:s');
@@ -301,7 +314,7 @@ class ScheduleController extends Controller
                         $emails[$membervals->memberid] = $membervals->memberemail;
                         $phones[$membervals->memberid] = $membervals->mobilenumber;
 					}
-				}		
+				}
 			}else{
 				$members_result = $this->rest()->getResponse('members','get',$arr);
 				if($members_result['code'] == 200){
@@ -332,9 +345,24 @@ class ScheduleController extends Controller
 						$result = $this->rest()->getResponse('services/'.$servicekey.'/schedules','get',$arr);
 						if($result['code'] == 200){
 							$schedules = array_merge(json_decode($result['response'])->schedules,$schedules);
-							
 						}
+
+
+                        $result = $this->rest()->getResponse('services/'.$servicekey.'/sharedmembers','get',$arr);
+
+                        if($result['code'] == 200){
+                            $sharedmembers_result = json_decode($result['response'])->sharedmembers;
+                            if($sharedmembers_result){
+                                foreach($sharedmembers_result as $sharedmember){
+                                    $member[$sharedmember->memberid] = $sharedmember->membername;
+                                    $sharedList[$sharedmember->memberid] = $sharedmember->membername;
+                                    $emails[$sharedmember->memberid] = $sharedmember->memberemail;
+                                    $phones[$sharedmember->memberid] = $sharedmember->mobilenumber;
+                                }
+                            }
+                        }
 					}
+
 					Yii::app()->cache->set($ownerid.'_myschedules',$schedules,CACHETIME);			
 				}
 			//}
@@ -994,9 +1022,14 @@ class ScheduleController extends Controller
                             }
                         }
 
+                        $real_start = (new DateTime($schedulesval->startdatetime, new DateTimeZone('UTC')))
+                            ->setTimezone(new DateTimeZone(getTimezoneAbbr($schedulesval->tzid)))->format('Y/m/d h:i A');
+                        $real_end = (new DateTime($schedulesval->enddatetime, new DateTimeZone('UTC')))
+                            ->setTimezone(new DateTimeZone(getTimezoneAbbr($schedulesval->tzid)))->format('Y/m/d h:i A');
+
                         $str .= "{'name':'".$servicename[$activityid]
-                            ."','start':'".date('Y/m/d h:i A',(strtotime($schedulesval->startdatetime)))
-                            ."','end':'".date('Y/m/d h:i A',(strtotime($schedulesval->enddatetime)))
+                            ."','start':'".$real_start
+                            ."','end':'".$real_end
                             ."','desp':'".$schedulesval->desp
                             ."','alert':'".$schedulesval->alert
                             ."','tzid':'".$schedulesval->tzid
@@ -1014,11 +1047,14 @@ class ScheduleController extends Controller
 	public function actionEditSchedule(){
 		if(isset($_POST['activity']))
 		{
-			$ownerid = $_SESSION['ownerid'];
-			
-			$serviceid = $_POST['activity'];
-			$scheduleid = $_POST['schedule'];
-			$desp = $_POST['desp'];
+            $ownerid = $_SESSION['ownerid'];
+
+            $serviceid = $_POST['activity'];
+            $scheduleid = $_POST['schedule'];
+            $desp = $_POST['desp'];
+            $start = $_POST['start'];
+            $end = $_POST['end'];
+            $tzid = $_POST['timezone'];
             $alert = $_POST['alert'];
 
             $onduties = explode(",",$_POST['onduty']);
@@ -1026,45 +1062,53 @@ class ScheduleController extends Controller
             foreach($onduties as $member){
                 array_push($members, array('memberid'=>$member, 'confirm'=>0));
             }
-			
-			//对应的member name
-			$names = $_POST['names'];
-			
-			$timezone = $_POST['timezone'];
-			
-			$start = date('Y-m-d H:i:s',(strtotime($_POST['start'])));
-			$end = date('Y-m-d H:i:s',(strtotime($_POST['end'])));
-			
-			
-			$arr = array(
-				'ownerid'=>$ownerid,
-				'serviceid'=>$serviceid,
-				'schedules'=>array(				
-					'desp'=>$desp,
-					'startdatetime'=>$start,
-					'enddatetime'=>$end,
-					'tzid'=>$timezone,
-                    'alert'=>$alert,
-					'members'=>$members
-				)
-			);
 
-			$result = $this->rest()->getResponse('schedules/'.$scheduleid,'put',$arr);
-			if($result['code'] == 200){
-				
-				$myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
-				if($myschedules){
-					foreach($myschedules as $myschedules_vals){
-						if($myschedules_vals->scheduleid == $scheduleid){
-							$myschedules_vals->startdatetime = $start;
-							$myschedules_vals->enddatetime = $end;
-							$myschedules_vals->desp = $desp;
-							$myschedules_vals->members = $members;
+            //对应的member name
+            $names = $_POST['names'];
+            $timezone = "UTC";
+            foreach (getPartTimezones() as $timezonekey => $timezoneval) {
+                if($timezonekey==$tzid) {
+                    $timezone = $timezoneval;
+                    break;
+                }
+            }
+            //$start = date('Y-m-d H:i:s',(strtotime($_POST['start'])));
+            //$end = date('Y-m-d H:i:s',(strtotime($_POST['end'])));
+
+            $real_start = (new DateTime($start, new DateTimeZone($timezone)))
+                ->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+            $real_end = (new DateTime($end, new DateTimeZone($timezone)))
+                ->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+
+            $arr = array(
+                'ownerid'=>$ownerid,
+                'serviceid'=>$serviceid,
+                'schedules'=>array(
+                    'desp'=>$desp,
+                    'startdatetime'=>$real_start,
+                    'enddatetime'=>$real_end,
+                    'tzid'=>$tzid,
+                    'members'=>$members,
+                    'alert'=>$alert
+                )
+            );
+
+            $result = $this->rest()->getResponse('schedules/'.$scheduleid,'put',$arr);
+            if($result['code'] == 200){
+
+                $myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
+                if($myschedules){
+                    foreach($myschedules as $myschedules_vals){
+                        if($myschedules_vals->scheduleid == $scheduleid){
+                            $myschedules_vals->startdatetime = $start;
+                            $myschedules_vals->enddatetime = $end;
+                            $myschedules_vals->desp = $desp;
+                            $myschedules_vals->members = $members;
                             $myschedules_vals->alert = $alert;
                             $myschedules_vals->tzid = $timezone;
-						}
-					}
-				}
+                        }
+                    }
+                }
 				
 				Yii::app()->cache->set($ownerid.'_myschedules',$myschedules,CACHETIME);
 
