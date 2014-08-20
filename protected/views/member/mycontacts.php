@@ -169,10 +169,10 @@
 					if($i < $count){
 						$member_str .= "<li class='conbg2'><table width='800' height='56' border='0' cellpadding='0' cellspacing='0'>
   <tr>
-    <td width='170' align='center' id='name_".$member_vals->memberid."'>".$member_vals->membername."</td>
-    <td width='171' align='center' id='email_".$member_vals->memberid."'>".$member_vals->memberemail."</td>
-    <td width='171' align='center' id='mobile_".$member_vals->memberid."'>".$member_vals->mobilenumber."</td>
-    <td width='171' align='center'>".$member_vals->createdtime."</td>
+    <td width='237' align='center' id='name_".$member_vals->memberid."'>".$member_vals->membername."</td>
+    <td width='270' align='center' id='email_".$member_vals->memberid."'>".$member_vals->memberemail."</td>
+    <td width='173' align='center' id='mobile_".$member_vals->memberid."'>".$member_vals->mobilenumber."</td>
+
     <td width='58'><span class='table5'><a cursor:pointer; title='Edit' onclick='editContacts(".$member_vals->memberid.")'></a></span></td>
     <td width='59'><span class='table6'><a cursor:pointer; title='Delete'
  onclick='deleteContact(".$member_vals->memberid.")' ></a></span></td>
@@ -183,10 +183,10 @@
 					}else{
 						$member_str .= "<li class='conbg2'><table width='800' height='56' border='0' cellpadding='0' cellspacing='0'>
   <tr>
-    <td width='170' align='center' id='name_".$member_vals->memberid."'>".$member_vals->membername."</td>
-    <td width='171' align='center' id='email_".$member_vals->memberid."'>".$member_vals->memberemail."</td>
-    <td width='171' align='center' id='mobile_".$member_vals->memberid."'>".$member_vals->mobilenumber."</td>
-    <td width='171' align='center'>".$member_vals->createdtime."</td>
+    <td width='237' align='center' id='name_".$member_vals->memberid."'>".$member_vals->membername."</td>
+    <td width='270' align='center' id='email_".$member_vals->memberid."'>".$member_vals->memberemail."</td>
+    <td width='173' align='center' id='mobile_".$member_vals->memberid."'>".$member_vals->mobilenumber."</td>
+
     <td width='58'><span class='table5'><a cursor:pointer; title='Edit' onclick='editContacts(".$member_vals->memberid.")'></a></span></td>
     <td width='59'><span class='table6'><a cursor:pointer; title='Delete'
 onclick='deleteContact(".$member_vals->memberid.")'></a></span></td>

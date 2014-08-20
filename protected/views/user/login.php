@@ -56,7 +56,8 @@ if(isset($_COOKIE['cschedule_user']) && $_COOKIE['cschedule_user']!=''){
 <!-- sign in form end-->
 
 <!-- sign up form start-->
-<div class="loged" style='display:none' id='signupform'><table width="254" border="0" cellspacing="0" cellpadding="0">
+<div class="loged" style='display:none' id='signupform'>
+    <table width="254" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td height="20" colspan="2" align="center"><span class="wrong" id="error_info2"></span></td>
     </tr>

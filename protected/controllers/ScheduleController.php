@@ -1023,9 +1023,9 @@ class ScheduleController extends Controller
                         }
 
                         $real_start = (new DateTime($schedulesval->startdatetime, new DateTimeZone('UTC')))
-                            ->setTimezone(new DateTimeZone(getTimezoneAbbr($schedulesval->tzid)))->format('Y/m/d h:i A');
+                            ->setTimezone(new DateTimeZone(getTimezoneAbbr($schedulesval->tzid)))->format('m/d/Y h:i A');
                         $real_end = (new DateTime($schedulesval->enddatetime, new DateTimeZone('UTC')))
-                            ->setTimezone(new DateTimeZone(getTimezoneAbbr($schedulesval->tzid)))->format('Y/m/d h:i A');
+                            ->setTimezone(new DateTimeZone(getTimezoneAbbr($schedulesval->tzid)))->format('m/d/Y h:i A');
 
                         $str .= "{'name':'".$servicename[$activityid]
                             ."','start':'".$real_start

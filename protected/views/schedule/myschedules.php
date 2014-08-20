@@ -1248,12 +1248,12 @@ function sendConfirmStatus(confirm){
 <script language='javascript'>
     $('#editstart').datetimepicker({
         step: 10,
-        format: 'Y/m/d g:i A',
+        format: 'm/d/Y g:i A',
         formatTime: 'g:i A'
     });
     $('#editend').datetimepicker({
         step: 10,
-        format: 'Y/m/d g:i A',
+        format: 'm/d/Y g:i A',
         formatTime: 'g:i A'
     });
 </script>

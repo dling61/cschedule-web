@@ -200,7 +200,7 @@ class ServiceController extends Controller
 
 
                 $ownerid = $_SESSION['ownerid'];
-
+                $creatorId = $ownerid.'0000';
                 $sharedMembers = array();
                 $sharedMemberIds = array();
 
@@ -216,6 +216,7 @@ class ServiceController extends Controller
                         if ($cache_sharedMembers_vals->sharedrole == 0) {
                             $creator = $cache_sharedMembers_vals->membername;
                             $creatoremail = $cache_sharedMembers_vals->memberemail;
+                            $creatorId = $cache_sharedMembers_vals->memberid;
                         }
                     }
                 } else {
@@ -299,6 +300,8 @@ class ServiceController extends Controller
 
                 if ($members) {
                     foreach ($members as $memberkey => $membersvals) {
+                        if ($membersvals->memberid == $creatorId)
+                            continue;
                         /*if(in_array($membersvals->memberid,$sharedMemberIds)){
                             $str .= "<li>
             <table width='117' border='0' cellspacing='0' cellpadding='0'>
