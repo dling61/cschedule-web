@@ -1010,8 +1010,8 @@ function editSchedule(i, repeat) {
 
                 if(typeof(data.data) == 'undefined'){
                     document.getElementById('editactivity').value = data.name;
-                    document.getElementById('editstart').value = data.start.substr(0,16);
-                    document.getElementById('editend').value = data.end.substr(0,16);
+                    document.getElementById('editstart').value = data.start;
+                    document.getElementById('editend').value = data.end;
                     document.getElementById('editdesp').value = data.desp;
                     document.getElementById('edittimezone').value = data.tzid;
                     document.getElementById('editalert').value = data.alert;
@@ -1247,12 +1247,12 @@ function sendConfirmStatus(confirm){
 <script type="text/javascript" src="./js/jquery.datetimepicker.js"></script>
 <script language='javascript'>
     $('#editstart').datetimepicker({
-        step: 10,
+        step: 5,
         format: 'm/d/Y g:i A',
         formatTime: 'g:i A'
     });
     $('#editend').datetimepicker({
-        step: 10,
+        step: 5,
         format: 'm/d/Y g:i A',
         formatTime: 'g:i A'
     });

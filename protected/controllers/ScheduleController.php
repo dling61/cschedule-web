@@ -363,6 +363,7 @@ class ScheduleController extends Controller
                         }
 					}
 
+                    usort($schedules, array($this, "compareSchedule"));
 					Yii::app()->cache->set($ownerid.'_myschedules',$schedules,CACHETIME);			
 				}
 			//}
@@ -386,6 +387,14 @@ class ScheduleController extends Controller
 			));
 		}
 	}
+
+
+    private function compareSchedule($a, $b)
+    {
+        $result =  $a->startdatetime < $b->startdatetime;
+        return $result;
+    }
+
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -1112,7 +1121,7 @@ class ScheduleController extends Controller
 				
 				Yii::app()->cache->set($ownerid.'_myschedules',$myschedules,CACHETIME);
 
-				$tz = "<br>（".getTimezoneAbbr($timezone)."）";
+				$tz = "<br>（".getTimezoneAbbr($tzid)."）";
 				$re_start = date("m/d/Y h:i A",strtotime($_POST['start'])).$tz;
 				$re_end = date("m/d/Y h:i A",strtotime($_POST['end'])).$tz;
 

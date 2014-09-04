@@ -8,7 +8,16 @@
 <body >
 
 <div class="main11"><div class="top3"><a href="<?php echo Yii::app()->homeUrl;?>"></a></div></div>
-<div class="main12"><div class="fontsize2"><div  class="size3" style="margin-bottom:50px;">About CSchedule </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSchedule is a scheduling app like no other! While most scheduling apps simply allow you to create a schedule for your own personal use, CSchedule allows you to share the schedules you create with other users. This feature is essential for those who want to coordinate with others to organize activities or events. CSchedule also enables you to send automatic reminders via email or phone to users about events on their schedule. This app is ideal for those involved in organizing volunteer events, church services, or even informal social gatherings, like carpool ride arrangements and potlucks. Our hope is that this app will be used to facilitate social collaboration for all types of activities.</div>
+<div class="main12"><div class="fontsize2">
+        <div  class="size3" style="margin-bottom:50px;">About CSchedule </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSchedule is a scheduling app like no other! CSchedule allows
+        the user to create a schedule, add participants to that schedule, and share the schedule with others. This app
+        is great for those who want to work with others to organize activities or events. CSchedule also enables you to
+        send automatic reminders via email or push notification to participants about events on their schedule. This app
+        is ideal for those involved in organizing volunteer events, church services, or even informal social gatherings,
+        like carpool ride arrangements and potlucks. Our hope is that this app will be used to facilitate social
+        collaboration for all types of activities.
+    </div>
 
 
 </div>

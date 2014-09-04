@@ -320,11 +320,11 @@ echo $timezones_str;
 <script language='javascript'>
     $(function () {
         $('#starttime').datetimepicker({
-            step: 10,
+            step: 5,
             format: 'm/d/Y g:i A',
             formatTime: 'g:i A'});
         $('#endtime').datetimepicker({
-            step: 10,
+            step: 5,
             format: 'm/d/Y g:i A',
             formatTime: 'g:i A'});
     });
