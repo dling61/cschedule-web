@@ -24,7 +24,6 @@
             schedules among participants and send out reminders (email and push notifications on mobile platforms) to
             those on the schedule. It also allows participants of an activity to contact each other very easily.
         </p>
-        <img src="images/help.png" />
         <p class="size4">How do I use CSchedule?</p>
 
         <p>If you're the organizer of an activity:
@@ -32,8 +31,8 @@
 
         <p>Step 1: Enter your contacts <br/>
             Step 2: Create an activity. <br/>
-            Step 3: Go to the activity info page to add contacts into "Participant" on the activity so they can assigned
-            on duty. <br/>
+            Step 3: Go to the activity info page to add contacts into "Participant" on the activity so they can be
+            assigned on duty. <br/>
             Step 4: Create schedules for your activity and assign participants on duty.</p>
 
         <p>If you are a participant in an activity:</p>

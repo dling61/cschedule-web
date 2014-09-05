@@ -806,7 +806,7 @@ echo $schedule_str;
 </ul>
 </div>
 <div class="main5">
-    <input type="button" class="mname3" onclick='repeatSelected()'>
+    <input type="button" class="mname3" onclick='repeatSelected()' style="display: none;">
 </div>
 
 <?php include_once(dirname(dirname(__FILE__)) . '/footer.php'); ?>
