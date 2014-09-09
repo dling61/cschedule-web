@@ -27,7 +27,8 @@ class ScheduleController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','create','update','admin','delete','createSchedule','repeatSelected','Search','CheckFolder','Calendar','Test','ScheduleInfo','GetSharedMembers','view','EditSchedule', 'UpdateJoinStatus'),
+				'actions'=>array('index','create','update','admin','delete','createSchedule','repeatSelected','Search',
+                    'CheckFolder','Calendar','Test','ScheduleInfo','GetSharedMembers','GetSharedMembersData', 'view','EditSchedule', 'UpdateJoinStatus'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -43,7 +44,7 @@ class ScheduleController extends Controller
                // timeout
 			   if(in_array(strtolower($action->getId()),array('view'))){
                  	echo "{'data':'ajaxsessionout'}";
-				}else if(in_array(strtolower($action->getId()),array('createschedule','getsharedmembers','delete','repeatselected','EditSchedule'))){
+				}else if(in_array(strtolower($action->getId()),array('createschedule','getsharedmembers','getsharedmembersdata','delete','repeatselected','EditSchedule'))){
                  	echo "ajaxsessionout";
 				}else{
 					Yii::app()->user->logout();
@@ -530,23 +531,7 @@ class ScheduleController extends Controller
 					foreach($membersname[$i] as $memberskey=>$membersvals){
 						$membersinfo .= "<li id='".$scheduleid."_".$members[$i][$memberskey]."' name='membersid_".$scheduleid."'>".$membersvals."</li>";	
 					}
-					
-					/*if($service){
-						foreach($service as $servicekey=>$servicevals){
-							if($serviceid[$i] == $servicekey){
-								$repeat = $servicevals;
-							}
-						}
-					}else $repeat = 0;
-					
-					switch($repeat){
-						case 0:$addtime = 0;break;
-						case 1:$addtime = 1*24*3600;break;
-						case 2:$addtime = 7*24*3600;break;
-						case 3:$addtime = 2*7*24*3600;break;
-						case 4:$addtime = 30*24*3600;break;
-						case 5:$addtime = 365*24*3600;break;
-					}*/
+				
 					
 					$addtime = 7*24*3600;
 					
@@ -873,81 +858,114 @@ class ScheduleController extends Controller
 	}*/
 	
 	public function actionGetSharedMembers(){
-		$ownerid = $_SESSION['ownerid'];
-		
-		if(isset($_POST['activity'])){
-			$serviceid = $_POST['activity'];
-			
-			$cache_sharedMembers = Yii::app()->cache->get($serviceid.'_sharedmembers');
-			$sharedList = array();
-			if($cache_sharedMembers === array() || $cache_sharedMembers){
-				foreach($cache_sharedMembers as $cache_sharedMembers_vals){
-					$sharedList[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->membername;
-				}
-			}else{
-				$lastupdatetime = '0000-00-00 00:00:00';
-				$arr = array(
-					'ownerid'=>$ownerid,
-					'lastupdatetime'=>$lastupdatetime
-				);
-				$result = $this->rest()->getResponse('services/'.$serviceid.'/sharedmembers','get',$arr);
-			
-				if($result['code'] == 200){
-					$sharedmembers_result = json_decode($result['response'])->sharedmembers;
-					if($sharedmembers_result){
-						foreach($sharedmembers_result as $sharedmembers_result_vals){
-							$sharedList[$sharedmembers_result_vals->memberid] = $sharedmembers_result_vals->membername;
-						}						
-						Yii::app()->cache->set($serviceid.'_sharedmembers',$sharedmembers_result,CACHETIME);
-					}
-				}
-			}
-			
-			$shared_members_str = "";
-			$count = count($sharedList);
-			
-			$lines = floor($count/3)+1;
-			
-			if($sharedList){
-				$i = 1;
-				foreach($sharedList as $sharedList_key=>$sharedList_vals){
-					if(($i-1)%3 == 0){
-						$shared_members_str .= "<li class='schbg1'><table width='546' border='0' cellspacing='0' cellpadding='0'><tr>";
-					}
-									
-					$shared_members_str .= "<td width='35' align='center'><input name='contact_check' type='checkbox' id='".$sharedList_key."_check' onclick='is_Checked(".$sharedList_key.")'></td><td width='147' height='35' id='".$sharedList_key."_name'>".$sharedList_vals."</td>";
-					
-					if($lines > 1){
-						if(($i-1)/(3*($lines-1)) == 1 && $count == ($lines-1)*3+1){
-							$shared_members_str .= "<td width='147' height='35'></td><td width='147' height='35'></td>";
-						}
-			
-						if(($i-2)/(3*($lines-1)) == 1 && $count == ($lines-1)*3+2){
-							$shared_members_str .= "<td width='35'></td><td width='147' height='35'></td>";
-						}
-					}else if($lines == 1){
-						if($count == 1 && $i == $count){
-							$shared_members_str .= "<td width='147' height='35'></td><td width='147' height='35'></td>";
-						}
-			
-						if($count == 2 && $i == $count){
-							$shared_members_str .= "<td width='35'></td><td width='147' height='35'></td>";
-						}
-					}
-			
-					
-					if($i%3 == 0 || $i == $count){
-						$shared_members_str .= "</tr></table></li><li class='schbg2'></li>";
-					}
-					
-					$i++;
-				}
-			}else $shared_members_str .= "<div class='schtable2'>No shared Contacts.</div>";
-			echo $shared_members_str;
-		}			
-	}
-	
-	public function actionView(){
+        $ownerid = $_SESSION['ownerid'];
+
+        if(isset($_POST['activity'])){
+            $serviceid = $_POST['activity'];
+
+            $cache_sharedMembers = Yii::app()->cache->get($serviceid.'_sharedmembers');
+            $sharedList = array();
+            if($cache_sharedMembers === array() || $cache_sharedMembers){
+                foreach($cache_sharedMembers as $cache_sharedMembers_vals){
+                    $sharedList[$cache_sharedMembers_vals->memberid] = $cache_sharedMembers_vals->membername;
+                }
+            }else{
+                $lastupdatetime = '0000-00-00 00:00:00';
+                $arr = array(
+                    'ownerid'=>$ownerid,
+                    'lastupdatetime'=>$lastupdatetime
+                );
+                $result = $this->rest()->getResponse('services/'.$serviceid.'/sharedmembers','get',$arr);
+
+                if($result['code'] == 200){
+                    $sharedmembers_result = json_decode($result['response'])->sharedmembers;
+                    if($sharedmembers_result){
+                        foreach($sharedmembers_result as $sharedmembers_result_vals){
+                            $sharedList[$sharedmembers_result_vals->memberid] = $sharedmembers_result_vals->membername;
+                        }
+                        Yii::app()->cache->set($serviceid.'_sharedmembers',$sharedmembers_result,CACHETIME);
+                    }
+                }
+            }
+
+            $shared_members_str = "";
+            $count = count($sharedList);
+
+            $lines = floor($count/3)+1;
+
+            if($sharedList){
+                $i = 1;
+                foreach($sharedList as $sharedList_key=>$sharedList_vals){
+                    if(($i-1)%3 == 0){
+                        $shared_members_str .= "<li class='schbg1'><table width='546' border='0' cellspacing='0' cellpadding='0'><tr>";
+                    }
+
+                    $shared_members_str .= "<td width='35' align='center'><input name='contact_check' type='checkbox' id='".$sharedList_key."_check' onclick='is_Checked(".$sharedList_key.")'></td><td width='147' height='35' id='".$sharedList_key."_name'>".$sharedList_vals."</td>";
+
+                    if($lines > 1){
+                        if(($i-1)/(3*($lines-1)) == 1 && $count == ($lines-1)*3+1){
+                            $shared_members_str .= "<td width='147' height='35'></td><td width='147' height='35'></td>";
+                        }
+
+                        if(($i-2)/(3*($lines-1)) == 1 && $count == ($lines-1)*3+2){
+                            $shared_members_str .= "<td width='35'></td><td width='147' height='35'></td>";
+                        }
+                    }else if($lines == 1){
+                        if($count == 1 && $i == $count){
+                            $shared_members_str .= "<td width='147' height='35'></td><td width='147' height='35'></td>";
+                        }
+
+                        if($count == 2 && $i == $count){
+                            $shared_members_str .= "<td width='35'></td><td width='147' height='35'></td>";
+                        }
+                    }
+
+
+                    if($i%3 == 0 || $i == $count){
+                        $shared_members_str .= "</tr></table></li><li class='schbg2'></li>";
+                    }
+
+                    $i++;
+                }
+            }else $shared_members_str .= "<div class='schtable2'>No shared Contacts.</div>";
+            echo $shared_members_str;
+        }
+    }
+
+    public function actionGetSharedMembersData(){
+        $ownerid = $_SESSION['ownerid'];
+
+        if(isset($_POST['activity'])){
+            $serviceid = $_POST['activity'];
+
+            $cache_sharedMembers = Yii::app()->cache->get($serviceid.'_sharedmembers');
+            $data = array();
+            if($cache_sharedMembers === array() || $cache_sharedMembers){
+                $data = $cache_sharedMembers;
+            }else{
+                $lastupdatetime = '0000-00-00 00:00:00';
+                $arr = array(
+                    'ownerid'=>$ownerid,
+                    'lastupdatetime'=>$lastupdatetime
+                );
+                $result = $this->rest()->getResponse('services/'.$serviceid.'/sharedmembers','get',$arr);
+
+                if($result['code'] == 200){
+                    $sharedmembers_result = json_decode($result['response'])->sharedmembers;
+                    if($sharedmembers_result){
+                        $data = $sharedmembers_result;
+                        Yii::app()->cache->set($serviceid.'_sharedmembers',$sharedmembers_result,CACHETIME);
+                    }
+                }
+            }
+
+
+            echo  json_encode($data);
+        }
+    }
+
+
+    public function actionView(){
 		if(isLogin()){
 			$this->redirect(Yii::app()->createUrl('User/login'));
 			exit;
@@ -1019,6 +1037,7 @@ class ScheduleController extends Controller
                 foreach($schedules as $schedulesval){
                     if($schedulesval->scheduleid == $scheduleid){
                         $memberstr = "";
+                        $memberIds = "";
 
                         foreach($schedulesval->members as $mem){
                             if (in_array( $mem->memberid, array_keys($member))){
@@ -1028,7 +1047,12 @@ class ScheduleController extends Controller
                                     ."<span class=\"name\">".$member[$mem->memberid]."</span></td>"
                                     ."<td width=\"25\"><span class=\"cha\" onclick=\"deleteContact(".$mem->memberid.")\" style=\"cursor:pointer;\"></span></td>"
                                     ."</tr></table></li>";
+                                $memberIds.= ",".$mem->memberid;
                             }
+                        }
+
+                        if (strlen($memberIds) >0){
+                            $memberIds = substr($memberIds, 1);
                         }
 
                         $real_start = (new DateTime($schedulesval->startdatetime, new DateTimeZone('UTC')))
@@ -1042,6 +1066,7 @@ class ScheduleController extends Controller
                             ."','desp':'".$schedulesval->desp
                             ."','alert':'".$schedulesval->alert
                             ."','tzid':'".$schedulesval->tzid
+                            ."','memberIds':'".$memberIds
                             ."','onduty':'".$memberstr."'}";
                     }
                 }

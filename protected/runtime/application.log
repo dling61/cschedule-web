@@ -8914,3 +8914,220 @@ REQUEST_URI=/cschedule/index.php?r=Schedule/EditSchedule
 in D:\xampp\htdocs\cschedule\protected\Common\function.php (532)
 in D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php (1115)
 in D:\xampp\htdocs\cschedule\index.php (26)
+2014/09/04 08:09:24 [error] [php] Undefined index: America/Los_Angeles (D:\xampp\htdocs\cschedule\protected\Common\function.php:532)
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(133): ScheduleController->runAction()
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#4 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CInlineFilter.php(58): ScheduleController->filterAccessControl()
+#5 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#6 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(265): ScheduleController->runActionWithFilters()
+#8 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): ScheduleController->run()
+#9 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#10 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#11 D:\xampp\htdocs\cschedule\index.php(26): CWebApplication->run()
+REQUEST_URI=/cschedule/index.php?r=Schedule/EditSchedule
+in D:\xampp\htdocs\cschedule\protected\Common\function.php (532)
+in D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php (1124)
+in D:\xampp\htdocs\cschedule\index.php (26)
+2014/09/04 08:11:02 [error] [php] Undefined index: America/Chicago (D:\xampp\htdocs\cschedule\protected\Common\function.php:532)
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(133): ScheduleController->runAction()
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#4 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CInlineFilter.php(58): ScheduleController->filterAccessControl()
+#5 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#6 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(265): ScheduleController->runActionWithFilters()
+#8 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): ScheduleController->run()
+#9 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#10 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#11 D:\xampp\htdocs\cschedule\index.php(26): CWebApplication->run()
+REQUEST_URI=/cschedule/index.php?r=Schedule/EditSchedule
+in D:\xampp\htdocs\cschedule\protected\Common\function.php (532)
+in D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php (1124)
+in D:\xampp\htdocs\cschedule\index.php (26)
+2014/09/04 08:15:05 [error] [php] Undefined index: America/Chicago (D:\xampp\htdocs\cschedule\protected\Common\function.php:532)
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(133): ScheduleController->runAction()
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#4 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CInlineFilter.php(58): ScheduleController->filterAccessControl()
+#5 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#6 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(265): ScheduleController->runActionWithFilters()
+#8 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): ScheduleController->run()
+#9 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#10 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#11 D:\xampp\htdocs\cschedule\index.php(26): CWebApplication->run()
+REQUEST_URI=/cschedule/index.php?r=Schedule/EditSchedule
+in D:\xampp\htdocs\cschedule\protected\Common\function.php (532)
+in D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php (1124)
+in D:\xampp\htdocs\cschedule\index.php (26)
+2014/09/06 13:06:29 [error] [php] Use of undefined constant i - assumed 'i' (D:\xampp\htdocs\cschedule\protected\views\schedule\myschedules.php:431)
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(869): ScheduleController->renderFile()
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(782): ScheduleController->renderPartial()
+#2 D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php(387): ScheduleController->render()
+#3 D:\xampp\htdocs\cschedule\yii\framework\web\actions\CInlineAction.php(49): ScheduleController->actionAdmin()
+#4 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(133): ScheduleController->runAction()
+#6 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#7 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#8 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CInlineFilter.php(58): ScheduleController->filterAccessControl()
+#9 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#10 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(291): CFilterChain->run()
+#11 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(265): ScheduleController->runActionWithFilters()
+#12 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): ScheduleController->run()
+#13 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#14 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#15 D:\xampp\htdocs\cschedule\index.php(26): CWebApplication->run()
+REQUEST_URI=/cschedule/index.php?r=Schedule/Admin
+in D:\xampp\htdocs\cschedule\protected\views\schedule\myschedules.php (431)
+in D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php (387)
+in D:\xampp\htdocs\cschedule\index.php (26)
+2014/09/08 23:14:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "GetShareMembersData".' in D:\xampp\htdocs\cschedule\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(270): CController->missingAction('GetShareMembers...')
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): CController->run('GetShareMembers...')
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('Schedule/GetSha...')
+#3 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\xampp\htdocs\cschedule\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/cschedule/index.php?r=Schedule/GetShareMembersData
+HTTP_REFERER=http://localhost/cschedule/index.php?r=Schedule/Admin
+---
+2014/09/08 23:15:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "GetShareMembersData".' in D:\xampp\htdocs\cschedule\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(270): CController->missingAction('GetShareMembers...')
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): CController->run('GetShareMembers...')
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('Schedule/GetSha...')
+#3 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\xampp\htdocs\cschedule\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/cschedule/index.php?r=Schedule/GetShareMembersData
+HTTP_REFERER=http://localhost/cschedule/index.php?r=Schedule/Admin
+---
+2014/09/08 23:16:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "GetShareMembersData".' in D:\xampp\htdocs\cschedule\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(270): CController->missingAction('GetShareMembers...')
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): CController->run('GetShareMembers...')
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('Schedule/GetSha...')
+#3 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\xampp\htdocs\cschedule\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/cschedule/index.php?r=Schedule/GetShareMembersData
+HTTP_REFERER=http://localhost/cschedule/index.php?r=Schedule/Admin
+---
+2014/09/08 23:19:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "GetShareMembersData".' in D:\xampp\htdocs\cschedule\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(270): CController->missingAction('GetShareMembers...')
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): CController->run('GetShareMembers...')
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('Schedule/GetSha...')
+#3 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\xampp\htdocs\cschedule\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/cschedule/index.php?r=Schedule/GetShareMembersData
+HTTP_REFERER=http://localhost/cschedule/index.php?r=Schedule/Admin
+---
+2014/09/08 23:20:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "GetShareMembersData".' in D:\xampp\htdocs\cschedule\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(270): CController->missingAction('GetShareMembers...')
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): CController->run('GetShareMembers...')
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('Schedule/GetSha...')
+#3 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\xampp\htdocs\cschedule\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/cschedule/index.php?r=Schedule/GetShareMembersData
+HTTP_REFERER=http://localhost/cschedule/index.php?r=Schedule/Admin
+---
+2014/09/08 23:21:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "GetShareMembersData".' in D:\xampp\htdocs\cschedule\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(270): CController->missingAction('GetShareMembers...')
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): CController->run('GetShareMembers...')
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('Schedule/GetSha...')
+#3 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\xampp\htdocs\cschedule\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/cschedule/index.php?r=Schedule/GetShareMembersData
+HTTP_REFERER=http://localhost/cschedule/index.php?r=Schedule/Admin
+---
+2014/09/08 23:22:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "GetShareMembersData".' in D:\xampp\htdocs\cschedule\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(270): CController->missingAction('GetShareMembers...')
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): CController->run('GetShareMembers...')
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('Schedule/GetSha...')
+#3 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\xampp\htdocs\cschedule\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/cschedule/index.php?r=Schedule/GetShareMembersData
+HTTP_REFERER=http://localhost/cschedule/index.php?r=Schedule/Admin
+---
+2014/09/08 23:24:58 [error] [php] Array to string conversion (D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php:983)
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(133): ScheduleController->runAction()
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#3 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CInlineFilter.php(58): ScheduleController->filterAccessControl()
+#4 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#5 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(265): ScheduleController->runActionWithFilters()
+#7 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): ScheduleController->run()
+#8 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#10 D:\xampp\htdocs\cschedule\index.php(26): CWebApplication->run()
+REQUEST_URI=/cschedule/index.php?r=Schedule/GetSharedMembersData
+in D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php (983)
+in D:\xampp\htdocs\cschedule\index.php (26)
+2014/09/08 23:26:34 [error] [php] Array to string conversion (D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php:983)
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(133): ScheduleController->runAction()
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#3 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CInlineFilter.php(58): ScheduleController->filterAccessControl()
+#4 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#5 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(265): ScheduleController->runActionWithFilters()
+#7 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): ScheduleController->run()
+#8 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#10 D:\xampp\htdocs\cschedule\index.php(26): CWebApplication->run()
+REQUEST_URI=/cschedule/index.php?r=Schedule/GetSharedMembersData
+in D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php (983)
+in D:\xampp\htdocs\cschedule\index.php (26)
+2014/09/09 04:06:55 [error] [php] Use of undefined constant length - assumed 'length' (D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php:1070)
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(133): ScheduleController->runAction()
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#3 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CInlineFilter.php(58): ScheduleController->filterAccessControl()
+#4 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#5 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(265): ScheduleController->runActionWithFilters()
+#7 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): ScheduleController->run()
+#8 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#10 D:\xampp\htdocs\cschedule\index.php(26): CWebApplication->run()
+REQUEST_URI=/cschedule/index.php?r=Schedule/View
+in D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php (1070)
+in D:\xampp\htdocs\cschedule\index.php (26)
+2014/09/09 04:12:26 [error] [php] Use of undefined constant length - assumed 'length' (D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php:1070)
+Stack trace:
+#0 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(133): ScheduleController->runAction()
+#1 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#3 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CInlineFilter.php(58): ScheduleController->filterAccessControl()
+#4 D:\xampp\htdocs\cschedule\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#5 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\xampp\htdocs\cschedule\yii\framework\web\CController.php(265): ScheduleController->runActionWithFilters()
+#7 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(282): ScheduleController->run()
+#8 D:\xampp\htdocs\cschedule\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\xampp\htdocs\cschedule\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#10 D:\xampp\htdocs\cschedule\index.php(26): CWebApplication->run()
+REQUEST_URI=/cschedule/index.php?r=Schedule/View
+in D:\xampp\htdocs\cschedule\protected\controllers\ScheduleController.php (1070)
+in D:\xampp\htdocs\cschedule\index.php (26)

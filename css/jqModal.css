@@ -209,6 +209,18 @@ margin-bottom:auto;
 overflow: visible;
 }
 
+.jqmWindowParticipants{
+    width:421px;
+    margin:50px auto 50px auto;
+
+    display: none;
+    position: absolute;
+    left:50%;
+    margin-left:-360px;
+    margin-top:auto;
+    margin-bottom:auto;
+    overflow: visible;
+}
 .jqmOverlay { background-color: #000; }
 
 /* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */

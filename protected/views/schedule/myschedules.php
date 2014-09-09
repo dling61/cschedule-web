@@ -6,6 +6,12 @@
     <title>My schedules</title>
     <link href="./css/cschedule.css" rel="stylesheet" type="text/css"/>
 
+    <link rel="stylesheet" type="text/css" href="./css/jquery.datetimepicker.css"/>
+    <script type="text/javascript" src="./js/jquery1.10.js"></script>
+    <script type="text/javascript" src="./js/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.datetimepicker.js"></script>
+    <script type="text/javascript" src="./js/moment.js"></script>
+
     <link href="<?php echo Yii::app()->baseUrl . '/css/jqModal.css'; ?>" rel="stylesheet" type="text/css"/>
     <script src="<?php echo Yii::app()->baseUrl . '/js/jqModal.js'; ?>" type="text/javascript"></script>
 
@@ -51,6 +57,47 @@
             margin: 10px 15px;
             float: left;
             display: inline;
+        }
+
+        #weekdays label{
+            margin-right: 20px;
+        }
+
+        .divRepeats{
+            display: none;
+            width:680px;
+        }
+
+        #repeatSchedules{
+            width:660px;
+            border-right: 1px solid #d6dfe5;
+            border-top: 1px solid #d6dfe5;
+        }
+
+        #repeatSchedules th, #repeatSchedules td{
+            border-left: 1px solid #d6dfe5;
+            border-bottom: 1px solid #d6dfe5;
+        }
+        #repeatSchedules th{
+            background-color: #EFEFEF;
+            padding: 10px;
+        }
+
+        #repeatSchedules tr:hover, #repeatSchedules tr:active, #repeatSchedules tr.active{
+            background-color: #d3d3d3;
+        }
+        #repeatSchedules td{
+            padding: 5px;
+        }
+        #repeatSchedules tr td:last-child{
+            text-align: center;
+        }
+        .repeatParicipantChange{
+            float: right;
+        }
+        .tableRepeatSchedules{
+            max-height: 400px;
+            overflow-y: scroll;
         }
     </style>
 
@@ -402,6 +449,165 @@ if ($members) {
     <div class="main10buttom"></div>
 </div>
 <!-- edit schedule popup end -->
+
+
+
+<!-- repeat schedule popup start -->
+<div class="jqmWindowEditSchedule" id="repeatschedulepopup">
+    <div class="main10top"></div>
+    <div class="main10inter">
+        <form id='filterform' action="<?php echo Yii::app()->createUrl('Schedule/repeatSelected'); ?>" method='post'>
+        <div style="float: right; width: 20px;">
+            <span class="jqmClose">X</span>
+        </div>
+        <div>
+            <h2 id="repeatSchedulePopupTitle" >Repeat schedule</h2>
+
+        </div>
+        <input type="hidden" id='repeatActivityId' name="activityId">
+        <input type="hidden" id='repeatScheduleId'>
+        <input type="hidden" id='repeatScheduleStart'>
+        <input type="hidden" id='repeatScheduleEnd'>
+        <input type="hidden" id='repeatScheduleDesc' id='desc'>
+        <input type="hidden" id='repeatScheduleTimezone' id='tzid'>
+        <input type="hidden" id='repeatScheduleAlert' id='alertid'>
+        <table width="700" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="66" height="46" valign="middle">
+                    <span class="fontsize1">Repeat every</span><span><img
+                            src="./images/bg_100.png"/></span></td>
+                <td width="10" valign="middle"></td>
+                <td>
+                   <select id="repeatNumber" name="repeatNumber" class="cname4" >
+                        <?php for($i=0;$i<30;$i++){ ?>
+                            <option value="<?php echo $i+1; ?>"><?php echo $i+1; ?></option>
+                        <?php }?>
+                   </select>
+                    &nbsp;
+                    <select id="repeatPeriod" name="repeatPeriod" class="cname4" >
+                        <option value="daily">day(s)</option>
+                        <option value="weekly">week(s)</option>
+                        <option value="monthly">month(s)</option>
+                        <option value="yearly">year(s)</option>
+                    </select>
+                </td>
+                <td width="22">&nbsp;</td>
+            </tr>
+
+            <tr style="display: none" id="weekdays">
+                <td height="46"></td>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="checkbox" id="sun" value="0" class="weekdays"/><label for="sun">S</label>
+                    <input type="checkbox" id="mon" value="1" class="weekdays"/><label for="mon">M</label>
+                    <input type="checkbox" id="tue" value="2" class="weekdays"/><label for="tue">T</label>
+                    <input type="checkbox" id="wed" value="3" class="weekdays"/><label for="wed">W</label>
+                    <input type="checkbox" id="thu" value="4" class="weekdays"/><label for="thu">T</label>
+                    <input type="checkbox" id="fri" value="5" class="weekdays"/><label for="fri">F</label>
+                    <input type="checkbox" id="sat" value="6" class="weekdays"/><label for="sat">S</label>
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td height="46"><span class="fontsize1">From</span><span><img src="./images/bg_100.png"/></span></td>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="text" class="cname3" id="repeatStartAt"/>
+                    &nbsp;&nbsp;&nbsp;
+                    <span class="fontsize1">To</span>&nbsp;
+                    <input type="text" class="cname3" id="repeatEndAt">
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+
+            <tr id="repeatTimeErrorTr" style="display:none">
+                <td height="30" colspan="4" align="center" valign="middle"><span class="wrong" id="repeatTimeError"></span></td>
+            </tr>
+
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>
+                    <div style="text-align: center; margin: 15px auto;">
+                        <input type="button" class="conbu4" id="addRepeatScheduleButton" onclick="addRepeatSchedule();"/>
+                    </div>
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+
+
+
+        <div class="divRepeats">
+            <hr/>
+            <div class="tableRepeatSchedules">
+                <table id="repeatSchedules" cellpadding="0" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>
+                            Start
+                        </th>
+                        <th>
+                            End
+                        </th>
+                        <th style="width: 260px;">
+                            On Duty
+                        </th>
+                        <th style="width: 50px;">
+                            Delete
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+            <div style="text-align: center;">
+                    <label>
+                        <input type="button" class="cname5" onclick="submitRepeatSchedule()">
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>
+                        <span class="jqmClose"><input type="button" class="cname6"></span>
+                    </label>
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="main10buttom"></div>
+</div>
+<!-- repeat schedule popup end -->
+
+
+<!-- repeat schedule popup start -->
+<div class="jqmWindowEditSchedule" id="repeatUserSelect">
+    <div class="main10top"></div>
+    <div class="main10inter">
+        <div>
+            <h2>Participants</h2>
+        </div>
+
+        <div id="divRepeatParticipants">
+
+
+        </div>
+        <div style="text-align: center;">
+            <label>
+                <input type="button" class="cname5" onclick="changeRepeatParticipants()">
+            </label>
+            &nbsp;&nbsp;
+            <label>
+                <span class="jqmClose"><input type="button" class="cname6"></span>
+            </label>
+        </div>
+    </div>
+    <div class="main10buttom"></div>
+</div>
+<!-- repeat schedule popup end -->
+
 
 <div class="main6">
     <!-- js loading start -->
@@ -806,7 +1012,7 @@ echo $schedule_str;
 </ul>
 </div>
 <div class="main5">
-    <input type="button" class="mname3" onclick='repeatSelected()' style="display: none;">
+    <input type="button" class="mname3" onclick='repeatSelected()'>
 </div>
 
 <?php include_once(dirname(dirname(__FILE__)) . '/footer.php'); ?>
@@ -838,7 +1044,41 @@ $(function () {
         }
     });
 
+    $("#repeatschedulepopup").jqm({
+        modal: true,
+        overlay: 40,
+        onShow: function (h) {
+            h.w.fadeIn(500);
+        },
+        onHide: function (h) {
+            h.o.remove();
+            h.w.fadeOut(500)
+        }
+    });
+
     $("#confirmChangeStatusPopup").jqm({
+        modal: true,
+        overlay: 40,
+        onShow: function (h) {
+            h.w.fadeIn(500);
+        },
+        onHide: function (h) {
+            h.o.remove();
+            h.w.fadeOut(500)
+        }
+    });
+
+    $("#repeatPeriod").change(function(){
+        if ($(this).val()=="weekly"){
+            $("#weekdays").show();
+        }
+        else{
+            $("#weekdays").hide();
+        }
+    })
+
+
+    $("#repeatUserSelect").jqm({
         modal: true,
         overlay: 40,
         onShow: function (h) {
@@ -889,10 +1129,14 @@ function deleteSchedule(i) {
     ?>
 }
 
+
+var shareMembers = [];
+var repeatScheduleMemberIds = "";
+var repeatScheduleMemberDisplay = "";
 function repeatSelected() {
     var length = document.getElementsByName('ischeck').length;
     var selected = document.getElementsByName('ischeck');
-
+    $("#addRepeatScheduleButton").hide();
     var activityid = new Array();
     var count = 0;
     for (var i = 0; i < length; i++) {
@@ -910,8 +1154,244 @@ function repeatSelected() {
         return;
     }
 
-    editSchedule(activityid[0], true);
+    $(".divRepeats").hide();
+    $("#repeatSchedules > tbody").html("");
+    repeatItemsTotal = 0;
+
+
+
+    var arr = activityid[0].split('_');
+    var activity = arr[1];
+
+    document.getElementById("repeatScheduleId").value = arr[0];
+    document.getElementById("repeatActivityId").value = arr[1];
+
+    var img = "<img src='<?php echo Yii::app()->baseUrl.'/images/loading.gif';?>'>";
+    <?php
+        echo CHtml::ajax(
+            array(
+                "url" => CController::createUrl("Schedule/GetSharedMembersData"),
+                "data" => "js:{activity:activity}",
+                "type"=>"POST",
+                "async"=>false,
+                'beforeSend'=>"js:function(){
+                    document.getElementById('sharememberlist').innerHTML = img;
+                }",
+                "success"=>"js:function(data){
+
+                    if(data == 'ajaxsessionout'){
+                        location.href = homeUrl;
+                        return;
+                    }
+
+                    $('#divRepeatParticipants').html('');
+                    shareMembers = $.parseJSON(data);
+
+                    //document.getElementById('sharememberlist').innerHTML = data;
+                }",
+            )
+        );
+    ?>
+
+    <?php
+        echo CHtml::ajax(array(
+            "url" => CController::createUrl("Schedule/View"),
+            "data" => "js:{schedule: arr[0],activity : arr[1]}",
+            "type"=>"POST",
+            "success"=>"js:function(json){
+                var data = eval('('+json+')');
+
+                if(typeof(data.data) == 'undefined'){
+                    document.getElementById('repeatSchedulePopupTitle').innerHTML = 'Repeat Schedule of ' + data.name;
+                    document.getElementById('repeatScheduleStart').value = data.start;
+                    document.getElementById('repeatScheduleEnd').value = data.end;
+                    document.getElementById('repeatScheduleDesc').value = data.desp;
+                    document.getElementById('repeatScheduleTimezone').value = data.tzid;
+                    document.getElementById('repeatScheduleAlert').value = data.alert;
+                    repeatScheduleMemberIds = data.memberIds;
+                    initilizeRepeatSelectMembers();
+
+                }else{
+                    location.href = homeUrl;
+                }
+
+            }",
+        ));
+    ?>
+    $("#repeatschedulepopup").jqmShow();
 }
+
+function initilizeRepeatSelectMembers(){
+    memberIds = repeatScheduleMemberIds.split(",");
+    memberSelected = [];
+    $(shareMembers).each(function(index, member){
+        if ($.inArray(member.memberid, memberIds) >= 0)
+            memberSelected.push(member.membername);
+        $('#divRepeatParticipants').append('<input type="checkbox" value="'+member.memberid+'" id="'+member.memberid+'"/> <label for="'+member.memberid+'">'+member.membername+'</label> <br/>' );
+    });
+
+    repeatScheduleMemberDisplay = memberSelected.join(", ");
+    $("#addRepeatScheduleButton").show();
+}
+
+
+
+function addRepeatSchedule(){
+    var start = $('#repeatStartAt').val();
+    var end = $('#repeatEndAt').val();
+
+
+
+    if (start == '' || start == null) {
+        document.getElementById('repeatTimeErrorTr').style.display = "";
+
+        document.getElementById('repeatTimeError').innerHTML = 'Start Time can not be empty.';
+        document.getElementById('repeatStartAt').focus();
+        return;
+    }
+    if (end == '' || end == null) {
+        document.getElementById('repeatTimeErrorTr').style.display = "";
+
+        document.getElementById('repeatTimeError').innerHTML = 'End Time can not be empty.';
+        document.getElementById('repeatEndAt').focus();
+        return;
+    }
+
+    start = moment(start, "MM/DD/YYYY");
+    end = moment(end, "MM/DD/YYYY");
+    if (start > end) {
+        document.getElementById('repeatTimeErrorTr').style.display = "";
+
+        document.getElementById('repeatTimeError').innerHTML = 'Start should be smaller than End.';
+        document.getElementById('repeatStartAt').focus();
+        return;
+    }
+
+
+
+    var weekdaySelected = [];
+
+    $("#weekdays input[type=checkbox]:checked").each(function(){
+        weekdaySelected.push($(this).val());
+    });
+
+    if ($("#repeatPeriod")== "weekly" && weekdays.length==0 ){
+        document.getElementById('repeatTimeErrorTr').style.display = "";
+
+        document.getElementById('repeatTimeError').innerHTML = 'Please select days of week';
+        document.getElementById('repeatStartAt').focus();
+        return;
+    }
+
+    document.getElementById('repeatTimeErrorTr').style.display = "none";
+    var schduleStart = moment($("#repeatScheduleStart").val(), "MM/DD/YYYY hh:mm A");
+    var schduleEnd =moment($("#repeatScheduleEnd").val(), "MM/DD/YYYY hh:mm A");
+    var timeDiff = schduleEnd - schduleStart;
+
+
+    while(start <= end){
+        if ($("#repeatPeriod").val()== "weekly"){
+            for (var i=0; i < 7; i++){
+                if (i >= start.days() && $.inArray(i+"",  weekdaySelected)>=0){
+                    start = moment(start).add("days", i-start.days());
+                    if (start<end)
+                        addRepeatScheduleRow(start, schduleStart, timeDiff);
+                }
+            }
+        }
+        else{
+            addRepeatScheduleRow(start, schduleStart, timeDiff);
+        }
+
+
+        if ($("#repeatPeriod").val() == "daily"){
+            start = moment(start).add('days', $("#repeatNumber").val());
+        }
+        else if ($("#repeatPeriod").val()== "weekly"){
+            start =  moment(start).add('days', 1);
+        }
+        else if ($("#repeatPeriod").val()== "monthly"){
+            start =  moment(start).add('months',  $("#repeatNumber").val());
+        }
+        else if ($("#repeatPeriod").val()== "yearly"){
+            start =  moment(start).add('years',  $("#repeatNumber").val());
+        }
+    }
+}
+
+var repeatItemsTotal = 0;
+
+function addRepeatScheduleRow(start, schduleStart, timeDiff){
+    $(".divRepeats").show();
+    if (repeatItemsTotal >40){
+        document.getElementById('repeatTimeErrorTr').style.display = "";
+        document.getElementById('repeatTimeError').innerHTML = 'Sorry, you are not allow to repeat more than 40 schedules.';
+        return;
+    }
+    repeatItemsTotal+=1;
+
+    var startDateTime =  moment(start).add('hours', schduleStart.format("H")).add('minutes', schduleStart.minutes());
+    var startTime = startDateTime.format("MM/DD/YYYY hh:mm A");
+    var endTime = moment(startDateTime).add('milliseconds', timeDiff).format("MM/DD/YYYY hh:mm A");
+
+    $("#repeatSchedules > tbody").append('<tr>'
+        + '<td class="start">'
+        +'<input type="hidden" name="start[]" value="'+startTime+'" /> '
+        +'<span class="start">'+startTime+'</span>'
+        + '</td>'
+        + '<td class="end">'
+        +'<input type="hidden" name="end[]" value="'+endTime+'" /> '
+        +'<span class="start">'+endTime+'</span>'
+        + '</td>'
+        + '<td class="participants">'
+        +'<input type="hidden" name="members[]" value="'+repeatScheduleMemberIds+'" /> '
+        +'<span class="members">'+repeatScheduleMemberDisplay+'</span>'
+        +'<a class="repeatParicipantChange" href="javascript:void(0)" onclick="selectParticipant(this)">Change</div>'
+        + '</td>'
+        + '<td>'
+        +'<button type="button" onclick="deleteRepeatSchedule(this)" >X</button> '
+        + '</td>'
+        + '</tr>');
+}
+
+function deleteRepeatSchedule(button){
+    $(button).parent().parent().remove();
+    repeatItemsTotal -=1;
+}
+
+var changeParticipantRow;
+function selectParticipant(button){
+    changeParticipantRow = $(button).parent().parent(); // get <tr>
+    var ids = $(changeParticipantRow).find(".participants input").val().split(",");
+
+    $("#repeatUserSelect").jqmShow();
+    $("#divRepeatParticipants input[type=checkbox]").removeAttr("checked");
+    $(ids).each(function(index, id){
+        $("#"+id).attr("checked", "checked");
+    });
+}
+
+
+function changeRepeatParticipants(){
+    var ids = [];
+    var names = [];
+    $("#divRepeatParticipants input[type=checkbox]:checked").each(function(index, checkbox){
+            for (var i=0;i<shareMembers.length;i++){
+                if (shareMembers[i].memberid==$(checkbox).val()){
+                    ids.push(shareMembers[i].memberid);
+                    names.push(shareMembers[i].membername);
+                    break;
+                }
+            }
+        }
+    );
+
+    $($(changeParticipantRow).find(".participants input")[0]).val(ids.join(","));
+    $(changeParticipantRow).find(".participants span.members").html(names.join(", "));
+
+    $("#repeatUserSelect").jqmHide();
+}
+
 
 function viewSchedule(i) {
     $("#viewschedulepopup").jqmShow();
@@ -1243,8 +1723,7 @@ function sendConfirmStatus(confirm){
 </script>
 
 <!--日期样式-->
-<link rel="stylesheet" type="text/css" href="./css/jquery.datetimepicker.css"/>
-<script type="text/javascript" src="./js/jquery.datetimepicker.js"></script>
+
 <script language='javascript'>
     $('#editstart').datetimepicker({
         step: 5,
@@ -1255,6 +1734,15 @@ function sendConfirmStatus(confirm){
         step: 5,
         format: 'm/d/Y g:i A',
         formatTime: 'g:i A'
+    });
+    $('#repeatStartAt').datetimepicker({
+        timepicker:false,
+        format: 'm/d/Y'
+
+    });
+    $('#repeatEndAt').datetimepicker({
+        timepicker:false,
+        format: 'm/d/Y'
     });
 </script>
 </html>
