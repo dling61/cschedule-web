@@ -485,109 +485,84 @@ class ScheduleController extends Controller
 		if(isLogin()){
 			$this->redirect(Yii::app()->createUrl('User/login'));
 		}else{
-			if(isset($_POST['name'])){
-				$serviceid = $_POST['name'];
-				$start = $_POST['start'];
-				$end = $_POST['end'];
-				$members = $_POST['participant'];
-				// $desp = $_POST['desp'];
-				$str = $_POST['str'];
-				$count = $_POST['count'];
-				
-				$membersname = $_POST['membersname'];
-				$activityname = $_POST['activityname'];
-				
-				$ownerid = $_SESSION['ownerid'];
-				
-				$cache_myservices = Yii::app()->cache->get($ownerid.'_myservices');
-				$service = array();
-				if($cache_myservices === array() || $cache_myservices){
-					$services = $cache_myservices;
-					if($services){
-						foreach($services as $servicevals){
-							$service[$servicevals->serviceid] = $servicevals->repeat;
-						}
-					}
-				}else{
-					$s_result = $this->rest()->getResponse('services','get',$arr);
-					if($s_result['code'] == 200){
-						$services = json_decode($s_result['response'])->services;		
-						Yii::app()->cache->set($ownerid.'_myservices',$services,CACHETIME);
-					
-						if($services){
-							foreach($services as $servicevals){
-								$service[$servicevals->serviceid] = $servicevals->repeat;
-							}
-						}
-					}
-				}
-				
-				$ajaxresponsedata = "";
-				
-				for($i=0;$i<$count;$i++){
-					$scheduleid = ($_SESSION['scheduleid'] == 0)?($_SESSION['ownerid'].'0001'):($_SESSION['scheduleid']+1);				
-					$membersinfo = "";
-					
-					foreach($membersname[$i] as $memberskey=>$membersvals){
-						$membersinfo .= "<li id='".$scheduleid."_".$members[$i][$memberskey]."' name='membersid_".$scheduleid."'>".$membersvals."</li>";	
-					}
-				
-					
-					$addtime = 7*24*3600;
-					
-					$starttime = date('Y-m-d H:i:s',strtotime(str_replace("<br>","",$start[$i]))+$addtime);
-					$endtime = date('Y-m-d H:i:s',strtotime(str_replace("<br>","",$end[$i]))+$addtime);
+            if(isset($_POST['activity']))
+            {
+                $ownerid = $_SESSION['ownerid'];
 
-					// echo $starttime;exit;
-					$arr = array(
-						'ownerid'=>$ownerid,
-						'serviceid'=>$serviceid[$i],
-						'schedules'=>array(
-							'scheduleid'=>$scheduleid,
-							// 'desp'=>$desp[$i],
-							'startdatetime'=>$starttime,
-							'enddatetime'=>$endtime,
-							'utcoffset'=>'0',
-							'members'=>$members[$i]
-						)	
-					);
-					
-					$cache_member_string = implode(",",$members[$i]);
-					$result = $this->rest()->getResponse('schedules','post',$arr);
-					if($result['code'] == 200){
-						//update scheduleid session
-						$_SESSION['scheduleid'] = $scheduleid;
-							
-						//add cache	
-						$myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
-						if(!$myschedules){
-							Yii::app()->cache->set($ownerid.'_myschedules',array(),CACHETIME);
-						}
-						$myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
-						$addschedule = new stdClass();
-						$addschedule->serviceid = $serviceid[$i];
-						$addschedule->scheduleid = $scheduleid;
-						// $addschedule->desp = $desp[$i];
-						$addschedule->startdatetime = $starttime;
-						$addschedule->enddatetime = $endtime;
-						$addschedule->utcoffset = 0;
-						$addschedule->members = $cache_member_string;
-						$addschedule->createdtime = date('Y-m-d H:i:s');
-						array_push($myschedules,$addschedule);
-						Yii::app()->cache->set($ownerid.'_myschedules',$myschedules,CACHETIME);
-						
-						//success to create schedule
-						$lastupdatetime = json_decode($result['response'])->lastmodified;
-						echo 'ok';
-						//$ajaxresponsedata .= "<tr class='a1' id='".$scheduleid."'><td><input name='ischeck' type='checkbox' id='".$scheduleid."_".$serviceid[$i].$str[$i]."_check'/></td><td id='".$scheduleid."_se'>".$activityname[$i]."</td><td id='".$scheduleid."_st'>".$starttime."</td><td id='".$scheduleid."_en'>".$endtime."</td><td id='".$scheduleid."_de'>".$desp[$i]."</td><td id='".$scheduleid."_me'>".strtr($membersinfo,"\"","'")."</td><td>".$lastupdatetime."</td><td><img id='".$scheduleid."_del' src='./images/delete.png' width='16' height='16' onclick='deleteSchedule(".$scheduleid.")'>&nbsp;&nbsp<img src='./images/smalledit.png' id='".$scheduleid."_edit' width='16' height='16' onclick='editSchedule(".$scheduleid.")' /><img src='./images/delete.png' id='".$scheduleid."_cancle' width='16' height='16' onclick='cancleSchedule(".$scheduleid.")' style='display:none'/>&nbsp;&nbsp<img src='./images/ok.png' id='".$scheduleid."_save' width='16' height='16' style='display:none' onclick=saveSchedule('".$scheduleid.'_'.$serviceid[$i].$str[$i]."')></td></tr>";
-					}else{
-						//do something
-						echo 'Fail to create the schedule.';
-						// $ajaxresponsedata .= 'Fail to create the schedule.';
-					}
-				}
-				// echo '{"tip":"ok","strings":"'.$ajaxresponsedata.'"}';
-			}
+                $serviceid = $_POST['activity'];
+                $desp = $_POST['desc'];
+                $tzid = $_POST['tzid'];
+                $alert = $_POST['alert'];
+
+                $start_array = $_POST['start'];
+                $end_array = $_POST['end'];
+                $member_array = $_POST['members'];
+
+                $timezone = "UTC";
+                foreach (getPartTimezones() as $timezonekey => $timezoneval) {
+                    if($timezonekey==$tzid) {
+                        $timezone = $timezoneval;
+                        break;
+                    }
+                }
+
+                for ($i = 0; $i< sizeof($start_array); $i++){
+                    $start = $start_array[$i];
+                    $end = $end_array[$i];
+                    $onduties = explode(",",$member_array[$i]);
+                    $scheduleid = ($_SESSION['scheduleid'] == 0)?($_SESSION['ownerid'].'0001'):($_SESSION['scheduleid']+1);
+
+                    $members = array();
+                    foreach($onduties as $member){
+                        array_push($members, array('memberid'=>$member, 'confirm'=>0));
+                    }
+
+
+                    $real_start = (new DateTime($start, new DateTimeZone($timezone)))
+                        ->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+                    $real_end = (new DateTime($end, new DateTimeZone($timezone)))
+                        ->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+
+                    $arr = array(
+                        'ownerid'=>$ownerid,
+                        'serviceid'=>$serviceid,
+                        'schedules'=>array(
+                            'scheduleid'=>$scheduleid,
+                            'desp'=>$desp,
+                            'startdatetime'=>$real_start,
+                            'enddatetime'=>$real_end,
+                            'tzid'=>$tzid,
+                            'members'=>$members,
+                            'alert'=>$alert
+                        )
+                    );
+
+
+                    $result = $this->rest()->getResponse('schedules','post',$arr);
+                    if($result['code'] == 200){
+                        $_SESSION['scheduleid'] = $scheduleid;
+
+                        $myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
+                        if($myschedules === array() || $myschedules){
+                            $myschedules = Yii::app()->cache->get($ownerid.'_myschedules');
+                            $addschedule = new stdClass();
+                            $addschedule->serviceid = $serviceid;
+                            $addschedule->scheduleid = $scheduleid;
+                            $addschedule->desp = $desp;
+                            $addschedule->startdatetime = $real_start;
+                            $addschedule->enddatetime = $real_end;
+                            $addschedule->tzid = $tzid;
+                            $addschedule->alert = $alert;
+                            $addschedule->members = $members;
+                            $addschedule->createdtime = date('Y-m-d H:i:s');
+
+                            array_push($myschedules,$addschedule);
+                            Yii::app()->cache->set($ownerid.'_myschedules',$myschedules,CACHETIME);
+                        }
+                    }
+                }
+            }
+            $this->redirect(Yii::app()->createUrl('Schedule/admin'));
 		}
 	}
 	

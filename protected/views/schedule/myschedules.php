@@ -456,7 +456,7 @@ if ($members) {
 <div class="jqmWindowEditSchedule" id="repeatschedulepopup">
     <div class="main10top"></div>
     <div class="main10inter">
-        <form id='filterform' action="<?php echo Yii::app()->createUrl('Schedule/repeatSelected'); ?>" method='post'>
+        <form id='repeatForm' action="<?php echo Yii::app()->createUrl('Schedule/repeatSelected'); ?>" method='post'>
         <div style="float: right; width: 20px;">
             <span class="jqmClose">X</span>
         </div>
@@ -464,13 +464,13 @@ if ($members) {
             <h2 id="repeatSchedulePopupTitle" >Repeat schedule</h2>
 
         </div>
-        <input type="hidden" id='repeatActivityId' name="activityId">
+        <input type="hidden" id='repeatActivityId' name="activity">
         <input type="hidden" id='repeatScheduleId'>
         <input type="hidden" id='repeatScheduleStart'>
         <input type="hidden" id='repeatScheduleEnd'>
-        <input type="hidden" id='repeatScheduleDesc' id='desc'>
-        <input type="hidden" id='repeatScheduleTimezone' id='tzid'>
-        <input type="hidden" id='repeatScheduleAlert' id='alertid'>
+        <input type="hidden" id='repeatScheduleDesc' name='desc'>
+        <input type="hidden" id='repeatScheduleTimezone' name='tzid'>
+        <input type="hidden" id='repeatScheduleAlert' name='alert'>
         <table width="700" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <td width="66" height="46" valign="middle">
@@ -567,7 +567,7 @@ if ($members) {
             <br/>
             <div style="text-align: center;">
                     <label>
-                        <input type="button" class="cname5" onclick="submitRepeatSchedule()">
+                        <input type="button" class="cname5" value="" onclick="validateSubmitRepeat(this);">
                     </label>
                     &nbsp;&nbsp;
                     <label>
@@ -939,7 +939,7 @@ else {
                 foreach ($schedules_vals->members as $members_vals) {
                     $members_vals = ((array)$members_vals);
                     $mem_id = $members_vals['memberid'];
-                    if ($_SESSION['ownerid'].'0000'==$mem_id){
+                    if ($_SESSION['useremail'] == $emails[$mem_id]){
                         $member_str = "<a "
                             . "' id='" . $schedules_vals->scheduleid . '_' . $mem_id
                             . "' title='Name: " . $sharedList[$mem_id] . "\nEmail: " . $emails[$mem_id] . "\nPhone: " . $phones[$mem_id]
@@ -1089,6 +1089,11 @@ $(function () {
             h.w.fadeOut(500)
         }
     });
+
+    $("#repeatForm").submit(function(e)
+    {
+        $(".showbox").stop(true).animate({'margin-top':'300px','opacity':'1'},200);
+    });
 });
 
 var homeUrl;
@@ -1227,7 +1232,13 @@ function initilizeRepeatSelectMembers(){
     $(shareMembers).each(function(index, member){
         if ($.inArray(member.memberid, memberIds) >= 0)
             memberSelected.push(member.membername);
-        $('#divRepeatParticipants').append('<input type="checkbox" value="'+member.memberid+'" id="'+member.memberid+'"/> <label for="'+member.memberid+'">'+member.membername+'</label> <br/>' );
+
+        if (member.sharedrole=="0") {
+            $('#divRepeatParticipants').append('<input checked="checked" disabled type="checkbox" value="'+member.memberid+'" id="'+member.memberid+'"/> <label for="'+member.memberid+'">'+member.membername+'</label> <br/>' );
+        }
+        else{
+            $('#divRepeatParticipants').append('<input type="checkbox" value="'+member.memberid+'" id="'+member.memberid+'"/> <label for="'+member.memberid+'">'+member.membername+'</label> <br/>' );
+        }
     });
 
     repeatScheduleMemberDisplay = memberSelected.join(", ");
@@ -1317,6 +1328,12 @@ function addRepeatSchedule(){
             start =  moment(start).add('years',  $("#repeatNumber").val());
         }
     }
+
+    $('.datetimepicker').datetimepicker({
+        step: 5,
+        format: 'm/d/Y g:i A',
+        formatTime: 'g:i A'
+    });
 }
 
 var repeatItemsTotal = 0;
@@ -1336,12 +1353,10 @@ function addRepeatScheduleRow(start, schduleStart, timeDiff){
 
     $("#repeatSchedules > tbody").append('<tr>'
         + '<td class="start">'
-        +'<input type="hidden" name="start[]" value="'+startTime+'" /> '
-        +'<span class="start">'+startTime+'</span>'
+        +'<input type="text" name="start[]" value="'+startTime+'" class="datetimepicker" /> '
         + '</td>'
         + '<td class="end">'
-        +'<input type="hidden" name="end[]" value="'+endTime+'" /> '
-        +'<span class="start">'+endTime+'</span>'
+        +'<input type="text" name="end[]" value="'+endTime+'" class="datetimepicker" /> '
         + '</td>'
         + '<td class="participants">'
         +'<input type="hidden" name="members[]" value="'+repeatScheduleMemberIds+'" /> '
@@ -1390,6 +1405,29 @@ function changeRepeatParticipants(){
     $(changeParticipantRow).find(".participants span.members").html(names.join(", "));
 
     $("#repeatUserSelect").jqmHide();
+}
+
+function validateSubmitRepeat(){
+    if ($("#repeatSchedules .participants input[value=]").length>0){
+        alert("Schedule must have at least 1 participant.");
+        return false;
+    }
+
+    var startDates = $("#repeatSchedules .start input");
+    var endDates = $("#repeatSchedules .end input");
+
+    for (var i=0;i < startDates.length;i ++){
+        start = moment($(startDates[i]).val(),  "MM/DD/YYYY hh:mm A");
+        end = moment($(endDates[i]).val(),  "MM/DD/YYYY hh:mm A");
+
+        if (start>end){
+            alert("Start should be smaller than End.");
+            $(startDates[i]).focus();
+            return false;
+        }
+    }
+
+    $("#repeatForm").submit();
 }
 
 

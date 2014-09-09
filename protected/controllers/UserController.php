@@ -118,6 +118,7 @@ class UserController extends Controller
 					setcookie('cschedule_psw', encrypt($_POST['password'], 'E', 'MyCSchedule'), time()+3600*24*14);
 				}else setcookie('cschedule_psw', encrypt($_POST['password'], 'E', 'MyCSchedule'), time()+3600*0.5);
 				session_start();
+
 				$response = json_decode($result['response']);
 				
 				//if login in successfull,store the users' session.Session key -- ownerid/username/serviceid/memberid/scheduleid
@@ -125,7 +126,7 @@ class UserController extends Controller
 					$_SESSION[$key] = $value;
 				}
 				echo 'ok';
-				
+                $_SESSION['useremail'] = $_POST['email'];
 				Yii::app()->user->setState('userSessionTimeout', time() + Yii::app()->params['sessionTimeoutSeconds']) ;
 				
 			}else if($result['code'] == 401){

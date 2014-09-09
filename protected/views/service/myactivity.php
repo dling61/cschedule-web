@@ -98,7 +98,7 @@
       <tr>
         <td width="43%" align="right">
         <label>
-          <input type="button" class="cname5" onclick="submitSharedMembers()">
+          <input type="button" class="cname5" onclick="submitSharedMembers()" value="">
           </label>
       </td>
         <td width="6%">&nbsp;</td>
