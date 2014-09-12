@@ -64,10 +64,12 @@
         }
 
         .divRepeats{
-            display: none;
             width:680px;
         }
 
+        #btnSubmitSchedule{
+            display: none;;
+        }
         #repeatSchedules{
             width:660px;
             border-right: 1px solid #d6dfe5;
@@ -98,6 +100,10 @@
         .tableRepeatSchedules{
             max-height: 400px;
             overflow-y: scroll;
+        }
+
+        #divRepeatParticipants{
+            margin-bottom: 20px;
         }
     </style>
 
@@ -457,11 +463,11 @@ if ($members) {
     <div class="main10top"></div>
     <div class="main10inter">
         <form id='repeatForm' action="<?php echo Yii::app()->createUrl('Schedule/repeatSelected'); ?>" method='post'>
-        <div style="float: right; width: 20px;">
+        <div class="popupClose">
             <span class="jqmClose">X</span>
         </div>
         <div>
-            <h2 id="repeatSchedulePopupTitle" >Repeat schedule</h2>
+            <h2 id="repeatSchedulePopupTitle" >Repeat Schedules</h2>
 
         </div>
         <input type="hidden" id='repeatActivityId' name="activity">
@@ -478,13 +484,13 @@ if ($members) {
                             src="./images/bg_100.png"/></span></td>
                 <td width="10" valign="middle"></td>
                 <td>
-                   <select id="repeatNumber" name="repeatNumber" class="cname4" >
+                   <select id="repeatNumber" name="repeatNumber" class="cname4-mini" >
                         <?php for($i=0;$i<30;$i++){ ?>
                             <option value="<?php echo $i+1; ?>"><?php echo $i+1; ?></option>
                         <?php }?>
                    </select>
                     &nbsp;
-                    <select id="repeatPeriod" name="repeatPeriod" class="cname4" >
+                    <select id="repeatPeriod" name="repeatPeriod" class="cname4-mini" >
                         <option value="daily">day(s)</option>
                         <option value="weekly">week(s)</option>
                         <option value="monthly">month(s)</option>
@@ -567,7 +573,7 @@ if ($members) {
             <br/>
             <div style="text-align: center;">
                     <label>
-                        <input type="button" class="cname5" value="" onclick="validateSubmitRepeat(this);">
+                        <input id="btnSubmitSchedule" type="button" class="cname5" value="" onclick="validateSubmitRepeat(this);">
                     </label>
                     &nbsp;&nbsp;
                     <label>
@@ -583,9 +589,8 @@ if ($members) {
 
 
 <!-- repeat schedule popup start -->
-<div class="jqmWindowEditSchedule" id="repeatUserSelect">
-    <div class="main10top"></div>
-    <div class="main10inter">
+<div class="jqmWindowSmall modelGray" id="repeatUserSelect">
+    <div>
         <div>
             <h2>Participants</h2>
         </div>
@@ -604,7 +609,6 @@ if ($members) {
             </label>
         </div>
     </div>
-    <div class="main10buttom"></div>
 </div>
 <!-- repeat schedule popup end -->
 
@@ -1159,7 +1163,7 @@ function repeatSelected() {
         return;
     }
 
-    $(".divRepeats").hide();
+    $("#btnSubmitSchedule").hide();
     $("#repeatSchedules > tbody").html("");
     repeatItemsTotal = 0;
 
@@ -1207,7 +1211,7 @@ function repeatSelected() {
                 var data = eval('('+json+')');
 
                 if(typeof(data.data) == 'undefined'){
-                    document.getElementById('repeatSchedulePopupTitle').innerHTML = 'Repeat Schedule of ' + data.name;
+                    document.getElementById('repeatSchedulePopupTitle').innerHTML = 'Repeat Schedules of ' + data.name;
                     document.getElementById('repeatScheduleStart').value = data.start;
                     document.getElementById('repeatScheduleEnd').value = data.end;
                     document.getElementById('repeatScheduleDesc').value = data.desp;
@@ -1243,6 +1247,20 @@ function initilizeRepeatSelectMembers(){
 
     repeatScheduleMemberDisplay = memberSelected.join(", ");
     $("#addRepeatScheduleButton").show();
+
+    $("#repeatSchedules > tbody").append('<tr>'
+        + '<td class="start">'
+        +'<span>'+$("#repeatScheduleStart").val()+'</span> '
+        + '</td>'
+        + '<td class="end">'
+        +'<span>'+$("#repeatScheduleEnd").val()+'</span> '
+        + '</td>'
+        + '<td class="participants">'
+        +'<span class="members">'+repeatScheduleMemberDisplay+'</span>'
+        + '</td>'
+        + '<td>&nbsp;'
+        + '</td>'
+        + '</tr>');
 }
 
 
@@ -1334,6 +1352,8 @@ function addRepeatSchedule(){
         format: 'm/d/Y g:i A',
         formatTime: 'g:i A'
     });
+
+    $("#btnSubmitSchedule").show();
 }
 
 var repeatItemsTotal = 0;
@@ -1361,7 +1381,7 @@ function addRepeatScheduleRow(start, schduleStart, timeDiff){
         + '<td class="participants">'
         +'<input type="hidden" name="members[]" value="'+repeatScheduleMemberIds+'" /> '
         +'<span class="members">'+repeatScheduleMemberDisplay+'</span>'
-        +'<a class="repeatParicipantChange" href="javascript:void(0)" onclick="selectParticipant(this)">Change</div>'
+        +'<a class="repeatParicipantChange" href="javascript:void(0)" onclick="selectParticipant(this)">Change</a>'
         + '</td>'
         + '<td>'
         +'<button type="button" onclick="deleteRepeatSchedule(this)" >X</button> '
@@ -1372,6 +1392,8 @@ function addRepeatScheduleRow(start, schduleStart, timeDiff){
 function deleteRepeatSchedule(button){
     $(button).parent().parent().remove();
     repeatItemsTotal -=1;
+    if (repeatItemsTotal==0)
+        $("#btnSubmitSchedule").hide();
 }
 
 var changeParticipantRow;

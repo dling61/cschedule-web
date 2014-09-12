@@ -493,7 +493,7 @@ class ServiceController extends Controller
     {
         $id = $_POST['id'];
         $ownerid = $_SESSION['ownerid'];
-        $result = $this->rest()->getResponse('services/' . $id, 'delete');
+        $result = $this->rest()->getResponse('services/' . $id, 'delete',null,$ownerid);
 
         if ($result['code'] == 200) {
             $services = Yii::app()->cache->get($ownerid . '_myservices');

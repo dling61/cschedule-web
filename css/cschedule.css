@@ -14,7 +14,7 @@ ul,li{margin:0;
 	  }
 	  
 dl,dt,dd{margin:0;
-         padding:0;ssssss
+         padding:0;
 		 }
 .clear{clear:both; display:block; font-size:1px; height:0;line-height:0; overflow:hidden; visibility:hidden; zoom:0.08 ; }
 a{text-decoration:none; cursor:pointer;}
@@ -103,6 +103,7 @@ img{border:none;}
 .cname2{ background:url(../images/bg_45.png) no-repeat; width:266px; height:126px; border:none; color:#908964;}
 .cname3{ background:url(../images/bg_44.png) no-repeat; width:260px; padding-left:6px; height:36px;  border:none; color:#908964;}
 .cname4{ background:url(../images/bg_46.png) no-repeat; width:260px; padding-left:6px; height:36px;  border:none; background-color:#cec8a9; color:#908964;padding-top: 10px;}
+.cname4-mini{ background:url(../images/bg_46.png) no-repeat; width:125px; padding-left:6px; height:36px;  border:none; background-color:#cec8a9; color:#908964;padding-top: 10px;}
 .cname5{background:url(../images/bg_48.png) no-repeat; width:72px; height:30px; border:none; margin-left:50px; cursor:pointer;}
 .cname6{background:url(../images/bg_49.png) no-repeat; width:72px; height:30px; border:none; cursor:pointer;}
 .main5{width:974px; margin:8px auto 40px auto; }
@@ -181,7 +182,7 @@ img{border:none;}
 .main13bg1{ width:571px; padding-left:22px; height:22px; padding-top:14px; background:url(../images/bg_95.png) no-repeat;}
 .main13bg2{width:591px; margin-left:1px; padding-left:1px;  background:url(../images/bg_97.png) repeat-y; height:36px;}
 .main13bg3{width:591px; margin-left:1px; padding-left:1px; background:url(../images/bg_96.png) no-repeat; height:3px;}
-.main13bg4{width:591px; margin-left:1px; p adding-left:1px; background:url(../images/bg_98.png) no-repeat; height:5px;}
+.main13bg4{width:591px; margin-left:1px; padding-left:1px; background:url(../images/bg_98.png) no-repeat; height:5px;}
 .main13bu1{background:url(../images/bg_99.png) no-repeat; width:72px; height:31px; border:none; cursor:pointer;}
 
 .main13bu3{background:url(../images/bg_101.png) no-repeat; width:72px; height:31px; cursor:pointer; border:none; }
@@ -238,4 +239,8 @@ img{border:none;}
      background-image: -ms-linear-gradient(top, #819bcb, #536f9d);
      background-image: -o-linear-gradient(top, #819bcb, #536f9d);
      background-image: linear-gradient(to bottom, #819bcb, #536f9d);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#819bcb, endColorstr=#536f9d);
+ }
+
+ .popupClose{
+     float: right; width: 20px; margin-top:-25px; font-weight: bold; cursor: pointer;
  }
