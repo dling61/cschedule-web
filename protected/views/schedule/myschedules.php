@@ -738,11 +738,11 @@ if (isset($_GET['activity'])) {
                 $schedule_str .= "<li class='tablebg3' id='" . $schedules_vals->scheduleid . "'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr> <td width='53' align='center'>";
                 if (in_array($servicerole[$schedules_vals->serviceid], array(0))) {
-                    $schedule_str .= "<input name='ischeck' type='checkbox' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check'/>";
+                    $schedule_str .= "<input name='ischeck' type='checkbox' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check' />";
                     // }else if($servicerole[$schedules_vals->serviceid] == 2){
                 }
                 else if (in_array($servicerole[$schedules_vals->serviceid], array(1, 2))) {
-                    $schedule_str .= "<input name='ischeck' type='checkbox' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check' disabled='disabled'/>";
+                    $schedule_str .= "<input name='ischeck' type='checkbox' disabled='disabled' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check' />";
                 }
                 $schedule_str .= "
    </td>
@@ -866,7 +866,16 @@ else if (isset($_POST['submit'])) {
             if ($time_condition && $activity_condition && $participant_condition) {
                 $schedule_str .= "<li class='tablebg3' id='" . $schedules_vals->scheduleid . "'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
-    <td width='53' align='center'><input name='ischeck' type='checkbox' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check'/></td>
+    <td width='53' align='center'>";
+                if (in_array($servicerole[$schedules_vals->serviceid], array(0))) {
+                    $schedule_str .= "<input name='ischeck' type='checkbox' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check' />";
+                    // }else if($servicerole[$schedules_vals->serviceid] == 2){
+                }
+                else if (in_array($servicerole[$schedules_vals->serviceid], array(1, 2))) {
+                    $schedule_str .= "<input name='ischeck' type='checkbox' disabled='disabled' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check' />";
+                }
+                $schedule_str .= "
+                </td>
     <td width='176' align='center'><span class='fontweight' id='" . $schedules_vals->scheduleid . "_se'>" . $service[$schedules_vals->serviceid] . "</span></td>
     <td width='108' align='center' id='" . $schedules_vals->scheduleid . "_st'>" . $startdate[0] . "<br/>
 " . $startdate[1] . " " . $startdate[2] . $tz . "</td>
@@ -978,7 +987,16 @@ else {
 
             $schedule_str .= "<li class='tablebg3' id='" . $schedules_vals->scheduleid . "'><table width='951' border='0' cellspacing='0' cellpadding='0'>
   <tr>
-    <td width='53' align='center'><input name='ischeck' type='checkbox' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check'/></td>
+    <td width='53' align='center'>";
+            if (in_array($servicerole[$schedules_vals->serviceid], array(0))) {
+                $schedule_str .= "<input name='ischeck' type='checkbox' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check' />";
+                // }else if($servicerole[$schedules_vals->serviceid] == 2){
+            }
+            else if (in_array($servicerole[$schedules_vals->serviceid], array(1, 2))) {
+                $schedule_str .= "<input name='ischeck' type='checkbox' disabled='disabled' id='" . $schedules_vals->scheduleid . "_" . $schedules_vals->serviceid . $mem . "_check' />";
+            }
+            $schedule_str .= "
+            </td>
     <td width='176' align='center'><span class='fontweight' id='" . $schedules_vals->scheduleid . "_se'>" . $service[$schedules_vals->serviceid] . "</span></td>
     <td width='108' align='center' id='" . $schedules_vals->scheduleid . "_st'>" . $startdate[0] . "<br/>
 " . $startdate[1] . " " . $startdate[2] . $tz . "</td>
