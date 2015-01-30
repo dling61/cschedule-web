@@ -56,7 +56,8 @@ if(isset($_COOKIE['cschedule_user']) && $_COOKIE['cschedule_user']!=''){
 <!-- sign in form end-->
 
 <!-- sign up form start-->
-<div class="loged" style='display:none' id='signupform'><table width="254" border="0" cellspacing="0" cellpadding="0">
+<div class="loged" style='display:none' id='signupform'>
+    <table width="254" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td height="20" colspan="2" align="center"><span class="wrong" id="error_info2"></span></td>
     </tr>
@@ -112,10 +113,10 @@ if(isset($_COOKIE['cschedule_user']) && $_COOKIE['cschedule_user']!=''){
       E2WSTUDY,LLC </li>
     <li>&nbsp;&nbsp;&nbsp;&nbsp;<img src="./images/bg_14.png" />&nbsp;&nbsp;&nbsp;&nbsp;</li>
     <li>
-      <input type="button" class="forapp" title="Coming soon">
+      <a title="iOS App" href="https://itunes.apple.com/us/app/cschedule/id596231825?mt=8" target="_blank" class="forapp">iOS</a>
     </li>
     <li>
-      <input type="button" class="foraid" title="Coming soon">
+      <a title="Android App" href="https://play.google.com/store/apps/details?id=com.e2wstudy.cschedule" target="_blank" class="foraid">Android App</a>
     </li>
   </ul>
 </div>

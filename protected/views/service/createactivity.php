@@ -146,22 +146,22 @@
       <td height="48"><span class="fontsize1">End</span><span><img src="./images/bg_100.png" /></span></td>
       <td colspan="2"><input type="text" id="endtime" onfocus="WdatePicker({dateFmt:'yyyy/MM/dd HH:mm',lang:'en'})" / class="cname3"></td>
     </tr>-->
-	
-	<tr>
+
+	<!--<tr>
       <td height="48"><span class="fontsize1">Timezone</span><span><img src="./images/bg_100.png" /></span></td>
       <td colspan="2"><select id="timezone"  class="cname4">
 	  <?php
-		$timezone_str = "<option value='none'>Please select a timezone</option>";
+/*		$timezone_str = "<option value='none'>Please select a timezone</option>";
 		foreach(getPartTimezones() as $timezonekey=>$timezonevals){
 			$timezone_str .= "<option value='".$timezonekey."'>".$timezonevals."</option>";
 		}
 		echo $timezone_str;
-	  ?>
+	  */?>
 	  </select></td>
-    </tr>
-	
+    </tr>-->
+
     <tr>
-      <td height="140"><span class="fontsize1">Descripion</span></td>
+      <td height="140"><span class="fontsize1">Description</span></td>
       <td colspan="2">
         <label>
           <textarea name="textarea" class="cname2" id="description"></textarea>
@@ -183,7 +183,8 @@
           </label>
       </form>      </td>
     </tr>-->
-    <tr>
+
+   <!-- <tr>
       <td height="48"><span class="fontsize1">Alert</span></td>
       <td colspan="2"><form id="form2" name="form2" method="post" action="">
         <label>
@@ -201,13 +202,13 @@
           </select>
           </label>
       </form></td>
-    </tr>
+    </tr>-->
 	
-	<tr>
+	<!--<tr>
 	<td height="48">&nbsp;</td>
 	<td colspan="2" class="font1" style="font-weight:bold;">
 	<hr>Based on the "Alert" setting, CSchedule will send reminder emails to those "on duty" in the schedules associated with this activity.<hr></td>
-	</tr>
+	</tr>-->
     
 	<tr>
       <td height="48">&nbsp;</td>
@@ -233,7 +234,7 @@
 <script language='javascript'>
 	var timezoneOffset = -(new Date().getTimezoneOffset()/60);
 	// alert(timezoneOffset);
-	document.getElementById("timezone").value = timezoneOffset;
+	// document.getElementById("timezone").value = timezoneOffset;
 
 	jQuery(document).ready(function() {
 		jQuery("#sharepopup").jqm({
@@ -333,15 +334,9 @@
 	function servicePath(){
 		var name = document.getElementById('activityname').value;
 		var desp = document.getElementById('description').value;
-		var alerts = document.getElementById('alert').value;
-		var timezone = document.getElementById('timezone').value;
 		if(name == ''){
 			document.getElementById('error').innerHTML = 'Name cannot be blank.';
 			document.getElementById('activityname').focus();
-			return false;
-		}else if(timezone == "none"){
-			document.getElementById('error').innerHTML = 'Please select a timezone.';
-			document.getElementById('timezone').focus();
 			return false;
 		}
 		
@@ -353,7 +348,7 @@
 			echo CHtml::ajax(
 				array(
 					"url" => CController::createUrl("Service/ServicePath"),
-					"data" => "js:{name : name, desp : desp,alerts : alerts,timezone:timezone}",
+					"data" => "js:{name : name, desp : desp}",
 					"type"=>"POST",
 					'beforeSend'=>"js:function(){
 						$(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);
@@ -366,15 +361,9 @@
 							
 							document.getElementById(\"name\").value = \"\";
 							document.getElementById(\"email\").value = \"\";
-							document.getElementById(\"mobile\").value = \"\";
-	
-							document.getElementById(\"notice\").innerHTML = \"\";
-	
-							// document.getElementById(\"addnewcontact\").style.display = \"none\";
-							// document.getElementById(\"sharecontacts\").style.display = \"none\";
+
 	
 							document.getElementById('shareloading').innerHTML = '';
-							// $('#shareloading').html('');
 							$('#shareloading').html(data); 
 						}
 						$(\".showbox\").stop(true).animate({'margin-top':'250px','opacity':'0'},400);
@@ -452,7 +441,7 @@ function addNewContact(){
 							// $(\"<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'><tr><td width='35'>&nbsp;</td><td width='154' height='33' id='name_\"+obj.id+\"'>\"+name+\"</td><td width='222' id='email_\"+obj.id+\"'>\"+email+\"</td><td width='116'><select  id='\"+obj.id+\"' name = 'selectdMembers' onchange='changerole(\"+obj.id+\")'><option value='-1'>Noshare</option><option value ='2'>Participant</option></select></td></tr></table></li>\").appendTo('#shareloading');
 							
 							if(obj.tip == 'ok'){
-								$(\"<li><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='25'><input name='contact_check' type='checkbox' id='\"+obj.id+\"_check' onclick='is_Checked(\"+obj.id+\")'></td><td width='75' height='25' id='\"+obj.id+\"_name'>\"+name+\"</td></tr></table></li>\").appendTo('#addnewcontact');
+								$(\"<li><table border='0' cellspacing='0' cellpadding='0'><tr><td width='25'><input name='contact_check' type='checkbox' id='\"+obj.id+\"_check' onclick='is_Checked(\"+obj.id+\")'></td><td id='\"+obj.id+\"_name'>\"+name+\"</td></tr></table></li>\").appendTo('#addnewcontact');
 								
 								$('#notice').html('');
 								$('#email').val('');
@@ -565,7 +554,7 @@ function is_Checked(i){
 	if(status){
 		var name = document.getElementById(i+'_name').innerHTML;
 			
-		$("<li id='"+i+"_selected'><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='75' height='25'><span class='name'><a href='#'>"+name+"</a></span></td><td width='25' onclick='deleteContact("+i+")'><span class='cha' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
+		$("<li id='"+i+"_selected'><table border='0' cellspacing='0' cellpadding='0'><tr><td><span class='name'><a href='#'>"+name+"</a></span></td><td width='25' onclick='deleteContact("+i+")'><span class='cha' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
 	}else{
 		$('#'+i+'_selected').remove();
 	}

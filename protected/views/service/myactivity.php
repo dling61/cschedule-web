@@ -54,44 +54,7 @@
     <td height="30" colspan="4" align="center" valign="middle"><span class="wrong">错误信息</span></td>
     </tr>-->
   
-  <tr id="shareloading"> <!--
-    <td valign="top"><span class="fontsize1" style="visibility:hidden;">On Duty</span></td>
-    <td>&nbsp;</td>
-    <td><div class="cschbg1"></div>
-	<div class="cschbg2"><table width="563" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-  <td><div class="cschb">
-    <ul>
-	
-		<span id = "editonduty"></span>
-		<div class="clear"></div>
-		
-    </ul>
-    </div></td>
-    </tr>
-</table>
-</div>
-<div style="width:563px; border-left:1px solid #dbe2e7; border-right:1px solid #dbe2e7; border-bottom:1px solid #dbe2e7; ">&nbsp;&nbsp;<span class="color1">Please select contacts to add particpants into activity.</span></div>
-<div class="schtable">
-  <ul id="shareloading">
-   <li class="schbg1">
-      <table width="546" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td width="35" align="center"><input name="Input" type="checkbox" value="" /></td>
-          <td width="147" height="35">Tony Tang </td>
-          <td width="35" align="center"><input name="Input" type="checkbox" value="" /></td>
-          <td width="147">Wang Na</td>
-          <td width="35" align="center"><input name="Input" type="checkbox" value="" /></td>
-          <td width="147">David Wang</td>
-        </tr>
-      </table>
-    </li>
-    <li class="schbg2"></li>
-	
-  </ul>
-</div>
-<div class="schbg3"></div></td>
-    <td>&nbsp;</td>-->
+  <tr id="shareloading">
   </tr></table>
   <br>
   <table style="width:563px; border:1px solid #dbe2e7;margin-left:60px;">
@@ -135,7 +98,7 @@
       <tr>
         <td width="43%" align="right">
         <label>
-          <input type="button" class="cname5" onclick="submitSharedMembers()">
+          <input type="button" class="cname5" onclick="submitSharedMembers()" value="">
           </label>
       </td>
         <td width="6%">&nbsp;</td>
@@ -173,12 +136,12 @@
       <td><input type="text" class="cname3" id='viewend' disabled></td>
     </tr>-->
 	
-	<tr>
+	<!--<tr>
       <td height="48"><span class="fontsize1">Timezone</span></td>
       <td><select id='viewtimezone' class="cname4" disabled><option value='-11'>US/Samoa</option><option value='-10'>US/Hawaii</option><option value='-9'>US/Alaska</option><option value='-8'>US/Pacific</option><option value='-7'>US/Arizona &amp; US/Mountain</option><option value='-6'>US/Central</option><option value='-5'>US/Eastern &amp; US/East-Indiana</option><option value='-4'>Canada/Atlantic</option><option value='-3.5'>Canada/Newfoundland</option>
-	  
+
 	  </select></td>
-    </tr>
+    </tr>-->
 	
     <tr>
       <td height="140"><span class="fontsize1">Descripion</span></td>
@@ -203,7 +166,7 @@
           </label>
            </td>
     </tr>-->
-    <tr>
+    <!--<tr>
       <td height="48"><span class="fontsize1">Alert</span></td>
       <td>
         <label>
@@ -221,7 +184,7 @@
         </select>
         </label>
      </td>
-    </tr>
+    </tr>-->
     <tr>
       <td height="48">&nbsp;</td>
       <td align="center"> <span class="jqmClose"><input type="button" class="main13bu3"></span></td>
@@ -264,13 +227,13 @@
       <td colspan="2"><input type="text" class="cname3" id="editend" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',lang:'en'})"></td>
     </tr>-->
 	
-	<tr>
+	<!--<tr>
       <td height="48"><span class="fontsize1">Timezone</span><img src="./images/bg_100.png" width="14" height="14"></td>
       <td colspan="2"><select id='edittimezone' class="cname4" disabled>
 	  <option value='-11'>US/Samoa</option><option value='-10'>US/Hawaii</option><option value='-9'>US/Alaska</option><option value='-8'>US/Pacific</option><option value='-7'>US/Arizona &amp; US/Mountain</option><option value='-6'>US/Central</option><option value='-5'>US/Eastern &amp; US/East-Indiana</option><option value='-4'>Canada/Atlantic</option><option value='-3.5'>Canada/Newfoundland</option>
 	  
 	  </select></td>
-    </tr>
+    </tr>-->
 	
     <tr>
       <td height="140"><span class="fontsize1">Descripion</span></td>
@@ -297,7 +260,7 @@
           </label>
       </td>
     </tr>-->
-    <tr>
+    <!--<tr>
       <td height="48"><span class="fontsize1">Alert</span></td>
       <td colspan="2">
         <label>
@@ -317,7 +280,7 @@
           </select>
           </label>
       </td>
-    </tr>
+    </tr>-->
     <tr>
       <td height="48">&nbsp;</td>
       <td width="144">
@@ -485,7 +448,6 @@
 </div>
 
 <?php include_once(dirname(dirname(__FILE__)).'/footer.php');?>
-
 </body>
 
 <script language='javascript'>
@@ -674,7 +636,7 @@ function addNewContact(){
 							// $(\"<li class='sharebg6'><table width='527' border='0' cellspacing='0' cellpadding='0'><tr><td width='35'>&nbsp;</td><td width='154' height='33' id='name_\"+obj.id+\"'>\"+name+\"</td><td width='222' id='email_\"+obj.id+\"'>\"+email+\"</td><td width='116'><select  id='\"+obj.id+\"' name = 'selectdMembers' onchange='changerole(\"+obj.id+\")'><option value='-1'>Noshare</option><option value ='2'>Participant</option></select></td></tr></table></li>\").appendTo('#shareloading');
 							
 							if(obj.tip == 'ok'){
-								$(\"<li><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='25'><input name='contact_check' type='checkbox' id='\"+obj.id+\"_check' onclick='is_Checked(\"+obj.id+\")'></td><td width='75' height='25' id='\"+obj.id+\"_name'>\"+name+\"</td></tr></table></li>\").appendTo('#addnewcontact');
+								$(\"<li><table border='0' cellspacing='0' cellpadding='0'><tr><td width='25'><input name='contact_check' type='checkbox' id='\"+obj.id+\"_check' onclick='is_Checked(\"+obj.id+\")'></td><td id='\"+obj.id+\"_name'>\"+name+\"</td></tr></table></li>\").appendTo('#addnewcontact');
 								
 								$('#notice').html('');
 								$('#email').val('');
@@ -792,8 +754,8 @@ function viewActivity(i){
 					// document.getElementById('viewend').value = data.end;
 					document.getElementById('viewdesp').value = data.desp;
 					// document.getElementById('viewrepeat').value = data.repeat;
-					document.getElementById('viewalert').value = data.alert;
-					document.getElementById('viewtimezone').value = data.timezone;					
+					// document.getElementById('viewalert').value = data.alert;
+					// document.getElementById('viewtimezone').value = data.timezone;
 				}else{
 					// $(\"#viewactivitypopup\").jqmHide();
 					location.href = url;
@@ -832,8 +794,8 @@ function editActivity(i){
 					// document.getElementById('editend').value = data.end;
 					document.getElementById('editdesp').value = data.desp;
 					// document.getElementById('editrepeat').value = data.repeat;
-					document.getElementById('editalert').value = data.alert;
-					document.getElementById('edittimezone').value = data.timezone;
+					// document.getElementById('editalert').value = data.alert;
+					// document.getElementById('edittimezone').value = data.timezone;
 				}else{
 					location.href = url;
 				}
@@ -853,8 +815,8 @@ function saveActivity(){
 	// var endtime = document.getElementById('editend').value; 
 	var desp = document.getElementById('editdesp').value; 
 	// var repeat = document.getElementById('editrepeat').value;
-	var alerts = document.getElementById('editalert').value;
-	var timezone = document.getElementById('edittimezone').value;
+	// var alerts = document.getElementById('editalert').value;
+	// var timezone = document.getElementById('edittimezone').value;
 	
 
 	if(activity == ''){
@@ -900,7 +862,7 @@ function saveActivity(){
 		echo CHtml::ajax(array(
 			"url" => CController::createUrl("Service/Update"),
 			// "data" => "js:{id : id, name : activity, start : starttime, end : endtime, desp : desp, repeat : repeat, alerts : alerts,timezone:timezone}",
-			"data" => "js:{id : id, name : activity, desp : desp, alerts : alerts,timezone:timezone}",
+			"data" => "js:{id : id, name : activity, desp : desp}",
 			"type"=>"POST",
 			'beforeSend'=>"js:function(){
 				$(\".showbox\").stop(true).animate({'margin-top':'300px','opacity':'1'},200);
@@ -923,7 +885,7 @@ function is_Checked(i){
 	if(status){
 		var name = document.getElementById(i+'_name').innerHTML;
 			
-		$("<li id='"+i+"_selected'><table width='117' border='0' cellspacing='0' cellpadding='0'><tr><td width='75' height='25'><span class='name'><a href='#'>"+name+"</a></span></td><td width='25' onclick='deleteContact("+i+")'><span class='cha' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
+		$("<li id='"+i+"_selected'><table border='0' cellspacing='0' cellpadding='0'><tr><td><span class='name'><a href='#'>"+name+"</a></span></td><td width='25' onclick='deleteContact("+i+")'><span class='cha' style='cursor:pointer;'></span></td></tr></table></li>").appendTo('#editonduty');
 	}else{
 		$('#'+i+'_selected').remove();
 	}

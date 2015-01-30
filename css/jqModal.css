@@ -20,6 +20,32 @@
     padding: 12px;
 }
 
+.jqmWindowConfirm {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    margin-left: -200px;
+    width: 400px;
+    background-color: #EEE;
+    color: #333;
+    border: 1px solid #555;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: #333 0px 0px 10px;
+    -moz-box-shadow: #333 0px 0px 10px;
+    box-shadow: #333 0px 0px 10px;
+    background-color: #FFF;
+    overflow: visible;
+    padding: 20px;
+    text-align: center;
+}
+
+.buttons{
+    margin: 20px auto 0;
+}
+
 .jqmWindow {
     display: none;
 	position: fixed;
@@ -181,6 +207,37 @@ margin-left:-360px;
 margin-top:auto;
 margin-bottom:auto;
 overflow: visible;
+}
+
+.jqmWindowParticipants{
+    width:421px;
+    margin:50px auto 50px auto;
+
+    display: none;
+    position: absolute;
+    left:50%;
+    margin-left:-360px;
+    margin-top:auto;
+    margin-bottom:auto;
+    overflow: visible;
+}
+
+.jqmWindowSmall{
+    display: none;
+    margin:50px auto;
+    width:400px;
+    border: solid 5px #F5F5F5;
+    border-radius: 4px;
+    background-color: #ffffff;
+    position: absolute;
+    left:50%;
+    margin-left:-220px;
+    padding: 20px;
+}
+
+.modelGray{
+    border: solid 5px #a9a9a9;
+    background-color: #efefef;
 }
 
 .jqmOverlay { background-color: #000; }
